@@ -1,0 +1,1 @@
+document.addEventListener(`click`,e=>{let t=e.target.closest(`[data-toggle]`);t&&document.querySelector(t.dataset.toggle)?.classList.toggle(`hidden`)}),document.addEventListener(`submit`,e=>{let t=e.target.dataset.confirm;t&&!window.confirm(t)&&e.preventDefault()});
