@@ -62,26 +62,54 @@
         </section>
 
         <section class="card p-5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                    <h2 class="font-bold text-slate-900">Voucher &amp; Kode Promo</h2>
+                    <p class="text-xs text-slate-500">Punya kode kupon potongan harga? Masukkan kode promo Anda di sini.</p>
+                </div>
+                @auth
+                    @if (auth()->user()->isMember())
+                        @php $userTier = auth()->user()->tier(); @endphp
+                        @if ($userTier && $userTier->discount_percentage > 0)
+                            <span class="badge bg-amber-100 text-amber-900 text-xs font-bold">
+                                Member {{ $userTier->name }} Aktif (Diskon {{ $userTier->discount_percentage }}%)
+                            </span>
+                        @endif
+                    @endif
+                @endauth
+            </div>
+            <div class="mt-3">
+                <input class="input font-mono uppercase max-w-xs text-sm tracking-wider" 
+                       id="promo_code" name="promo_code" 
+                       value="{{ old('promo_code', request('promo_code')) }}" 
+                       placeholder="Contoh: HEMAT50K">
+                @error('promo_code')
+                    <p class="text-xs text-rose-600 mt-1.5 font-medium">{{ $message }}</p>
+                @enderror
+            </div>
+        </section>
+
+        <section class="card p-5">
             <h2 class="font-bold text-slate-900">Data pemesan</h2>
             <div class="mt-3 grid gap-3 md:grid-cols-2">
                 <div>
                     <label class="label" for="customer_name">Nama lengkap (sesuai KTP)</label>
-                    <input class="input" id="customer_name" name="customer_name" value="{{ old('customer_name') }}" required maxlength="100">
+                    <input class="input" id="customer_name" name="customer_name" value="{{ old('customer_name', auth()->user()?->name) }}" required maxlength="100">
                     @error('customer_name')<p class="error">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="label" for="customer_phone">Nomor HP/WhatsApp</label>
-                    <input class="input" id="customer_phone" name="customer_phone" value="{{ old('customer_phone') }}" required inputmode="tel" placeholder="08xxxxxxxxxx">
+                    <input class="input" id="customer_phone" name="customer_phone" value="{{ old('customer_phone', auth()->user()?->phone) }}" required inputmode="tel" placeholder="08xxxxxxxxxx">
                     @error('customer_phone')<p class="error">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="label" for="customer_email">Email (opsional)</label>
-                    <input class="input" type="email" id="customer_email" name="customer_email" value="{{ old('customer_email') }}">
+                    <input class="input" type="email" id="customer_email" name="customer_email" value="{{ old('customer_email', auth()->user()?->email) }}">
                     @error('customer_email')<p class="error">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="label" for="customer_address">Alamat domisili (opsional)</label>
-                    <input class="input" id="customer_address" name="customer_address" value="{{ old('customer_address') }}">
+                    <input class="input" id="customer_address" name="customer_address" value="{{ old('customer_address', auth()->user()?->memberProfile?->address) }}">
                 </div>
                 <div class="md:col-span-2">
                     <label class="label" for="notes">Catatan (opsional)</label>

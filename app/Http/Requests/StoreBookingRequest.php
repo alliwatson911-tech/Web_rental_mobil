@@ -29,6 +29,7 @@ class StoreBookingRequest extends FormRequest
             ],
             'addons' => ['nullable', 'array'],
             'addons.*' => ['integer', Rule::exists('addons', 'id')->where('is_active', true)],
+            'promo_code' => ['nullable', 'string', 'max:50'],
             'customer_name' => ['required', 'string', 'max:100'],
             'customer_phone' => ['required', 'string', 'regex:/^\+?[0-9\s\-]{8,20}$/'],
             'customer_email' => ['nullable', 'email', 'max:150'],

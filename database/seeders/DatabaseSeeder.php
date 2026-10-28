@@ -29,6 +29,18 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // Akun admin kedua (Operasional & Reservasi)
+        User::updateOrCreate(
+            ['email' => env('ADMIN2_SEED_EMAIL', 'admin2@padaidi.test')],
+            [
+                'name' => 'Admin Padaidi 2 (Operasional)',
+                'phone' => '6282235585445',
+                'role' => User::ROLE_ADMIN,
+                'password' => env('ADMIN2_SEED_PASSWORD', 'padaidi-admin-123'),
+                'email_verified_at' => now(),
+            ]
+        );
+
         $categories = collect([
             ['City Car', 'Mobil kecil irit untuk dalam kota.'],
             ['MPV', 'Mobil keluarga 7 penumpang.'],
@@ -97,5 +109,8 @@ class DatabaseSeeder extends Seeder
         $sample($created['Toyota Avanza'], 2, 3, [$insurance->id], 'Contoh Pelanggan Satu', '081200000001');
         $confirmed = $sample($created['Toyota Innova Zenix'], 4, 2, [$driver->id], 'Contoh Pelanggan Dua', '081200000002');
         $bookings->transition($confirmed, BookingStatus::Confirmed);
+
+        $this->call(MembershipTierSeeder::class);
+        $this->call(PromotionSeeder::class);
     }
 }

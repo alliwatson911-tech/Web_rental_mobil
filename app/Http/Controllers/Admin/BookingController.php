@@ -7,6 +7,7 @@ use App\Exceptions\InvalidStatusTransitionException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CancelBookingRequest;
 use App\Models\Booking;
+use App\Models\CustomerDocument;
 use App\Services\BookingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class BookingController extends Controller
 
     public function show(Booking $booking): View
     {
-        $booking->load(['car.category', 'pickupLocation', 'addons', 'payments.verifier', 'review']);
+        $booking->load(['car.category', 'pickupLocation', 'addons', 'payments.verifier', 'documents.verifier', 'review']);
 
         return view('admin.bookings.show', compact('booking'));
     }
@@ -47,14 +48,64 @@ class BookingController extends Controller
         return $this->move($booking, BookingStatus::Cancelled, 'Pesanan dibatalkan/ditolak.', $request->validated('reason') ?: 'Ditolak admin');
     }
 
-    public function pickup(Booking $booking): RedirectResponse
+    public function pickup(Request $request, Booking $booking): RedirectResponse
     {
-        return $this->move($booking, BookingStatus::Active, 'Mobil ditandai sudah diambil.');
+        $data = $request->validate([
+            'start_odometer' => ['nullable', 'integer', 'min:0'],
+            'fuel_out' => ['nullable', 'string', 'max:30'],
+            'handover_notes' => ['nullable', 'string', 'max:2000'],
+            'driver_name' => ['nullable', 'string', 'max:255'],
+            'driver_phone' => ['nullable', 'string', 'max:30'],
+        ]);
+
+        if (! empty($data)) {
+            $booking->update($data);
+        }
+
+        return $this->move($booking, BookingStatus::Active, 'Mobil ditandai sudah diambil (serah terima unit berhasil).');
     }
 
-    public function complete(Booking $booking): RedirectResponse
+    public function complete(Request $request, Booking $booking): RedirectResponse
     {
-        return $this->move($booking, BookingStatus::Completed, 'Pesanan ditandai selesai.');
+        $data = $request->validate([
+            'end_odometer' => ['nullable', 'integer', 'min:0'],
+            'fuel_in' => ['nullable', 'string', 'max:30'],
+            'return_notes' => ['nullable', 'string', 'max:2000'],
+            'overtime_hours' => ['nullable', 'integer', 'min:0'],
+            'overtime_fee' => ['nullable', 'integer', 'min:0'],
+            'extra_fee' => ['nullable', 'integer', 'min:0'],
+            'extra_fee_notes' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        if (! empty($data)) {
+            $booking->update($data);
+        }
+
+        return $this->move($booking, BookingStatus::Completed, 'Pesanan ditandai selesai (mobil telah dikembalikan).');
+    }
+
+    public function verifyDocument(Request $request, CustomerDocument $document): RedirectResponse
+    {
+        $document->update([
+            'status' => CustomerDocument::STATUS_VERIFIED,
+            'verified_by' => $request->user()->id,
+            'verified_at' => now(),
+            'notes' => $request->input('notes'),
+        ]);
+
+        return back()->with('success', 'Dokumen identitas telah diverifikasi valid.');
+    }
+
+    public function rejectDocument(Request $request, CustomerDocument $document): RedirectResponse
+    {
+        $document->update([
+            'status' => CustomerDocument::STATUS_REJECTED,
+            'verified_by' => $request->user()->id,
+            'verified_at' => now(),
+            'notes' => $request->input('notes', 'Dokumen buram/tidak valid'),
+        ]);
+
+        return back()->with('success', 'Dokumen identitas ditolak.');
     }
 
     public function updateNotes(Request $request, Booking $booking): RedirectResponse

@@ -33,16 +33,52 @@
             @foreach ($quote['addons'] as $line)
                 <tr><td class="py-1">{{ $line['name'] }} @if($line['charge_type'] === 'per_day')({{ rupiah($line['unit_price']) }} × {{ $line['quantity'] }} hari)@endif</td><td class="py-1 text-right">{{ rupiah($line['subtotal']) }}</td></tr>
             @endforeach
-            @if ($quote['discount'] > 0)
+
+            {{-- Rincian Diskon Berjenjang (Fase 2) --}}
+            @if (! empty($quote['tier_discount']) && $quote['tier_discount'] > 0)
+                <tr>
+                    <td class="py-1 text-amber-800">
+                        Diskon Member {{ $quote['discount_snapshot']['tier']['name'] ?? '' }} ({{ $quote['discount_snapshot']['tier']['percentage'] ?? '' }}%)
+                    </td>
+                    <td class="py-1 text-right text-amber-800 font-semibold">
+                        −{{ rupiah($quote['tier_discount']) }}
+                    </td>
+                </tr>
+            @endif
+
+            @if (! empty($quote['promo_discount']) && $quote['promo_discount'] > 0)
+                <tr>
+                    <td class="py-1 text-emerald-800">
+                        Kode Promo ({{ $quote['promo_code'] }})
+                    </td>
+                    <td class="py-1 text-right text-emerald-800 font-semibold">
+                        −{{ rupiah($quote['promo_discount']) }}
+                    </td>
+                </tr>
+            @elseif (! empty($quote['discount']) && $quote['discount'] > 0 && empty($quote['tier_discount']) && empty($quote['promo_discount']))
                 <tr><td class="py-1">Diskon</td><td class="py-1 text-right">−{{ rupiah($quote['discount']) }}</td></tr>
             @endif
+
             <tr class="border-t border-slate-200 text-base font-extrabold text-brand-700"><td class="pt-2">Total</td><td class="pt-2 text-right">{{ rupiah($quote['total']) }}</td></tr>
         </table>
+
+        {{-- Opsi Pembayaran DP 30% & Pelunasan --}}
+        <div class="mt-3 rounded-lg bg-brand-50/60 p-3 text-xs border border-brand-100 space-y-1">
+            <div class="flex justify-between text-slate-700">
+                <span>Opsi Uang Muka (DP 30%):</span>
+                <strong class="text-brand-900">{{ rupiah($quote['dp_amount']) }}</strong>
+            </div>
+            <div class="flex justify-between text-slate-500 text-[11px]">
+                <span>Sisa Pelunasan (70%):</span>
+                <span>{{ rupiah($quote['settlement_amount']) }}</span>
+            </div>
+        </div>
+
         <p class="mt-2 text-xs text-slate-500">Belum termasuk deposit {{ rupiah($business['terms']['deposit']) }} (dibayar saat ambil mobil, dikembalikan).</p>
 
         <form method="POST" action="{{ route('bookings.store', $car) }}" class="mt-4">
             @csrf
-            @foreach (['pickup_location_id', 'pickup_date', 'return_date', 'delivery_address', 'customer_name', 'customer_phone', 'customer_email', 'customer_address', 'notes', 'agree_terms'] as $field)
+            @foreach (['pickup_location_id', 'pickup_date', 'return_date', 'delivery_address', 'customer_name', 'customer_phone', 'customer_email', 'customer_address', 'notes', 'agree_terms', 'promo_code'] as $field)
                 @if (isset($data[$field]))<input type="hidden" name="{{ $field }}" value="{{ $data[$field] }}">@endif
             @endforeach
             @foreach ($data['addons'] ?? [] as $addonId)
@@ -54,6 +90,7 @@
             <input type="hidden" name="pickup_location_id" value="{{ $data['pickup_location_id'] }}">
             <input type="hidden" name="pickup_date" value="{{ $data['pickup_date'] }}">
             <input type="hidden" name="return_date" value="{{ $data['return_date'] }}">
+            @if (! empty($data['promo_code']))<input type="hidden" name="promo_code" value="{{ $data['promo_code'] }}">@endif
             <button class="btn btn-outline w-full">Ubah pesanan</button>
         </form>
     </aside>

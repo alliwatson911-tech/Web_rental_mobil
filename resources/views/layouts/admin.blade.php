@@ -18,6 +18,10 @@
         ['admin.blocks.index', 'Jadwal Servis', 'admin.blocks.*'],
         ['admin.addons.index', 'Tambahan', 'admin.addons.*'],
         ['admin.locations.index', 'Lokasi', 'admin.locations.*'],
+        ['admin.members.index', 'Member Pelanggan', ['admin.members.index', 'admin.members.show']],
+        ['admin.promotions.index', 'Diskon & Promo', ['admin.promotions.index', 'admin.promotions.create', 'admin.promotions.edit']],
+        ['admin.promotions.report', 'Laporan Promo', 'admin.promotions.report'],
+        ['admin.members.logs', 'Audit Akses Dokumen', 'admin.members.logs'],
     ];
 @endphp
 <div class="md:flex">
@@ -29,8 +33,11 @@
             </button>
         </div>
         <nav id="admin-nav" class="hidden space-y-1 px-2 pb-4 text-sm md:block">
-            @foreach ($menu as [$route, $label, $pattern])
-                <a href="{{ route($route) }}" class="block rounded-lg px-3 py-2 {{ request()->routeIs($pattern) ? 'bg-white/15 font-semibold text-white' : 'hover:bg-white/10' }}">{{ $label }}</a>
+            @foreach ($menu as [$route, $label, $patterns])
+                @php
+                    $isActive = is_array($patterns) ? request()->routeIs(...$patterns) : request()->routeIs($patterns);
+                @endphp
+                <a href="{{ route($route) }}" class="block rounded-lg px-3 py-2 {{ $isActive ? 'bg-white/15 font-semibold text-white' : 'hover:bg-white/10' }}">{{ $label }}</a>
             @endforeach
             <a href="{{ route('home') }}" class="block rounded-lg px-3 py-2 hover:bg-white/10" target="_blank">Lihat situs ↗</a>
             <form method="POST" action="{{ route('admin.logout') }}" class="px-3 pt-3">

@@ -23,6 +23,38 @@
             <a href="{{ route('terms') }}" class="hover:text-brand-600">Syarat Sewa</a>
             <a href="{{ route('contact') }}" class="hover:text-brand-600">Kontak</a>
             <a href="{{ route('bookings.lookup') }}" class="btn btn-outline">Cek Pesanan</a>
+
+            @auth
+                @if (auth()->user()->isMember())
+                    @php
+                        $userTier = auth()->user()->tier();
+                    @endphp
+                    <div class="flex items-center gap-3 pl-2 border-l border-slate-200">
+                        <a href="{{ route('member.dashboard') }}" class="flex items-center gap-2 hover:text-brand-700">
+                            <span class="grid h-8 w-8 place-items-center rounded-full bg-brand-100 text-brand-800 text-xs font-bold">
+                                {{ substr(auth()->user()->name, 0, 1) }}
+                            </span>
+                            <div class="text-left text-xs leading-tight">
+                                <span class="font-bold text-slate-800 block">{{ auth()->user()->name }}</span>
+                                <span class="text-[10px] text-amber-700 font-semibold">{{ $userTier?->name ?? 'Member' }}</span>
+                            </div>
+                        </a>
+                        <form method="POST" action="{{ route('member.logout') }}" class="inline">
+                            @csrf
+                            <button type="submit" class="text-xs text-slate-400 hover:text-rose-600" title="Keluar">
+                                Keluar
+                            </button>
+                        </form>
+                    </div>
+                @elseif (auth()->user()->isAdmin())
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-primary text-xs">Panel Admin &rarr;</a>
+                @endif
+            @else
+                <div class="flex items-center gap-2 pl-2 border-l border-slate-200">
+                    <a href="{{ route('member.login') }}" class="hover:text-brand-700 text-xs font-semibold">Masuk</a>
+                    <a href="{{ route('member.register') }}" class="btn btn-primary text-xs py-1.5 px-3">Daftar Member</a>
+                </div>
+            @endauth
         </nav>
     </div>
     <nav id="nav-mobile" class="hidden border-t border-slate-200 px-4 py-2 text-sm font-medium md:hidden">
@@ -30,6 +62,33 @@
         <a href="{{ route('terms') }}" class="block py-2">Syarat Sewa</a>
         <a href="{{ route('contact') }}" class="block py-2">Kontak</a>
         <a href="{{ route('bookings.lookup') }}" class="block py-2">Cek Pesanan</a>
+
+        <div class="border-t border-slate-200 pt-2 mt-2">
+            @auth
+                @if (auth()->user()->isMember())
+                    <div class="py-2">
+                        <span class="text-xs text-slate-500 block">Masuk sebagai:</span>
+                        <span class="font-bold text-slate-800 text-sm">{{ auth()->user()->name }}</span>
+                        <span class="text-xs text-brand-700 font-semibold">({{ auth()->user()->tier()?->name ?? 'Member' }})</span>
+                    </div>
+                    <a href="{{ route('member.dashboard') }}" class="block py-1.5 text-brand-700 font-bold">Akun Saya</a>
+                    <a href="{{ route('member.bookings') }}" class="block py-1.5">Riwayat Pesanan</a>
+                    <a href="{{ route('member.profile') }}" class="block py-1.5">Ubah Profil</a>
+                    <a href="{{ route('member.documents') }}" class="block py-1.5">Dokumen e-KYC</a>
+                    <form method="POST" action="{{ route('member.logout') }}" class="mt-2">
+                        @csrf
+                        <button type="submit" class="btn btn-outline w-full text-xs text-rose-600 border-rose-300 hover:bg-rose-50">Keluar</button>
+                    </form>
+                @elseif (auth()->user()->isAdmin())
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-primary w-full text-center text-xs">Panel Admin</a>
+                @endif
+            @else
+                <div class="grid grid-cols-2 gap-2 py-2">
+                    <a href="{{ route('member.login') }}" class="btn btn-outline text-center text-xs">Masuk</a>
+                    <a href="{{ route('member.register') }}" class="btn btn-primary text-center text-xs">Daftar Member</a>
+                </div>
+            @endauth
+        </div>
     </nav>
 </header>
 

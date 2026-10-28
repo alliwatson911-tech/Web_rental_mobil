@@ -18,6 +18,8 @@ class SearchCarsRequest extends FormRequest
             'pickup_date' => ['nullable', 'required_with:return_date', 'date', 'after_or_equal:today'],
             'return_date' => ['nullable', 'required_with:pickup_date', 'date', 'after:pickup_date'],
             'category' => ['nullable', 'string', 'exists:categories,slug'],
+            'transmission' => ['nullable', 'string', 'in:manual,automatic'],
+            'seats' => ['nullable', 'integer', 'min:1', 'max:20'],
         ];
     }
 
@@ -28,6 +30,8 @@ class SearchCarsRequest extends FormRequest
             'pickup_date' => 'tanggal ambil',
             'return_date' => 'tanggal kembali',
             'category' => 'kategori',
+            'transmission' => 'transmisi',
+            'seats' => 'kapasitas kursi',
         ];
     }
 

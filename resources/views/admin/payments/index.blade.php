@@ -1,37 +1,231 @@
 @extends('layouts.admin')
-@section('title', 'Pembayaran')
+@section('title', 'Kelola Transaksi & Pembayaran')
 
 @section('content')
-@php($current = request('status', 'pending'))
-<div class="mb-4 flex flex-wrap gap-2 text-sm">
-    @foreach (['pending' => 'Perlu dicek', 'verified' => 'Terverifikasi', 'rejected' => 'Ditolak', 'semua' => 'Semua'] as $k => $v)
-        <a href="{{ route('admin.payments.index', ['status' => $k]) }}" class="badge px-3 py-1 {{ $current === $k ? 'bg-brand-600 text-white' : 'bg-white text-slate-700 ring-1 ring-slate-300' }}">{{ $v }}</a>
-    @endforeach
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+    <div>
+        <h1 class="text-2xl font-black text-slate-900">Transaksi & Pembayaran</h1>
+        <p class="text-sm text-slate-500">Monitoring pembayaran gateway (QRIS, VA Bank), mutasi transfer manual, dan kelola refund.</p>
+    </div>
+    <div class="flex items-center gap-2">
+        <a href="{{ route('admin.payments.export', request()->query()) }}" class="btn btn-outline text-xs flex items-center gap-1.5 py-2">
+            📥 Ekspor Data (CSV)
+        </a>
+    </div>
 </div>
+
+{{-- Kartu Ringkasan Metrik --}}
+<div class="grid gap-4 sm:grid-cols-3 mb-6">
+    <div class="card p-5 border-l-4 border-l-emerald-500">
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Diterima / Lunas</p>
+        <p class="mt-1 text-2xl font-black text-emerald-700">{{ rupiah($totalPaid) }}</p>
+        <p class="text-[11px] text-slate-400 mt-1">Status Paid & Verified</p>
+    </div>
+    <div class="card p-5 border-l-4 border-l-amber-500">
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Menunggu Pembayaran</p>
+        <p class="mt-1 text-2xl font-black text-amber-700">{{ rupiah($totalPending) }}</p>
+        <p class="text-[11px] text-slate-400 mt-1">Status Pending / Tagihan Aktif</p>
+    </div>
+    <div class="card p-5 border-l-4 border-l-rose-500">
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Refund / Pengembalian</p>
+        <p class="mt-1 text-2xl font-black text-rose-700">{{ rupiah($totalRefunded) }}</p>
+        <p class="text-[11px] text-slate-400 mt-1">Dana yang telah dikembalikan</p>
+    </div>
+</div>
+
+{{-- Filter & Pencarian --}}
+<div class="card p-5 mb-6">
+    <form method="GET" action="{{ route('admin.payments.index') }}" class="grid gap-3 md:grid-cols-5 text-xs">
+        <div>
+            <label class="label text-xs">Cari Transaksi / Pesanan</label>
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="Ref ID, Kode, Nama..." class="input text-xs">
+        </div>
+        <div>
+            <label class="label text-xs">Status Pembayaran</label>
+            <select name="status" class="input text-xs">
+                <option value="semua" {{ request('status') === 'semua' ? 'selected' : '' }}>Semua Status</option>
+                <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending (Menunggu)</option>
+                <option value="paid" {{ request('status') === 'paid' ? 'selected' : '' }}>Paid (Lunas Gateway)</option>
+                <option value="verified" {{ request('status') === 'verified' ? 'selected' : '' }}>Verified (Terverifikasi)</option>
+                <option value="refunded" {{ request('status') === 'refunded' ? 'selected' : '' }}>Refunded (Penuh)</option>
+                <option value="partially_refunded" {{ request('status') === 'partially_refunded' ? 'selected' : '' }}>Partially Refunded</option>
+                <option value="expired" {{ request('status') === 'expired' ? 'selected' : '' }}>Expired (Kedaluwarsa)</option>
+                <option value="failed" {{ request('status') === 'failed' ? 'selected' : '' }}>Failed (Gagal)</option>
+                <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Rejected (Ditolak)</option>
+            </select>
+        </div>
+        <div>
+            <label class="label text-xs">Metode / Kanal</label>
+            <select name="channel" class="input text-xs">
+                <option value="">Semua Metode</option>
+                <option value="qris" {{ request('channel') === 'qris' ? 'selected' : '' }}>QRIS (Instant)</option>
+                <option value="va_bca" {{ request('channel') === 'va_bca' ? 'selected' : '' }}>BCA Virtual Account</option>
+                <option value="va_mandiri" {{ request('channel') === 'va_mandiri' ? 'selected' : '' }}>Mandiri Virtual Account</option>
+                <option value="va_bni" {{ request('channel') === 'va_bni' ? 'selected' : '' }}>BNI Virtual Account</option>
+                <option value="va_bri" {{ request('channel') === 'va_bri' ? 'selected' : '' }}>BRI BRIVA</option>
+                <option value="va_permata" {{ request('channel') === 'va_permata' ? 'selected' : '' }}>Permata VA</option>
+                <option value="manual_transfer" {{ request('channel') === 'manual_transfer' ? 'selected' : '' }}>Transfer Bank Manual</option>
+                <option value="cash" {{ request('channel') === 'cash' ? 'selected' : '' }}>Tunai (Cash)</option>
+            </select>
+        </div>
+        <div>
+            <label class="label text-xs">Tanggal Dari</label>
+            <input type="date" name="start_date" value="{{ request('start_date') }}" class="input text-xs">
+        </div>
+        <div class="flex items-end gap-2">
+            <button type="submit" class="btn btn-primary text-xs py-2 flex-1">Filter</button>
+            <a href="{{ route('admin.payments.index') }}" class="btn btn-outline text-xs py-2">Reset</a>
+        </div>
+    </form>
+</div>
+
+{{-- Tabel Pembayaran --}}
 <div class="card overflow-x-auto">
-    <table class="table-base">
-        <thead><tr><th>Tanggal</th><th>Pesanan</th><th>Jumlah</th><th>Pengirim</th><th>Bukti</th><th>Status</th><th></th></tr></thead>
+    <table class="table-base text-xs">
+        <thead>
+            <tr>
+                <th>Waktu</th>
+                <th>Referensi / ID</th>
+                <th>Pesanan</th>
+                <th>Pelanggan</th>
+                <th>Kanal / Tipe</th>
+                <th>Nominal</th>
+                <th>Status</th>
+                <th class="text-right">Tindakan</th>
+            </tr>
+        </thead>
         <tbody class="divide-y divide-slate-100">
         @forelse ($payments as $payment)
             <tr>
-                <td class="whitespace-nowrap">{{ tanggal($payment->created_at, 'd M Y H:i') }}</td>
-                <td><a class="font-semibold text-brand-600 hover:underline" href="{{ route('admin.bookings.show', $payment->booking) }}">{{ $payment->booking->code }}</a><br><span class="text-xs text-slate-500">Total {{ rupiah($payment->booking->total) }}</span></td>
-                <td>{{ rupiah($payment->amount) }}</td>
-                <td>{{ $payment->sender_name }}</td>
-                <td>@if ($payment->proofUrl())<a class="text-brand-600 underline" target="_blank" href="{{ $payment->proofUrl() }}">Lihat</a>@else - @endif</td>
-                <td>{{ $payment->statusLabel() }}</td>
                 <td class="whitespace-nowrap">
-                    @if ($payment->status === 'pending')
-                        <form method="POST" action="{{ route('admin.payments.verify', $payment) }}" class="inline">@csrf<button class="btn btn-success px-2 py-1 text-xs">Verifikasi</button></form>
-                        <form method="POST" action="{{ route('admin.payments.reject', $payment) }}" class="inline" data-confirm="Tolak bukti pembayaran ini?">@csrf<button class="btn btn-danger px-2 py-1 text-xs">Tolak</button></form>
+                    {{ tanggal($payment->created_at, 'd M Y H:i') }}
+                    @if ($payment->paid_at)
+                        <span class="block text-[11px] text-emerald-600">Lunas: {{ tanggal($payment->paid_at, 'H:i') }}</span>
+                    @endif
+                </td>
+                <td>
+                    <span class="font-mono font-semibold text-slate-800">{{ $payment->reference_id ?: 'MANUAL-'.$payment->id }}</span>
+                    @if ($payment->gateway_name)
+                        <span class="block text-[10px] uppercase text-slate-400">{{ $payment->gateway_name }}</span>
+                    @endif
+                </td>
+                <td>
+                    <a class="font-semibold text-brand-600 hover:underline" href="{{ route('admin.bookings.show', $payment->booking) }}">
+                        {{ $payment->booking->code }}
+                    </a>
+                    <span class="block text-[11px] text-slate-500">{{ $payment->booking->car->name }}</span>
+                </td>
+                <td>
+                    <span class="font-medium text-slate-900">{{ $payment->booking->customer_name }}</span>
+                    @if ($payment->sender_name && $payment->sender_name !== $payment->booking->customer_name)
+                        <span class="block text-[10px] text-slate-400">Pengirim: {{ $payment->sender_name }}</span>
+                    @endif
+                </td>
+                <td>
+                    <span class="font-semibold text-slate-800">{{ $payment->channelLabel() }}</span>
+                    <span class="block text-[11px] text-slate-500">{{ $payment->paymentTypeLabel() }}</span>
+                    @if ($payment->va_number)
+                        <span class="block font-mono text-[10px] text-brand-700 font-bold">VA: {{ $payment->va_number }}</span>
+                    @endif
+                </td>
+                <td class="whitespace-nowrap font-bold text-slate-900">
+                    {{ rupiah($payment->amount) }}
+                    @if ($payment->refunds->isNotEmpty())
+                        @php($refAmt = $payment->refunds->where('status', 'completed')->sum('amount'))
+                        @if ($refAmt > 0)
+                            <span class="block text-[10px] text-rose-600 font-normal">Refund: -{{ rupiah($refAmt) }}</span>
+                        @endif
+                    @endif
+                </td>
+                <td>
+                    <span class="badge {{ $payment->badgeClass() }} text-[11px]">
+                        {{ $payment->statusLabel() }}
+                    </span>
+                    @if ($payment->proof_path)
+                        <a href="{{ $payment->proofUrl() }}" target="_blank" class="block text-[10px] text-brand-600 underline mt-0.5">
+                            Lihat Struk
+                        </a>
+                    @endif
+                </td>
+                <td class="text-right whitespace-nowrap">
+                    @if ($payment->status === \App\Models\Payment::STATUS_PENDING && $payment->channel === \App\Models\Payment::CHANNEL_MANUAL_TRANSFER)
+                        <form method="POST" action="{{ route('admin.payments.verify', $payment) }}" class="inline">
+                            @csrf
+                            <button class="btn btn-success px-2 py-1 text-xs">Verifikasi</button>
+                        </form>
+                        <form method="POST" action="{{ route('admin.payments.reject', $payment) }}" class="inline" data-confirm="Tolak bukti transfer ini?">
+                            @csrf
+                            <button class="btn btn-danger px-2 py-1 text-xs">Tolak</button>
+                        </form>
+                    @elseif ($payment->isSuccessful() && $payment->status !== \App\Models\Payment::STATUS_REFUNDED)
+                        {{-- Tombol Buka Modal Refund --}}
+                        <button type="button" onclick="openRefundModal({{ $payment->id }}, '{{ $payment->reference_id ?: $payment->booking->code }}', {{ $payment->refundableAmount() }})" class="btn btn-outline text-[11px] px-2 py-1 text-rose-600 border-rose-300 hover:bg-rose-50">
+                            Refund
+                        </button>
+                    @else
+                        <span class="text-slate-400 text-xs">-</span>
                     @endif
                 </td>
             </tr>
         @empty
-            <tr><td colspan="7" class="py-6 text-center text-slate-500">Tidak ada data.</td></tr>
+            <tr>
+                <td colspan="8" class="py-8 text-center text-slate-500">
+                    Tidak ada transaksi pembayaran yang cocok dengan kriteria filter.
+                </td>
+            </tr>
         @endforelse
         </tbody>
     </table>
 </div>
+
 <div class="mt-4">{{ $payments->links() }}</div>
+
+{{-- Modal Refund Form --}}
+<div id="refundModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="card max-w-md w-full p-6 bg-white shadow-2xl relative">
+        <h3 class="text-lg font-bold text-slate-900">Proses Refund Pembayaran</h3>
+        <p class="text-xs text-slate-500 mt-1" id="refundModalSubtitle">
+            Mengembalikan dana pelanggan untuk transaksi pembayaran.
+        </p>
+
+        <form id="refundForm" method="POST" action="" class="mt-4 space-y-4 text-xs">
+            @csrf
+            <div>
+                <label class="label text-xs">Jumlah Refund (Rp)</label>
+                <input type="number" id="refundAmountInput" name="amount" min="1000" step="1" required class="input text-xs font-bold text-slate-900">
+                <p class="text-[10px] text-slate-400 mt-1">Maksimal pengembalian: <span id="maxRefundText" class="font-bold text-slate-700"></span></p>
+            </div>
+            <div>
+                <label class="label text-xs">Alasan Refund</label>
+                <textarea name="reason" rows="2" required placeholder="Contoh: Pembatalan sewa atas permintaan pelanggan, kelebihan transfer..." class="input text-xs"></textarea>
+            </div>
+            <div class="pt-3 border-t border-slate-100 flex justify-end gap-2">
+                <button type="button" onclick="closeRefundModal()" class="btn btn-outline text-xs py-1.5">Batal</button>
+                <button type="submit" class="btn btn-danger text-xs py-1.5">Konfirmasi Refund</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openRefundModal(paymentId, ref, maxAmount) {
+    const modal = document.getElementById('refundModal');
+    const form = document.getElementById('refundForm');
+    const subtitle = document.getElementById('refundModalSubtitle');
+    const input = document.getElementById('refundAmountInput');
+    const maxText = document.getElementById('maxRefundText');
+
+    form.action = `/admin/pembayaran/${paymentId}/refund`;
+    subtitle.textContent = `Transaksi: ${ref}`;
+    input.max = maxAmount;
+    input.value = maxAmount;
+    maxText.textContent = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(maxAmount);
+
+    modal.classList.remove('hidden');
+}
+
+function closeRefundModal() {
+    document.getElementById('refundModal').classList.add('hidden');
+}
+</script>
 @endsection

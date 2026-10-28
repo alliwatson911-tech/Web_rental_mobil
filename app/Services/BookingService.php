@@ -9,6 +9,8 @@ use App\Models\Addon;
 use App\Models\Booking;
 use App\Models\Car;
 use App\Models\Location;
+use App\Models\PromotionRedemption;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -52,9 +54,9 @@ class BookingService
      *
      * @throws CarUnavailableException
      */
-    public function create(Car $car, array $data): Booking
+    public function create(Car $car, array $data, ?User $user = null): Booking
     {
-        return DB::transaction(function () use ($car, $data) {
+        return DB::transaction(function () use ($car, $data, $user) {
             /** @var Car $lockedCar */
             $lockedCar = Car::query()->whereKey($car->id)->lockForUpdate()->firstOrFail();
 
@@ -64,11 +66,30 @@ class BookingService
 
             $location = Location::findOrFail($data['pickup_location_id']);
             $addons = $this->resolveAddons($data['addons'] ?? [], $location);
-            $quote = $this->pricing->quote($lockedCar, $data['pickup_date'], $data['return_date'], $addons);
+
+            $userId = $user?->id ?? ($data['user_id'] ?? null);
+            $memberId = $user?->id ?? ($data['member_id'] ?? $userId);
+            $resolvedUser = $user ?? ($userId ? User::find($userId) : null);
+
+            $promoCode = $data['promo_code'] ?? null;
+            $phone = $data['customer_phone'] ?? null;
+
+            $quote = $this->pricing->quote(
+                $lockedCar,
+                $data['pickup_date'],
+                $data['return_date'],
+                $addons,
+                (int) ($data['discount'] ?? 0),
+                $resolvedUser,
+                $promoCode,
+                $phone,
+                $location
+            );
 
             $booking = Booking::create([
                 'code' => Booking::generateCode(),
-                'user_id' => $data['user_id'] ?? null,
+                'user_id' => $userId,
+                'member_id' => $memberId,
                 'car_id' => $lockedCar->id,
                 'pickup_location_id' => $location->id,
                 'delivery_address' => $location->requires_address ? ($data['delivery_address'] ?? null) : null,
@@ -83,12 +104,21 @@ class BookingService
                 'base_total' => $quote['base_total'],
                 'addons_total' => $quote['addons_total'],
                 'discount' => $quote['discount'],
+                'promo_code' => $quote['promo_code'],
+                'tier_discount' => $quote['tier_discount'],
+                'promo_discount' => $quote['promo_discount'],
+                'discount_snapshot' => $quote['discount_snapshot'],
                 'total' => $quote['total'],
                 'status' => BookingStatus::Pending,
                 'notes' => $data['notes'] ?? null,
             ]);
 
             $booking->addons()->createMany($quote['addons']);
+
+            // Catat pemakaian promo bila ada
+            if ($booking->promo_discount > 0 && ! empty($booking->promo_code)) {
+                app(DiscountService::class)->recordRedemption($booking);
+            }
 
             return $booking->load(['car', 'pickupLocation', 'addons']);
         });
@@ -120,6 +150,24 @@ class BookingService
                 default => null,
             };
             $locked->save();
+
+            if ($target === BookingStatus::Completed) {
+                app(MembershipService::class)->recordCompletedRental($locked);
+            }
+
+            if ($target === BookingStatus::Cancelled) {
+                // Kembalikan kuota promo jika pesanan dibatalkan
+                if ($locked->promo_code) {
+                    $redemption = PromotionRedemption::where('booking_id', $locked->id)->first();
+                    if ($redemption) {
+                        $promo = $redemption->promotion;
+                        $redemption->delete();
+                        if ($promo && $promo->used_count > 0) {
+                            $promo->decrement('used_count');
+                        }
+                    }
+                }
+            }
 
             $booking->setRawAttributes($locked->getAttributes(), true);
 

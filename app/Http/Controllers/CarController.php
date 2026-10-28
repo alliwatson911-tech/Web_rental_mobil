@@ -30,6 +30,8 @@ class CarController extends Controller
         $cars = $query
             ->with(['category', 'primaryPhoto'])
             ->when($filters['category'] ?? null, fn ($q, $slug) => $q->whereHas('category', fn ($c) => $c->where('slug', $slug)))
+            ->when($filters['transmission'] ?? null, fn ($q, $t) => $q->where('transmission', $t))
+            ->when($filters['seats'] ?? null, fn ($q, $s) => $q->where('seats', '>=', (int) $s))
             ->orderBy('daily_price')
             ->get();
 

@@ -16,17 +16,102 @@
         <section class="card p-5">
             <h2 class="font-bold">Aksi status</h2>
             <p class="mt-1 text-xs text-slate-500">Alur: Menunggu konfirmasi → Dikonfirmasi → Sedang disewa → Selesai. Pembatalan hanya dari Menunggu konfirmasi atau Dikonfirmasi.</p>
+            
             <div class="mt-3 flex flex-wrap gap-2">
                 @if ($booking->status->canTransitionTo(BookingStatus::Confirmed))
-                    <form method="POST" action="{{ route('admin.bookings.confirm', $booking) }}" data-confirm="Konfirmasi pesanan ini?">@csrf<button class="btn btn-primary">Konfirmasi</button></form>
-                @endif
-                @if ($booking->status->canTransitionTo(BookingStatus::Active))
-                    <form method="POST" action="{{ route('admin.bookings.pickup', $booking) }}" data-confirm="Tandai mobil sudah diambil pelanggan?">@csrf<button class="btn btn-primary">Tandai diambil</button></form>
-                @endif
-                @if ($booking->status->canTransitionTo(BookingStatus::Completed))
-                    <form method="POST" action="{{ route('admin.bookings.complete', $booking) }}" data-confirm="Tandai pesanan selesai (mobil sudah kembali)?">@csrf<button class="btn btn-success">Tandai selesai</button></form>
+                    <form method="POST" action="{{ route('admin.bookings.confirm', $booking) }}" data-confirm="Konfirmasi pesanan ini?">@csrf<button class="btn btn-primary">Konfirmasi Pesanan</button></form>
                 @endif
             </div>
+
+            {{-- Formulir Serah Terima Unit saat Diambil (Pickup Handover Checklist) --}}
+            @if ($booking->status->canTransitionTo(BookingStatus::Active))
+                <div class="mt-4 rounded-xl border border-blue-200 bg-blue-50/50 p-4">
+                    <h3 class="text-sm font-bold text-blue-900">Formulir Serah Terima Unit (Handover Checklist)</h3>
+                    <p class="text-xs text-blue-700">Catat kondisi fisik armada sebelum kunci diserahkan ke pelanggan.</p>
+                    <form method="POST" action="{{ route('admin.bookings.pickup', $booking) }}" class="mt-3 grid gap-3 sm:grid-cols-2">
+                        @csrf
+                        <div>
+                            <label class="label">Odometer Awal (KM)</label>
+                            <input class="input" type="number" min="0" name="start_odometer" value="{{ old('start_odometer', $booking->start_odometer) }}" placeholder="Contoh: 45000" required>
+                        </div>
+                        <div>
+                            <label class="label">Indikator BBM Awal</label>
+                            <select class="input" name="fuel_out" required>
+                                <option value="Full (Penuh)" @selected($booking->fuel_out === 'Full (Penuh)')>Full (Penuh)</option>
+                                <option value="3/4" @selected($booking->fuel_out === '3/4')>3/4 Tank</option>
+                                <option value="1/2" @selected($booking->fuel_out === '1/2')>1/2 Tank</option>
+                                <option value="1/4" @selected($booking->fuel_out === '1/4')>1/4 Tank</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="label">Nama Sopir (Jika Paket Sopir)</label>
+                            <input class="input" name="driver_name" value="{{ old('driver_name', $booking->driver_name) }}" placeholder="Nama sopir bertugas">
+                        </div>
+                        <div>
+                            <label class="label">No. HP Sopir</label>
+                            <input class="input" name="driver_phone" value="{{ old('driver_phone', $booking->driver_phone) }}" placeholder="08xxxxxxxxxx">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="label">Catatan Baret / Kondisi Bodi Awal</label>
+                            <textarea class="input" name="handover_notes" rows="2" placeholder="Contoh: Baret halus bumper depan kiri, ban serep lengkap, dongkrak ada">{{ old('handover_notes', $booking->handover_notes) }}</textarea>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <button class="btn btn-primary w-full">Konfirmasi Serah Terima & Tandai Diambil</button>
+                        </div>
+                    </form>
+                </div>
+            @endif
+
+            {{-- Formulir Pemeriksaan Pengembalian Unit (Return Inspection Checklist) --}}
+            @if ($booking->status->canTransitionTo(BookingStatus::Completed))
+                <div class="mt-4 rounded-xl border border-emerald-200 bg-emerald-50/50 p-4">
+                    <h3 class="text-sm font-bold text-emerald-900">Formulir Pemeriksaan Pengembalian Unit (Return Inspection)</h3>
+                    <p class="text-xs text-emerald-700">Periksa kondisi odometer, BBM, dan fisik saat mobil dikembalikan.</p>
+                    <form method="POST" action="{{ route('admin.bookings.complete', $booking) }}" class="mt-3 grid gap-3 sm:grid-cols-2">
+                        @csrf
+                        <div>
+                            <label class="label">Odometer Akhir (KM)</label>
+                            <input class="input" type="number" min="{{ $booking->start_odometer ?? 0 }}" name="end_odometer" value="{{ old('end_odometer', $booking->end_odometer) }}" placeholder="Contoh: 45450" required>
+                            @if ($booking->start_odometer)
+                                <span class="text-xs text-slate-500">KM awal: {{ number_format($booking->start_odometer) }} KM</span>
+                            @endif
+                        </div>
+                        <div>
+                            <label class="label">Indikator BBM Kembali</label>
+                            <select class="input" name="fuel_in" required>
+                                <option value="Full (Penuh)" @selected($booking->fuel_in === 'Full (Penuh)')>Full (Penuh)</option>
+                                <option value="3/4" @selected($booking->fuel_in === '3/4')>3/4 Tank</option>
+                                <option value="1/2" @selected($booking->fuel_in === '1/2')>1/2 Tank</option>
+                                <option value="1/4" @selected($booking->fuel_in === '1/4')>1/4 Tank</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="label">Keterlambatan (Jam Overtime)</label>
+                            <input class="input" type="number" min="0" name="overtime_hours" value="{{ old('overtime_hours', $booking->overtime_hours ?? 0) }}" placeholder="0">
+                        </div>
+                        <div>
+                            <label class="label">Denda Overtime (Rp)</label>
+                            <input class="input" type="number" min="0" step="1000" name="overtime_fee" value="{{ old('overtime_fee', $booking->overtime_fee ?? 0) }}" placeholder="0">
+                        </div>
+                        <div>
+                            <label class="label">Biaya Ekstra (Baret / Selisih BBM)</label>
+                            <input class="input" type="number" min="0" step="1000" name="extra_fee" value="{{ old('extra_fee', $booking->extra_fee ?? 0) }}" placeholder="0">
+                        </div>
+                        <div>
+                            <label class="label">Keterangan Biaya Ekstra</label>
+                            <input class="input" name="extra_fee_notes" value="{{ old('extra_fee_notes', $booking->extra_fee_notes) }}" placeholder="Contoh: Selisih BBM 1/4 bar">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="label">Catatan Kondisi Kembali</label>
+                            <textarea class="input" name="return_notes" rows="2" placeholder="Catatan kebersihan bodi, interior, perlengkapan">{{ old('return_notes', $booking->return_notes) }}</textarea>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <button class="btn btn-success w-full">Pemeriksaan Selesai & Tandai Selesai</button>
+                        </div>
+                    </form>
+                </div>
+            @endif
+
             @if ($booking->status->canTransitionTo(BookingStatus::Cancelled))
                 <form method="POST" action="{{ route('admin.bookings.reject', $booking) }}" class="mt-4 flex flex-wrap gap-2" data-confirm="Tolak/batalkan pesanan ini?">
                     @csrf
@@ -37,6 +122,67 @@
             @if (in_array($booking->status, [BookingStatus::Completed, BookingStatus::Cancelled], true))
                 <p class="mt-2 text-sm text-slate-500">Pesanan sudah final. {{ $booking->cancel_reason }}</p>
             @endif
+        </section>
+
+        {{-- Verifikasi Dokumen Identitas (e-KYC) --}}
+        <section class="card p-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="font-bold">Verifikasi Identitas Pelanggan (e-KYC)</h2>
+                    <p class="text-xs text-slate-500">Pemeriksaan KTP dan SIM A untuk mitigasi risiko penipuan/penggelapan armada.</p>
+                </div>
+                @if ($booking->isKycComplete())
+                    <span class="badge bg-emerald-100 text-emerald-800">e-KYC Terverifikasi</span>
+                @else
+                    <span class="badge bg-amber-100 text-amber-800">e-KYC Belum Lengkap</span>
+                @endif
+            </div>
+
+            <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                @forelse ([\App\Models\CustomerDocument::TYPE_KTP, \App\Models\CustomerDocument::TYPE_SIM] as $type)
+                    @php($doc = $booking->documents->firstWhere('type', $type))
+                    <div class="rounded-xl border border-slate-200 p-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-sm text-slate-800">{{ $type === 'ktp' ? 'e-KTP (Identitas)' : 'SIM A (Mengemudi)' }}</h3>
+                            @if ($doc)
+                                <span class="badge {{ $doc->status === 'verified' ? 'bg-emerald-100 text-emerald-800' : ($doc->status === 'rejected' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800') }} text-xs">{{ $doc->statusLabel() }}</span>
+                            @else
+                                <span class="badge bg-slate-100 text-slate-600 text-xs">Belum Diunggah</span>
+                            @endif
+                        </div>
+
+                        @if ($doc)
+                            <div class="mt-2 text-xs text-slate-600 space-y-1">
+                                <p>Diupload: {{ tanggal($doc->created_at, 'd M Y H:i') }}</p>
+                                <a href="{{ $doc->documentUrl() }}" target="_blank" class="inline-block text-brand-600 font-semibold underline">Buka Dokumen (Aman)</a>
+                                @if ($doc->verifier)
+                                    <p class="text-slate-500">Diverifikasi oleh: {{ $doc->verifier->name }} ({{ tanggal($doc->verified_at, 'd M H:i') }})</p>
+                                @endif
+                                @if ($doc->notes)
+                                    <p class="text-rose-600 italic">Catatan: {{ $doc->notes }}</p>
+                                @endif
+                            </div>
+
+                            @if ($doc->status === 'pending')
+                                <div class="mt-3 flex gap-2">
+                                    <form method="POST" action="{{ route('admin.documents.verify', $doc) }}" class="inline">
+                                        @csrf
+                                        <button class="btn btn-success px-2 py-1 text-xs">Verifikasi Sah</button>
+                                    </form>
+                                    <form method="POST" action="{{ route('admin.documents.reject', $doc) }}" class="inline">
+                                        @csrf
+                                        <input type="hidden" name="notes" value="Foto dokumen buram/tidak terbaca">
+                                        <button class="btn btn-danger px-2 py-1 text-xs">Tolak (Buram)</button>
+                                    </form>
+                                </div>
+                            @endif
+                        @else
+                            <p class="mt-2 text-xs text-slate-500 italic">Pelanggan belum mengunggah dokumen ini.</p>
+                        @endif
+                    </div>
+                @empty
+                @endforelse
+            </div>
         </section>
 
         <section class="card p-5">
@@ -52,6 +198,11 @@
                 @if ($booking->customer_email)<div><dt class="text-slate-500">Email</dt><dd>{{ $booking->customer_email }}</dd></div>@endif
                 @if ($booking->customer_address)<div><dt class="text-slate-500">Alamat</dt><dd>{{ $booking->customer_address }}</dd></div>@endif
                 @if ($booking->notes)<div class="md:col-span-2"><dt class="text-slate-500">Catatan pelanggan</dt><dd>{{ $booking->notes }}</dd></div>@endif
+                @if ($booking->driver_name)<div><dt class="text-slate-500">Sopir Bertugas</dt><dd class="font-semibold">{{ $booking->driver_name }} @if($booking->driver_phone)({{ $booking->driver_phone }})@endif</dd></div>@endif
+                @if ($booking->start_odometer)<div><dt class="text-slate-500">Odometer Awal</dt><dd class="font-semibold">{{ number_format($booking->start_odometer) }} KM · BBM: {{ $booking->fuel_out ?: '-' }}</dd></div>@endif
+                @if ($booking->handover_notes)<div class="md:col-span-2"><dt class="text-slate-500">Catatan Serah Terima (Awal)</dt><dd class="text-xs bg-slate-50 p-2 rounded text-slate-700">{{ $booking->handover_notes }}</dd></div>@endif
+                @if ($booking->end_odometer)<div><dt class="text-slate-500">Odometer Akhir</dt><dd class="font-semibold">{{ number_format($booking->end_odometer) }} KM (Jarak: {{ number_format($booking->distanceDriven()) }} KM) · BBM: {{ $booking->fuel_in ?: '-' }}</dd></div>@endif
+                @if ($booking->return_notes)<div class="md:col-span-2"><dt class="text-slate-500">Catatan Pengembalian</dt><dd class="text-xs bg-slate-50 p-2 rounded text-slate-700">{{ $booking->return_notes }}</dd></div>@endif
                 <div><dt class="text-slate-500">Riwayat</dt><dd class="text-xs">
                     @if ($booking->confirmed_at)Dikonfirmasi {{ tanggal($booking->confirmed_at, 'd M H:i') }}<br>@endif
                     @if ($booking->picked_up_at)Diambil {{ tanggal($booking->picked_up_at, 'd M H:i') }}<br>@endif
@@ -118,7 +269,9 @@
                 <tr><td class="py-1">{{ $line->name }} ({{ rupiah($line->unit_price) }} × {{ $line->quantity }})</td><td class="py-1 text-right">{{ rupiah($line->subtotal) }}</td></tr>
             @endforeach
             @if ($booking->discount > 0)<tr><td class="py-1">Diskon</td><td class="py-1 text-right">−{{ rupiah($booking->discount) }}</td></tr>@endif
-            <tr class="border-t border-slate-200 font-extrabold"><td class="pt-2">Total</td><td class="pt-2 text-right">{{ rupiah($booking->total) }}</td></tr>
+            @if ($booking->overtime_fee > 0)<tr><td class="py-1 text-rose-600">Denda Overtime ({{ $booking->overtime_hours }} jam)</td><td class="py-1 text-right text-rose-600">+{{ rupiah($booking->overtime_fee) }}</td></tr>@endif
+            @if ($booking->extra_fee > 0)<tr><td class="py-1 text-rose-600">Biaya Tambahan ({{ $booking->extra_fee_notes ?: 'Lainnya' }})</td><td class="py-1 text-right text-rose-600">+{{ rupiah($booking->extra_fee) }}</td></tr>@endif
+            <tr class="border-t border-slate-200 font-extrabold"><td class="pt-2">Total Tagihan</td><td class="pt-2 text-right">{{ rupiah($booking->grandTotal()) }}</td></tr>
         </table>
         @if ($booking->review)
             <div class="mt-4 border-t border-slate-200 pt-3 text-sm"><p class="font-semibold">Ulasan: {{ str_repeat('★', $booking->review->rating) }}</p><p>{{ $booking->review->comment }}</p></div>
