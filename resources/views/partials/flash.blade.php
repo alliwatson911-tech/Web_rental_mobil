@@ -1,13 +1,19 @@
 @if (session('success'))
-    <div class="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800" role="status">{{ session('success') }}</div>
+    <div class="mb-6 rounded border border-emerald-500/50 bg-emerald-950/80 px-4 py-3 text-xs text-emerald-200 flex items-center gap-2" role="status">
+        <x-icon name="check" class="w-4 h-4 text-emerald-400 shrink-0" />
+        <span>{{ session('success') }}</span>
+    </div>
 @endif
 @if (session('info'))
-    <div class="mb-4 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800" role="status">{{ session('info') }}</div>
+    <div class="mb-6 rounded border border-sky-500/50 bg-sky-950/80 px-4 py-3 text-xs text-sky-200 flex items-center gap-2" role="status">
+        <x-icon name="sparkles" class="w-4 h-4 text-sky-400 shrink-0" />
+        <span>{{ session('info') }}</span>
+    </div>
 @endif
 @if ($errors->any())
-    <div class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
-        <p class="font-semibold">Mohon periksa kembali:</p>
-        <ul class="mt-1 list-disc pl-5">
+    <div class="mb-6 rounded border border-rose-500/50 bg-rose-950/80 px-4 py-3 text-xs text-rose-200" role="alert">
+        <p class="font-extrabold uppercase tracking-wider text-rose-300">Mohon periksa kembali:</p>
+        <ul class="mt-1 list-disc pl-5 space-y-0.5">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach

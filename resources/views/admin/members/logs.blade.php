@@ -8,7 +8,7 @@
 <div class="space-y-4">
     <div class="card p-4 bg-slate-50 border border-slate-200">
         <div class="flex items-start gap-3">
-            <div class="text-xl">🔒</div>
+            <x-icon name="lock" class="w-5 h-5 text-slate-700 shrink-0 mt-0.5" />
             <div class="text-xs text-slate-600">
                 <strong class="text-slate-800">Kepatuhan Privasi Data & Perlindungan Data Pribadi (UU PDP):</strong>
                 Seluruh aktivitas unggah, preview, maupun unduh berkas identitas pelanggan (KTP dan SIM A) dicatat secara permanen dengan IP Address dan User-Agent untuk memastikan akuntabilitas akses dan mencegah kebocoran data.

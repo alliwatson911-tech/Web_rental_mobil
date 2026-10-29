@@ -9,7 +9,8 @@
     </div>
     <div class="flex items-center gap-2">
         <a href="{{ route('admin.payments.export', request()->query()) }}" class="btn btn-outline text-xs flex items-center gap-1.5 py-2">
-            📥 Ekspor Data (CSV)
+            <x-icon name="download" class="w-4 h-4 text-slate-700" />
+            <span>Ekspor Data (CSV)</span>
         </a>
     </div>
 </div>

@@ -218,8 +218,9 @@
                         @if ($ktpDoc->status !== 'verified')
                             <form method="POST" action="{{ route('admin.members.documents.verify', [$member, $ktpDoc]) }}" class="inline">
                                 @csrf
-                                <button class="btn bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-1 px-3">
-                                    ✓ Setujui (Sah)
+                                <button class="btn bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-1 px-3 flex items-center gap-1">
+                                    <x-icon name="check" class="w-3.5 h-3.5 text-white" />
+                                    <span>Setujui (Sah)</span>
                                 </button>
                             </form>
                         @endif
@@ -270,8 +271,9 @@
                         @if ($simDoc->status !== 'verified')
                             <form method="POST" action="{{ route('admin.members.documents.verify', [$member, $simDoc]) }}" class="inline">
                                 @csrf
-                                <button class="btn bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-1 px-3">
-                                    ✓ Setujui (Sah)
+                                <button class="btn bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-1 px-3 flex items-center gap-1">
+                                    <x-icon name="check" class="w-3.5 h-3.5 text-white" />
+                                    <span>Setujui (Sah)</span>
                                 </button>
                             </form>
                         @endif

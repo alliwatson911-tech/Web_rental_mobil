@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Invoice {{ $booking->code }} - Padaidi Rental Mobil</title>
+    <title>Invoice {{ $booking->code }} - Padaidi Rent Car</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @media print {
@@ -20,8 +20,9 @@
             &larr; Kembali ke Detail Pesanan
         </a>
         <div class="flex gap-2">
-            <button onclick="window.print()" class="btn btn-primary text-xs flex items-center gap-1.5 py-1.5 px-4 shadow-sm">
-                🖨️ Cetak / Unduh PDF
+            <button onclick="window.print()" class="btn btn-primary text-xs flex items-center gap-2 py-2 px-4 shadow-sm font-bold uppercase tracking-wider">
+                <x-icon name="printer" class="w-4 h-4 text-[#0b1220]" />
+                <span>Cetak / Unduh PDF</span>
             </button>
         </div>
     </div>
@@ -30,14 +31,17 @@
     <div class="invoice-box mx-auto max-w-4xl bg-white rounded-2xl shadow-md border border-slate-200 p-8 sm:p-12">
         {{-- Header Invoice --}}
         <div class="flex flex-wrap items-start justify-between gap-6 pb-6 border-b border-slate-200">
-            <div>
-                <h1 class="text-2xl font-black text-brand-700 tracking-tight">PADAIDI RENTAL MOBIL</h1>
-                <p class="text-xs text-slate-500 mt-1 max-w-xs">
-                    Layanan Rental Mobil Lepas Kunci & Driver Profesional Terpercaya di Makassar dan Sekitarnya.
-                </p>
-                <p class="text-xs text-slate-500 mt-1">
-                    WhatsApp: 0812-3456-7890 · Email: info@padaidirental.com
-                </p>
+            <div class="flex items-center gap-4">
+                <img src="{{ asset('images/brand/padaidi-logo-light.png') }}" alt="Padaidi Rent Car" class="h-16 w-auto object-contain">
+                <div>
+                    <h1 class="text-2xl font-black text-slate-900 tracking-tight">PADAIDI RENT CAR</h1>
+                    <p class="text-xs text-slate-500 mt-1 max-w-xs">
+                        Layanan Rental Mobil Lepas Kunci & Driver Profesional Terpercaya di Makassar dan Sekitarnya.
+                    </p>
+                    <p class="text-xs text-slate-500 mt-1">
+                        WhatsApp: 0812-3456-7890 · Email: info@padaidirental.com
+                    </p>
+                </div>
             </div>
             <div class="text-right">
                 <span class="inline-block text-xs font-bold uppercase tracking-wider text-slate-400">FAKTUR SEWA / INVOICE</span>
@@ -236,7 +240,7 @@
                     Padaidi Official
                 </div>
                 <div class="w-48 border-b border-slate-300"></div>
-                <p class="mt-1 font-bold text-slate-800">Manajemen Padaidi Rental Mobil</p>
+                <p class="mt-1 font-bold text-slate-800">Manajemen Padaidi Rent Car</p>
             </div>
         </div>
     </div>

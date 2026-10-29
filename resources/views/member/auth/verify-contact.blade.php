@@ -1,32 +1,36 @@
 @extends('layouts.app')
-@section('title', 'Verifikasi Kontak Member')
+@section('title', 'Verifikasi Kontak Member - Padaidi Rent Car')
 
 @section('content')
-<div class="mx-auto max-w-md py-6">
-    <div class="card p-6 shadow-sm">
-        <h1 class="text-xl font-bold text-slate-900">Verifikasi Nomor WhatsApp</h1>
-        <p class="mt-1 text-sm text-slate-500">Pastikan nomor WhatsApp Anda aktif untuk menerima bukti sewa, kontak sopir, dan status pesanan.</p>
-
-        <div class="mt-4 rounded-lg bg-blue-50 border border-blue-200 p-3 text-sm text-blue-900">
-            Nomor HP terdaftar: <strong>{{ $user->phone }}</strong>
+<div class="mx-auto max-w-md py-10 px-4">
+    <div class="card card-accent-top p-8 shadow-sm border border-slate-200 bg-white relative">
+        <div class="text-center mb-6">
+            <a href="{{ route('home') }}" class="inline-block mb-3" title="Padaidi Rent Car">
+                <img src="{{ asset('images/brand/padaidi-logo.png') }}" alt="Padaidi Rent Car" class="h-14 w-auto mx-auto object-contain">
+            </a>
+            <h1 class="text-2xl font-black text-slate-900 tracking-wide uppercase">Verifikasi WhatsApp</h1>
+            <p class="mt-1 text-sm text-slate-500">Pastikan nomor WhatsApp Anda aktif untuk menerima bukti sewa dan kontak sopir.</p>
         </div>
 
-        <form method="POST" action="{{ route('member.verify.wa') }}" class="mt-5 space-y-4">
+        <div class="mb-4 rounded border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
+            Nomor HP terdaftar: <strong class="text-amber-800">{{ $user->phone }}</strong>
+        </div>
+
+        <form method="POST" action="{{ route('member.verify.wa') }}" class="space-y-4">
             @csrf
             <div>
-                <label class="label" for="otp">Kode OTP (6 Digit)</label>
+                <label class="label text-slate-700 font-bold" for="otp">Kode OTP (6 Digit)</label>
                 <input class="input text-center tracking-widest text-lg font-bold" id="otp" name="otp" maxlength="6" placeholder="123456" required autofocus>
-                <p class="mt-1 text-xs text-slate-500">Gunakan 6 digit contoh (misal: <code>123456</code>) untuk menyelesaikan verifikasi kontak nomor Anda.</p>
-                @error('otp')<p class="error">{{ $message }}</p>@enderror
+                <p class="mt-1 text-xs text-slate-500">Gunakan 6 digit contoh (misal: <code>123456</code>) untuk verifikasi kontak nomor Anda.</p>
+                @error('otp')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
 
-            <button class="btn btn-primary w-full py-2.5 font-bold">Verifikasi Sekarang</button>
+            <button type="submit" class="btn btn-primary w-full py-3 font-extrabold uppercase tracking-wider text-xs shadow-md">Verifikasi Sekarang</button>
         </form>
 
-        <div class="mt-6 text-center">
-            <a href="{{ route('member.account') }}" class="text-sm font-semibold text-brand-600 hover:underline">← Kembali ke Akun Saya</a>
+        <div class="mt-6 text-center border-t border-slate-200 pt-4">
+            <a href="{{ route('member.account') }}" class="text-sm font-bold text-amber-600 hover:text-amber-800 hover:underline">← Kembali ke Akun Saya</a>
         </div>
     </div>
 </div>
 @endsection
-
