@@ -6,8 +6,12 @@ echo "[Padaidi] Initializing Padaidi Rent Car Container..."
 # 1. Update Nginx listening port if PORT env variable is injected by Cloud Provider (Render / Cloud Run)
 TARGET_PORT="${PORT:-8080}"
 echo "[Padaidi] Configuring web server to listen on port ${TARGET_PORT}..."
-sed -i "s/listen 8080/listen ${TARGET_PORT}/g" /etc/nginx/conf.d/default.conf
-sed -i "s/listen \[::\]:8080/listen \[::\]:${TARGET_PORT}/g" /etc/nginx/conf.d/default.conf
+sed -i "s/listen 8080/listen ${TARGET_PORT}/g" /etc/nginx/nginx.conf
+sed -i "s/listen \[::\]:8080/listen \[::\]:${TARGET_PORT}/g" /etc/nginx/nginx.conf
+
+# Test Nginx configuration before proceeding
+echo "[Padaidi] Validating Nginx configuration..."
+nginx -t
 
 # 2. Ensure storage, database, and bootstrap directories exist
 mkdir -p /var/www/html/storage/framework/cache/data \

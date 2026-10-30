@@ -1,4 +1,4 @@
-# Multi-stage production Dockerfile for Padaidi Rent Car on Google Cloud Run
+# Production Dockerfile for Padaidi Rent Car on Render & Google Cloud Run
 # Base image: PHP 8.3 FPM on lightweight Alpine Linux
 FROM php:8.3-fpm-alpine
 
@@ -55,19 +55,24 @@ RUN mkdir -p \
     storage/framework/sessions \
     storage/framework/views \
     storage/logs \
+    database \
     bootstrap/cache && \
-    chown -R www-data:www-data storage bootstrap/cache && \
-    chmod -R 775 storage bootstrap/cache
+    chown -R www-data:www-data storage database bootstrap/cache && \
+    chmod -R 775 storage database bootstrap/cache
+
+# Setup Nginx runtime directories and clean default configs
+RUN rm -rf /etc/nginx/conf.d/* /etc/nginx/http.d/* /etc/nginx/nginx.conf && \
+    mkdir -p /var/lib/nginx/tmp /var/lib/nginx/html /var/log/nginx /var/run && \
+    chown -R www-data:www-data /var/lib/nginx /var/log/nginx /var/run
 
 # Copy configuration files
-COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/php.ini /usr/local/etc/php/conf.d/padaidi.ini
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Cloud Run expects the container to listen on the port defined by $PORT (default 8080)
+# Render and Cloud Run inject dynamic port (PORT variable)
 EXPOSE 8080
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-

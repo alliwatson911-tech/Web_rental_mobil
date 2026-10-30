@@ -30,3 +30,4 @@ services:
         value: database
       - key: FILESYSTEM_DISK
         value: public
+
