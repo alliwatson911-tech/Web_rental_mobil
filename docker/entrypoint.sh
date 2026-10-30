@@ -6,8 +6,8 @@ echo "[Padaidi] Initializing Padaidi Rent Car Container..."
 # 1. Update Nginx listening port if PORT env variable is injected by Cloud Provider (Render / Cloud Run)
 TARGET_PORT="${PORT:-8080}"
 echo "[Padaidi] Configuring web server to listen on port ${TARGET_PORT}..."
-sed -i "s/listen 8080/listen ${TARGET_PORT}/g" /etc/nginx/nginx.conf
-sed -i "s/listen \[::\]:8080/listen \[::\]:${TARGET_PORT}/g" /etc/nginx/nginx.conf
+sed -i -E "s/listen [0-9]+/listen ${TARGET_PORT}/g" /etc/nginx/nginx.conf
+sed -i -E "s/listen \[::\]:[0-9]+/listen \[::\]:${TARGET_PORT}/g" /etc/nginx/nginx.conf
 
 # Test Nginx configuration before proceeding
 echo "[Padaidi] Validating Nginx configuration..."
@@ -63,11 +63,7 @@ if [ "$AUTO_MIGRATE" = "true" ]; then
     fi
 fi
 
-# 8. Re-apply permissions
-chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache /var/run
-chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache /var/run
-
-# 9. Clear and warm up Laravel caches
+# 8. Refresh Laravel configuration, routes, and views
 echo "[Padaidi] Refreshing Laravel configuration, routes, and views..."
 php artisan config:clear || true
 php artisan route:clear || true
@@ -76,6 +72,11 @@ php artisan view:clear || true
 php artisan config:cache || true
 php artisan route:cache || true
 php artisan view:cache || true
+
+# 9. Final permission check: ensure www-data owns storage, logs, database, and cache
+echo "[Padaidi] Finalizing runtime permissions for www-data..."
+chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache /var/run
+chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache /var/run
 
 echo "[Padaidi] Application ready. Starting Supervisord..."
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

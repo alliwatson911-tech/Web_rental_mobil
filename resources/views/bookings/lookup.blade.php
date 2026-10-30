@@ -18,12 +18,12 @@
             @csrf
             <div>
                 <label class="label text-slate-700 font-bold" for="code">Kode pesanan</label>
-                <input class="input font-mono uppercase tracking-widest text-center text-base font-bold" id="code" name="code" value="{{ old('code', $code) }}" required placeholder="PDD-XXXXXX" autofocus>
+                <input class="input font-mono uppercase tracking-widest text-center text-base font-bold" id="code" name="code" value="{{ old('code', $code) }}" required autocapitalize="characters" autocorrect="off" spellcheck="false" placeholder="PDD-XXXXXX" autofocus>
                 @error('code')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
             <div>
                 <label class="label text-slate-700 font-bold" for="customer_phone">Nomor HP</label>
-                <input class="input" id="customer_phone" name="customer_phone" value="{{ old('customer_phone') }}" required inputmode="tel" placeholder="08xxxxxxxxxx">
+                <input class="input" id="customer_phone" name="customer_phone" value="{{ old('customer_phone') }}" required inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxxxx">
                 @error('customer_phone')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
             <button type="submit" class="btn btn-primary w-full py-3.5 font-black uppercase tracking-wider text-xs shadow-md">

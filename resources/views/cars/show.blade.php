@@ -4,17 +4,19 @@
 @section('content')
 <x-breadcrumb :back-url="route('cars.index', array_filter($filters))" back-text="Kembali ke Daftar Armada" :crumbs="['Daftar Armada' => route('cars.index', array_filter($filters)), $car->name => null]" />
 
-<div class="grid gap-8 lg:grid-cols-5 items-start">
+<div class="grid gap-8 lg:grid-cols-5 items-start pb-20 lg:pb-0">
     {{-- Kolom Kiri: Galeri Foto, Spesifikasi, dan Ulasan --}}
     <div class="lg:col-span-3 space-y-6">
         {{-- Foto Utama & Galeri --}}
         <div class="card overflow-hidden bg-white border border-slate-200 p-0 shadow-sm">
             @if ($car->photos->isNotEmpty())
-                <img src="{{ $car->photos->first()->url() }}" alt="{{ $car->name }}" class="h-72 w-full object-cover md:h-96">
+                <img id="main-car-photo" src="{{ $car->photos->first()->url() }}" alt="{{ $car->name }}" class="h-72 w-full object-cover md:h-96">
                 @if ($car->photos->count() > 1)
                     <div class="grid grid-cols-4 gap-2 p-3 bg-slate-50 border-t border-slate-200">
-                        @foreach ($car->photos->skip(1) as $photo)
-                            <img src="{{ $photo->url() }}" alt="{{ $car->name }}" class="h-20 w-full rounded border border-slate-200 object-cover cursor-pointer hover:border-[#F5A623] transition-colors" loading="lazy">
+                        @foreach ($car->photos as $photo)
+                            <button type="button" class="h-20 w-full rounded border border-slate-200 overflow-hidden cursor-pointer hover:border-[#F5A623] focus:border-[#F5A623] focus:outline-none transition-colors" onclick="document.getElementById('main-car-photo').src = '{{ $photo->url() }}'">
+                                <img src="{{ $photo->url() }}" alt="{{ $car->name }}" class="h-full w-full object-cover" loading="lazy">
+                            </button>
                         @endforeach
                     </div>
                 @endif
@@ -90,7 +92,7 @@
     </div>
 
     {{-- Kolom Kanan: Kotak Pemesanan Sticky --}}
-    <aside class="lg:col-span-2">
+    <aside class="lg:col-span-2" id="form-pemesanan-mobil">
         <div class="card card-accent-top sticky top-24 p-6 md:p-8 bg-white border border-slate-200 shadow-xl" style="position: sticky; top: 6rem; z-index: 20;">
             <span class="badge badge-accent mb-3">{{ $car->category->name }}</span>
             <h1 class="text-2xl md:text-3xl font-black uppercase text-slate-900 tracking-wide leading-tight">{{ $car->name }}</h1>
@@ -141,7 +143,7 @@
                     </div>
 
                     <div class="pt-2">
-                        <button type="submit" class="btn btn-primary w-full py-3.5 font-black uppercase text-xs tracking-wider">
+                        <button type="submit" class="btn btn-primary w-full py-3.5 font-black uppercase text-xs tracking-wider min-h-[44px]">
                             Lanjut ke Pengisian Pesanan →
                         </button>
                     </div>
@@ -160,5 +162,22 @@
             </div>
         </div>
     </aside>
+</div>
+
+{{-- Mobile Sticky Booking Bar (Hanya Layar HP & Tablet Sempit) --}}
+<div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.12)] flex items-center justify-between gap-3" style="padding-bottom: max(0.75rem, calc(0.75rem + env(safe-area-inset-bottom)));">
+    <div>
+        <p class="text-[10px] uppercase tracking-wider font-bold text-slate-500">Mulai dari</p>
+        <p class="text-base font-black text-amber-700 leading-tight">{{ rupiah($car->daily_price) }}<span class="text-[11px] font-normal text-slate-500">/hari</span></p>
+    </div>
+    @if ($car->status === \App\Models\Car::STATUS_AVAILABLE)
+        <a href="#form-pemesanan-mobil" class="btn btn-primary px-5 py-2.5 font-black uppercase tracking-wider text-xs shadow-md min-h-[44px] flex items-center justify-center">
+            Sewa Unit Ini
+        </a>
+    @else
+        <span class="badge badge-warning text-xs font-bold py-2 px-3">
+            {{ $car->statusLabel() }}
+        </span>
+    @endif
 </div>
 @endsection

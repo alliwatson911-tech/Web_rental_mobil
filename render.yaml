@@ -13,9 +13,11 @@ services:
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
-        value: "true"
+        value: "false"
       - key: APP_KEY
-        value: "base64:c5L2n3padaidiSecretKeyProductionRun123456="
+        value: "base64:LYVOj6jWrySKfgsE96O1+SM3CFzJog2AlWSC2+ovXv0="
+      - key: LOG_CHANNEL
+        value: stderr
       - key: APP_TIMEZONE
         value: Asia/Makassar
       - key: APP_LOCALE
@@ -27,9 +29,9 @@ services:
       - key: DB_DATABASE
         value: /var/www/html/database/database.sqlite
       - key: AUTO_MIGRATE
-        value: "false"
+        value: "true"
       - key: AUTO_SEED
-        value: "false"
+        value: "true"
       - key: SESSION_DRIVER
         value: cookie
       - key: CACHE_STORE

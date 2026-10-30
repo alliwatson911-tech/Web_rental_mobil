@@ -63,7 +63,7 @@ RUN cp .env.example .env 2>/dev/null || touch .env
 
 # Pre-bake SQLite database with all tables and vehicle seeders during build
 ENV APP_ENV=production
-ENV APP_KEY=base64:c5L2n3padaidiSecretKeyProductionRun123456=
+ENV APP_KEY=base64:LYVOj6jWrySKfgsE96O1+SM3CFzJog2AlWSC2+ovXv0=
 ENV DB_CONNECTION=sqlite
 ENV DB_DATABASE=/var/www/html/database/database.sqlite
 RUN touch /var/www/html/database/database.sqlite && \

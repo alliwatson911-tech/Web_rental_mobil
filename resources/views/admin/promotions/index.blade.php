@@ -40,7 +40,7 @@
     </div>
 </div>
 
-<div class="card overflow-x-auto">
+<div class="card overflow-x-auto bg-[#111827] border border-[#1e293b]">
     <table class="table-base text-xs">
         <thead>
             <tr>
@@ -55,10 +55,10 @@
                 <th class="text-right">Aksi</th>
             </tr>
         </thead>
-        <tbody class="divide-y divide-slate-100">
+        <tbody class="divide-y divide-[#1e293b]">
         @forelse ($promotions as $promo)
-            <tr class="hover:bg-slate-50">
-                <td class="font-semibold text-slate-900">
+            <tr class="hover:bg-[#1e293b]/50">
+                <td class="font-bold text-white">
                     <div>{{ $promo->name }}</div>
                     @if ($promo->description)
                         <div class="text-[11px] text-slate-400 font-normal max-w-xs truncate">{{ $promo->description }}</div>

@@ -32,7 +32,7 @@
     </div>
 </div>
 
-<div class="card overflow-x-auto">
+<div class="card overflow-x-auto bg-[#111827] border border-[#1e293b]">
     <table class="table-base text-xs">
         <thead>
             <tr>
@@ -47,29 +47,29 @@
                 <th class="text-right">Aksi</th>
             </tr>
         </thead>
-        <tbody class="divide-y divide-slate-100">
+        <tbody class="divide-y divide-[#1e293b]">
         @forelse ($members as $member)
             @php
                 $profile = $member->memberProfile;
                 $tier = $profile?->effectiveTier();
             @endphp
-            <tr class="hover:bg-slate-50">
-                <td class="font-semibold text-slate-900">
-                    <a href="{{ route('admin.members.show', $member) }}" class="text-brand-700 hover:underline">
+            <tr class="hover:bg-[#1e293b]/50">
+                <td class="font-bold text-white">
+                    <a href="{{ route('admin.members.show', $member) }}" class="text-[#F5A623] hover:underline">
                         {{ $member->name }}
                     </a>
                 </td>
                 <td>
-                    <div>{{ $member->email }}</div>
-                    <div class="text-[11px] text-slate-500">{{ $member->phone ?? '-' }}</div>
+                    <div class="text-white font-medium">{{ $member->email }}</div>
+                    <div class="text-[11px] text-slate-400">{{ $member->phone ?? '-' }}</div>
                 </td>
                 <td>
                     @if ($tier)
-                        <span class="badge {{ $tier->slug === 'gold' ? 'bg-amber-100 text-amber-900 font-bold' : ($tier->slug === 'silver' ? 'bg-slate-200 text-slate-800' : 'bg-slate-100 text-slate-700') }}">
+                        <span class="badge {{ $tier->slug === 'gold' ? 'badge-accent' : ($tier->slug === 'silver' ? 'badge-info' : 'bg-[#0b1220] text-slate-300 border border-[#1e293b]') }}">
                             {{ $tier->name }} ({{ $tier->discount_percentage }}%)
                         </span>
                         @if ($profile->hasManualTier())
-                            <span class="text-[10px] bg-amber-50 text-amber-700 border border-amber-200 px-1.5 py-0.2 rounded ml-1" title="{{ $profile->manual_tier_notes }}">
+                            <span class="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.5 rounded ml-1" title="{{ $profile->manual_tier_notes }}">
                                 Manual
                             </span>
                         @endif
@@ -89,32 +89,32 @@
                 <td class="font-medium">
                     {{ $profile?->total_completed_rentals ?? 0 }} kali
                 </td>
-                <td class="font-semibold text-slate-800">
+                <td class="font-bold text-white">
                     {{ rupiah($profile?->total_spend ?? 0) }}
                 </td>
                 <td>
                     @if ($profile && $profile->is_active)
-                        <span class="inline-flex items-center gap-1 text-emerald-700 font-medium">
-                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span> Aktif
+                        <span class="inline-flex items-center gap-1 text-emerald-400 font-bold">
+                            <span class="h-2 w-2 rounded-full bg-emerald-400"></span> Aktif
                         </span>
                     @else
-                        <span class="inline-flex items-center gap-1 text-rose-700 font-medium">
-                            <span class="h-2 w-2 rounded-full bg-rose-500"></span> Nonaktif
+                        <span class="inline-flex items-center gap-1 text-rose-400 font-bold">
+                            <span class="h-2 w-2 rounded-full bg-rose-400"></span> Nonaktif
                         </span>
                     @endif
                 </td>
-                <td class="text-slate-500 text-[11px] whitespace-nowrap">
+                <td class="text-slate-400 text-[11px] whitespace-nowrap">
                     {{ $member->created_at->translatedFormat('d M Y') }}
                 </td>
                 <td class="whitespace-nowrap text-right">
-                    <a href="{{ route('admin.members.show', $member) }}" class="btn btn-outline text-xs py-1 px-2.5">
+                    <a href="{{ route('admin.members.show', $member) }}" class="btn btn-outline text-xs py-1 px-2.5 font-bold">
                         Kelola
                     </a>
                 </td>
             </tr>
         @empty
             <tr>
-                <td colspan="9" class="py-8 text-center text-slate-500">
+                <td colspan="9" class="py-8 text-center text-slate-400 italic">
                     Tidak ada data member yang cocok dengan filter.
                 </td>
             </tr>

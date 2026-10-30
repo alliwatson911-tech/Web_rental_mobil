@@ -18,36 +18,36 @@
             @csrf
             <div>
                 <label class="label text-slate-700 font-bold" for="name">Nama Lengkap (sesuai KTP)</label>
-                <input class="input" id="name" name="name" value="{{ old('name') }}" required autofocus placeholder="Contoh: Budi Santoso">
+                <input class="input" id="name" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" placeholder="Contoh: Budi Santoso">
                 @error('name')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
 
             <div>
                 <label class="label text-slate-700 font-bold" for="email">Alamat Email</label>
-                <input class="input" type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="nama@domain.com">
+                <input class="input" type="email" id="email" name="email" value="{{ old('email') }}" required autocomplete="email" autocapitalize="none" autocorrect="off" placeholder="nama@domain.com">
                 @error('email')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
 
             <div>
                 <label class="label text-slate-700 font-bold" for="phone">Nomor WhatsApp / HP Aktif</label>
-                <input class="input" type="tel" id="phone" name="phone" value="{{ old('phone') }}" required placeholder="08xxxxxxxxxx">
+                <input class="input" type="tel" id="phone" name="phone" value="{{ old('phone') }}" required autocomplete="tel" inputmode="tel" placeholder="08xxxxxxxxxx">
                 @error('phone')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
 
             <div>
                 <label class="label text-slate-700 font-bold" for="address">Alamat Domisili (Opsional)</label>
-                <input class="input" id="address" name="address" value="{{ old('address') }}" placeholder="Kota Makassar">
+                <input class="input" id="address" name="address" value="{{ old('address') }}" autocomplete="street-address" placeholder="Kota Makassar">
             </div>
 
             <div class="grid gap-3 sm:grid-cols-2">
                 <div>
                     <label class="label text-slate-700 font-bold" for="password">Kata Sandi</label>
-                    <input class="input" type="password" id="password" name="password" required placeholder="Min. 6 karakter">
+                    <input class="input" type="password" id="password" name="password" required autocomplete="new-password" placeholder="Min. 6 karakter">
                     @error('password')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="label text-slate-700 font-bold" for="password_confirmation">Ulangi Sandi</label>
-                    <input class="input" type="password" id="password_confirmation" name="password_confirmation" required placeholder="Konfirmasi sandi">
+                    <input class="input" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" placeholder="Konfirmasi sandi">
                 </div>
             </div>
 

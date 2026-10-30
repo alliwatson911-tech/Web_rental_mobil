@@ -18,7 +18,7 @@
             @csrf
             <div>
                 <label class="label text-slate-700 font-bold" for="email">Email atau Nomor WhatsApp</label>
-                <input class="input" id="email" name="email" value="{{ old('email') }}" required autofocus placeholder="nama@domain.com atau 08xxxxxxxxxx">
+                <input class="input" id="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" autocapitalize="none" autocorrect="off" placeholder="nama@domain.com atau 08xxxxxxxxxx">
                 @error('email')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
 
@@ -27,7 +27,7 @@
                     <label class="label text-slate-700 font-bold" for="password">Kata Sandi</label>
                     <a href="{{ route('password.request') }}" class="text-xs text-amber-600 hover:text-amber-800 font-semibold hover:underline">Lupa sandi?</a>
                 </div>
-                <input class="input" type="password" id="password" name="password" required placeholder="••••••••">
+                <input class="input" type="password" id="password" name="password" required autocomplete="current-password" placeholder="••••••••">
                 @error('password')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
 

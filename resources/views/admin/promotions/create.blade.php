@@ -5,31 +5,31 @@
 @endsection
 
 @section('content')
-<div class="card p-6 max-w-4xl">
+<div class="card p-6 max-w-4xl border border-[#1e293b] bg-[#111827]">
     <form method="POST" action="{{ route('admin.promotions.store') }}" class="space-y-6">
         @csrf
 
         {{-- Bagian 1: Identitas Promo --}}
         <div>
-            <h2 class="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2 mb-4">Informasi Utama</h2>
+            <h2 class="text-sm font-bold text-white border-b border-[#1e293b] pb-2 mb-4">Informasi Utama</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="label text-xs">Nama Promo <span class="text-rose-500">*</span></label>
+                    <label class="label text-xs text-slate-300">Nama Promo <span class="text-rose-400">*</span></label>
                     <input type="text" name="name" class="input text-xs" required
                            placeholder="Contoh: Promo Akhir Pekan Hemat" value="{{ old('name') }}">
-                    @error('name') <p class="text-xs text-rose-600 mt-1">{{ $message }}</p> @enderror
+                    @error('name') <p class="text-xs text-rose-400 mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label class="label text-xs">Kode Voucher (Kosongkan bila otomatis)</label>
-                    <input type="text" name="code" class="input text-xs font-mono uppercase"
+                    <label class="label text-xs text-slate-300">Kode Voucher (Kosongkan bila otomatis)</label>
+                    <input type="text" name="code" class="input text-xs font-mono uppercase text-[#F5A623]"
                            placeholder="Contoh: HEMAT50K" value="{{ old('code') }}">
-                    @error('code') <p class="text-xs text-rose-600 mt-1">{{ $message }}</p> @enderror
+                    @error('code') <p class="text-xs text-rose-400 mt-1">{{ $message }}</p> @enderror
                     <p class="text-[11px] text-slate-400 mt-1">Kosongkan jika ingin promo diterapkan otomatis tanpa input kode kupon.</p>
                 </div>
 
                 <div>
-                    <label class="label text-xs">Tipe Target Promo <span class="text-rose-500">*</span></label>
+                    <label class="label text-xs text-slate-300">Tipe Target Promo <span class="text-rose-400">*</span></label>
                     <select name="target_type" class="input text-xs" required>
                         <option value="coupon" @selected(old('target_type') === 'coupon')>Kode Voucher (Kupon input manual)</option>
                         <option value="first_order" @selected(old('target_type') === 'first_order')>Pelanggan Baru (Sewa Pertama Kali)</option>
@@ -39,7 +39,7 @@
                 </div>
 
                 <div>
-                    <label class="label text-xs">Deskripsi / Syarat & Ketentuan</label>
+                    <label class="label text-xs text-slate-300">Deskripsi / Syarat & Ketentuan</label>
                     <input type="text" name="description" class="input text-xs"
                            placeholder="Penjelasan singkat promo untuk pelanggan..." value="{{ old('description') }}">
                 </div>
@@ -48,7 +48,7 @@
 
         {{-- Bagian 2: Nilai & Batasan Potongan --}}
         <div>
-            <h2 class="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2 mb-4">Besaran Diskon & Perhitungan</h2>
+            <h2 class="text-sm font-bold text-white border-b border-[#1e293b] pb-2 mb-4">Besaran Diskon & Perhitungan</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                     <label class="label text-xs">Tipe Nilai Potongan <span class="text-rose-500">*</span></label>

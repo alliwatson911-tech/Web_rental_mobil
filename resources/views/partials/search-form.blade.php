@@ -40,7 +40,7 @@
         </div>
     @endif
     <div>
-        <button type="submit" class="btn btn-primary w-full py-2.5 px-4 font-black uppercase tracking-wider text-xs flex items-center justify-center gap-2 shadow-sm hover:shadow transition">
+        <button type="submit" class="btn btn-primary w-full min-h-[44px] py-2.5 px-4 font-black uppercase tracking-wider text-xs flex items-center justify-center gap-2 shadow-sm hover:shadow transition">
             <x-icon name="car" class="w-4 h-4" />
             <span>Cari Mobil Tersedia</span>
         </button>

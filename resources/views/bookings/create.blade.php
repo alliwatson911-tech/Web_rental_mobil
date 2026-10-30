@@ -10,7 +10,7 @@
     <li class="badge bg-slate-100 text-slate-600 border border-slate-200 px-3 py-1">3. Selesai</li>
 </ol>
 
-<form method="POST" action="{{ route('bookings.review', $car) }}" class="grid gap-6 lg:grid-cols-3 items-start" id="booking-form">
+<form method="POST" action="{{ route('bookings.review', $car) }}" class="grid gap-6 lg:grid-cols-3 items-start pb-24 lg:pb-0" id="booking-form">
     @csrf
     <div class="space-y-6 lg:col-span-2">
         {{-- Jadwal & Lokasi --}}
@@ -157,6 +157,17 @@
         </div>
     </aside>
 </form>
+
+{{-- Mobile Sticky Action Bar (Hanya Layar HP & Tablet Sempit) --}}
+<div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.12)] flex items-center justify-between gap-3" style="padding-bottom: max(0.75rem, calc(0.75rem + env(safe-area-inset-bottom)));">
+    <div>
+        <p class="text-[10px] uppercase tracking-wider font-bold text-slate-500">Perkiraan Total</p>
+        <p class="text-base font-black text-amber-700 leading-tight" id="mobile-est-total">-</p>
+    </div>
+    <button type="submit" form="booking-form" class="btn btn-primary px-5 py-2.5 font-black uppercase tracking-wider text-xs shadow-md min-h-[44px]">
+        Lihat Ringkasan
+    </button>
+</div>
 @endsection
 
 @push('scripts')
@@ -167,20 +178,30 @@
     const fmt = (n) => 'Rp ' + n.toLocaleString('id-ID');
     const loc = document.getElementById('pickup_location_id');
     const wrap = document.getElementById('delivery-address-wrap');
+    const estTotal = document.getElementById('est-total');
+    const mobileEstTotal = document.getElementById('mobile-est-total');
+    const estDays = document.getElementById('est-days');
+
     const update = () => {
         const p = new Date(form.pickup_date.value), r = new Date(form.return_date.value);
         const needsAddress = loc.selectedOptions[0]?.dataset.requiresAddress === '1';
         wrap.classList.toggle('hidden', !needsAddress);
         document.getElementById('delivery_address').required = needsAddress;
-        if (isNaN(p) || isNaN(r) || r <= p) { document.getElementById('est-days').textContent = '-'; document.getElementById('est-total').textContent = '-'; return; }
+        if (isNaN(p) || isNaN(r) || r <= p) {
+            if (estDays) estDays.textContent = '-';
+            if (estTotal) estTotal.textContent = '-';
+            if (mobileEstTotal) mobileEstTotal.textContent = '-';
+            return;
+        }
         const days = Math.max(1, Math.round((r - p) / 86400000));
         let total = daily * days;
         form.querySelectorAll('input[name="addons[]"]').forEach((cb) => {
             const auto = needsAddress && cb.dataset.code === 'delivery';
             if (cb.checked || auto) total += Number(cb.dataset.price) * (cb.dataset.type === 'per_day' ? days : 1);
         });
-        document.getElementById('est-days').textContent = days + ' hari';
-        document.getElementById('est-total').textContent = fmt(total);
+        if (estDays) estDays.textContent = days + ' hari';
+        if (estTotal) estTotal.textContent = fmt(total);
+        if (mobileEstTotal) mobileEstTotal.textContent = fmt(total);
     };
     form.addEventListener('change', update);
     update();

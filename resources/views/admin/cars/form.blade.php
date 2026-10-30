@@ -2,7 +2,7 @@
 @section('title', $car->exists ? 'Ubah mobil: '.$car->name : 'Tambah mobil')
 
 @section('content')
-<form method="POST" enctype="multipart/form-data" action="{{ $car->exists ? route('admin.cars.update', $car) : route('admin.cars.store') }}" class="card space-y-4 p-5">
+<form method="POST" enctype="multipart/form-data" action="{{ $car->exists ? route('admin.cars.update', $car) : route('admin.cars.store') }}" class="card space-y-4 p-5 md:p-6 bg-[#111827] border border-[#1e293b]">
     @csrf
     @if ($car->exists) @method('PUT') @endif
     <div class="grid gap-4 md:grid-cols-3">
@@ -27,20 +27,20 @@
     </div>
     <div><label class="label">Deskripsi</label><textarea class="input" name="description" rows="3">{{ old('description', $car->description) }}</textarea></div>
     <div><label class="label">Tambah foto (bisa pilih beberapa, maks 4 MB per foto)</label><input class="input" type="file" name="photos[]" multiple accept="image/*"></div>
-    <p class="text-xs text-slate-500">Mengubah harga hanya berlaku untuk pesanan baru. Pesanan lama tetap memakai harga saat dipesan.</p>
-    <div class="flex gap-2"><button class="btn btn-primary">Simpan</button><a href="{{ route('admin.cars.index') }}" class="btn btn-outline">Kembali</a></div>
+    <p class="text-xs text-slate-400">Mengubah harga hanya berlaku untuk pesanan baru. Pesanan lama tetap memakai harga saat dipesan.</p>
+    <div class="flex gap-2"><button class="btn btn-primary min-h-[44px] px-5 font-black uppercase text-xs">Simpan</button><a href="{{ route('admin.cars.index') }}" class="btn btn-outline min-h-[44px] px-5 font-bold text-xs flex items-center justify-center">Kembali</a></div>
 </form>
 
 @if ($car->exists && $car->photos->isNotEmpty())
-    <section class="card mt-6 p-5">
-        <h2 class="font-bold">Foto</h2>
+    <section class="card mt-6 p-5 md:p-6 bg-[#111827] border border-[#1e293b]">
+        <h2 class="font-black uppercase text-white tracking-wide text-sm">Foto Galeri Armada</h2>
         <div class="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
             @foreach ($car->photos as $photo)
-                <div class="rounded-lg border border-slate-200 p-2">
+                <div class="rounded-lg border border-[#1e293b] bg-[#0b1220] p-2">
                     <img src="{{ $photo->url() }}" class="h-28 w-full rounded object-cover" alt="">
                     <div class="mt-2 flex flex-wrap gap-1">
                         @if ($photo->is_primary)
-                            <span class="badge bg-brand-100 text-brand-700">Utama</span>
+                            <span class="badge badge-accent text-xs">Utama</span>
                         @else
                             <form method="POST" action="{{ route('admin.cars.photos.primary', [$car, $photo]) }}">@csrf<button class="btn btn-outline px-2 py-1 text-xs">Jadikan utama</button></form>
                         @endif

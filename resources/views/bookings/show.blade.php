@@ -309,7 +309,11 @@
                 <div class="mt-6 pt-5 border-t border-[#1e293b]">
                     <p class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">Atau Transfer Bank Manual</p>
                     <p class="text-xs text-slate-400 leading-relaxed">
-                        Transfer ke rekening <strong>{{ $business['bank']['name'] }} {{ $business['bank']['account'] }}</strong> a.n. <strong>{{ $business['bank']['holder'] }}</strong>, lalu unggah foto struk bukti transfer di bawah ini:
+                        Transfer ke rekening <strong class="text-white">{{ $business['bank']['name'] }} <span id="bankAccountText">{{ $business['bank']['account'] }}</span></strong>
+                        <button type="button" onclick="navigator.clipboard.writeText('{{ $business['bank']['account'] }}'); this.innerText='✓ Tersalin!'; setTimeout(()=>this.innerText='Salin', 2000);" class="inline-flex items-center ml-1.5 px-2 py-0.5 text-[11px] font-bold text-amber-400 hover:text-amber-300 border border-amber-500/30 rounded bg-amber-500/10">
+                            Salin
+                        </button>
+                        a.n. <strong class="text-white">{{ $business['bank']['holder'] }}</strong>, lalu unggah foto struk bukti transfer di bawah ini:
                     </p>
 
                     <form method="POST" action="{{ route('bookings.payment', $booking) }}" enctype="multipart/form-data" class="mt-4 grid gap-3 md:grid-cols-3">

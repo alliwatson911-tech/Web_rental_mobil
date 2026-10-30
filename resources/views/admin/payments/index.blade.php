@@ -4,38 +4,38 @@
 @section('content')
 <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
     <div>
-        <h1 class="text-2xl font-black text-slate-900">Transaksi & Pembayaran</h1>
-        <p class="text-sm text-slate-500">Monitoring pembayaran gateway (QRIS, VA Bank), mutasi transfer manual, dan kelola refund.</p>
+        <h1 class="text-2xl font-black uppercase text-white tracking-wide">Transaksi &amp; Pembayaran</h1>
+        <p class="text-xs text-slate-400 mt-0.5">Monitoring pembayaran gateway (QRIS, VA Bank), mutasi transfer manual, dan kelola refund.</p>
     </div>
     <div class="flex items-center gap-2">
-        <a href="{{ route('admin.payments.export', request()->query()) }}" class="btn btn-outline text-xs flex items-center gap-1.5 py-2">
-            <x-icon name="download" class="w-4 h-4 text-slate-700" />
-            <span>Ekspor Data (CSV)</span>
+        <a href="{{ route('admin.payments.export', request()->query()) }}" class="btn btn-outline text-xs flex items-center gap-1.5 py-2 min-h-[44px]">
+            <x-icon name="download" class="w-4 h-4 text-amber-400" />
+            <span class="font-bold">Ekspor Data (CSV)</span>
         </a>
     </div>
 </div>
 
 {{-- Kartu Ringkasan Metrik --}}
 <div class="grid gap-4 sm:grid-cols-3 mb-6">
-    <div class="card p-5 border-l-4 border-l-emerald-500">
-        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Diterima / Lunas</p>
-        <p class="mt-1 text-2xl font-black text-emerald-700">{{ rupiah($totalPaid) }}</p>
-        <p class="text-[11px] text-slate-400 mt-1">Status Paid & Verified</p>
+    <div class="card p-5 bg-[#111827] border border-[#1e293b] border-l-4 border-l-emerald-500 shadow-md">
+        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Diterima / Lunas</p>
+        <p class="mt-1 text-2xl font-black text-emerald-400">{{ rupiah($totalPaid) }}</p>
+        <p class="text-[11px] text-slate-400 mt-1">Status Paid &amp; Verified</p>
     </div>
-    <div class="card p-5 border-l-4 border-l-amber-500">
-        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Menunggu Pembayaran</p>
-        <p class="mt-1 text-2xl font-black text-amber-700">{{ rupiah($totalPending) }}</p>
+    <div class="card p-5 bg-[#111827] border border-[#1e293b] border-l-4 border-l-amber-500 shadow-md">
+        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Menunggu Pembayaran</p>
+        <p class="mt-1 text-2xl font-black text-[#F5A623]">{{ rupiah($totalPending) }}</p>
         <p class="text-[11px] text-slate-400 mt-1">Status Pending / Tagihan Aktif</p>
     </div>
-    <div class="card p-5 border-l-4 border-l-rose-500">
-        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Refund / Pengembalian</p>
-        <p class="mt-1 text-2xl font-black text-rose-700">{{ rupiah($totalRefunded) }}</p>
+    <div class="card p-5 bg-[#111827] border border-[#1e293b] border-l-4 border-l-rose-500 shadow-md">
+        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Refund / Pengembalian</p>
+        <p class="mt-1 text-2xl font-black text-rose-400">{{ rupiah($totalRefunded) }}</p>
         <p class="text-[11px] text-slate-400 mt-1">Dana yang telah dikembalikan</p>
     </div>
 </div>
 
 {{-- Filter & Pencarian --}}
-<div class="card p-5 mb-6">
+<div class="card p-5 mb-6 bg-[#111827] border border-[#1e293b]">
     <form method="GET" action="{{ route('admin.payments.index') }}" class="grid gap-3 md:grid-cols-5 text-xs">
         <div>
             <label class="label text-xs">Cari Transaksi / Pesanan</label>
@@ -81,7 +81,7 @@
 </div>
 
 {{-- Tabel Pembayaran --}}
-<div class="card overflow-x-auto">
+<div class="card overflow-x-auto bg-[#111827] border border-[#1e293b]">
     <table class="table-base text-xs">
         <thead>
             <tr>
@@ -95,46 +95,46 @@
                 <th class="text-right">Tindakan</th>
             </tr>
         </thead>
-        <tbody class="divide-y divide-slate-100">
+        <tbody class="divide-y divide-[#1e293b]">
         @forelse ($payments as $payment)
             <tr>
-                <td class="whitespace-nowrap">
+                <td class="whitespace-nowrap text-slate-400">
                     {{ tanggal($payment->created_at, 'd M Y H:i') }}
                     @if ($payment->paid_at)
-                        <span class="block text-[11px] text-emerald-600">Lunas: {{ tanggal($payment->paid_at, 'H:i') }}</span>
+                        <span class="block text-[11px] text-emerald-400 font-bold">Lunas: {{ tanggal($payment->paid_at, 'H:i') }}</span>
                     @endif
                 </td>
                 <td>
-                    <span class="font-mono font-semibold text-slate-800">{{ $payment->reference_id ?: 'MANUAL-'.$payment->id }}</span>
+                    <span class="font-mono font-bold text-white">{{ $payment->reference_id ?: 'MANUAL-'.$payment->id }}</span>
                     @if ($payment->gateway_name)
                         <span class="block text-[10px] uppercase text-slate-400">{{ $payment->gateway_name }}</span>
                     @endif
                 </td>
                 <td>
-                    <a class="font-semibold text-brand-600 hover:underline" href="{{ route('admin.bookings.show', $payment->booking) }}">
+                    <a class="font-mono font-bold text-[#F5A623] hover:underline" href="{{ route('admin.bookings.show', $payment->booking) }}">
                         {{ $payment->booking->code }}
                     </a>
-                    <span class="block text-[11px] text-slate-500">{{ $payment->booking->car->name }}</span>
+                    <span class="block text-[11px] text-slate-400">{{ $payment->booking->car->name }}</span>
                 </td>
                 <td>
-                    <span class="font-medium text-slate-900">{{ $payment->booking->customer_name }}</span>
+                    <span class="font-bold text-white">{{ $payment->booking->customer_name }}</span>
                     @if ($payment->sender_name && $payment->sender_name !== $payment->booking->customer_name)
                         <span class="block text-[10px] text-slate-400">Pengirim: {{ $payment->sender_name }}</span>
                     @endif
                 </td>
                 <td>
-                    <span class="font-semibold text-slate-800">{{ $payment->channelLabel() }}</span>
-                    <span class="block text-[11px] text-slate-500">{{ $payment->paymentTypeLabel() }}</span>
+                    <span class="font-semibold text-white">{{ $payment->channelLabel() }}</span>
+                    <span class="block text-[11px] text-slate-400">{{ $payment->paymentTypeLabel() }}</span>
                     @if ($payment->va_number)
-                        <span class="block font-mono text-[10px] text-brand-700 font-bold">VA: {{ $payment->va_number }}</span>
+                        <span class="block font-mono text-[10px] text-[#F5A623] font-bold">VA: {{ $payment->va_number }}</span>
                     @endif
                 </td>
-                <td class="whitespace-nowrap font-bold text-slate-900">
+                <td class="whitespace-nowrap font-extrabold text-white">
                     {{ rupiah($payment->amount) }}
                     @if ($payment->refunds->isNotEmpty())
                         @php($refAmt = $payment->refunds->where('status', 'completed')->sum('amount'))
                         @if ($refAmt > 0)
-                            <span class="block text-[10px] text-rose-600 font-normal">Refund: -{{ rupiah($refAmt) }}</span>
+                            <span class="block text-[10px] text-rose-400 font-bold">Refund: -{{ rupiah($refAmt) }}</span>
                         @endif
                     @endif
                 </td>
@@ -143,7 +143,7 @@
                         {{ $payment->statusLabel() }}
                     </span>
                     @if ($payment->proof_path)
-                        <a href="{{ $payment->proofUrl() }}" target="_blank" class="block text-[10px] text-brand-600 underline mt-0.5">
+                        <a href="{{ $payment->proofUrl() }}" target="_blank" class="block text-[10px] text-amber-400 hover:text-amber-300 font-bold underline mt-0.5">
                             Lihat Struk
                         </a>
                     @endif

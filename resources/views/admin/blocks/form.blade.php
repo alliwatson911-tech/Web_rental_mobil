@@ -2,7 +2,7 @@
 @section('title', $block->exists ? 'Ubah jadwal servis' : 'Tambah jadwal servis')
 
 @section('content')
-<form method="POST" action="{{ $block->exists ? route('admin.blocks.update', $block) : route('admin.blocks.store') }}" class="card max-w-xl space-y-4 p-5">
+<form method="POST" action="{{ $block->exists ? route('admin.blocks.update', $block) : route('admin.blocks.store') }}" class="card max-w-xl space-y-4 p-5 md:p-6 bg-[#111827] border border-[#1e293b]">
     @csrf
     @if ($block->exists) @method('PUT') @endif
     <div><label class="label">Mobil</label>
@@ -16,6 +16,6 @@
     </div>
     <div><label class="label">Alasan</label><input class="input" name="reason" value="{{ old('reason', $block->reason) }}" required></div>
     <div><label class="label">Catatan</label><textarea class="input" name="notes" rows="2">{{ old('notes', $block->notes) }}</textarea></div>
-    <div class="flex gap-2"><button class="btn btn-primary">Simpan</button><a href="{{ route('admin.blocks.index') }}" class="btn btn-outline">Kembali</a></div>
+    <div class="flex gap-2 pt-2"><button class="btn btn-primary min-h-[44px] px-5 font-black uppercase text-xs">Simpan</button><a href="{{ route('admin.blocks.index') }}" class="btn btn-outline min-h-[44px] px-5 font-bold text-xs flex items-center justify-center">Kembali</a></div>
 </form>
 @endsection

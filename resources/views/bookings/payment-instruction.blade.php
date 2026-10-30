@@ -104,7 +104,7 @@
                                     {{ $payment->va_number ?: 'Menunggu nomor...' }}
                                 </span>
                                 @if ($payment->va_number)
-                                    <button type="button" onclick="copyVA()" class="btn btn-outline text-xs px-3 py-1 font-bold uppercase">
+                                    <button type="button" onclick="copyVA(this)" class="btn btn-outline text-xs px-3.5 py-2 font-bold uppercase min-h-[44px] transition-all">
                                         Salin
                                     </button>
                                 @endif
@@ -127,27 +127,63 @@
                     </div>
                 @endif
 
-                {{-- Action Refresh --}}
+                {{-- Action Refresh & WhatsApp Help --}}
                 <div class="pt-5 border-t border-[#1e293b] flex flex-wrap items-center justify-between gap-3">
-                    <button type="button" onclick="window.location.reload()" class="btn btn-primary flex-1 sm:flex-none py-2.5 px-5 text-xs uppercase font-black flex items-center justify-center gap-2">
+                    <button type="button" onclick="window.location.reload()" class="btn btn-primary flex-1 sm:flex-none py-2.5 px-5 text-xs uppercase font-black flex items-center justify-center gap-2 min-h-[44px]">
                         <x-icon name="refresh" class="w-4 h-4 text-[#0b1220]" />
                         <span>Cek Status Pembayaran</span>
                     </button>
-                    <a href="{{ route('bookings.show', $booking) }}" class="btn btn-outline text-xs flex-1 sm:flex-none text-center py-2.5 px-5 uppercase font-bold">
+                    <a href="{{ route('bookings.show', $booking) }}" class="btn btn-outline text-xs flex-1 sm:flex-none text-center py-2.5 px-5 uppercase font-bold min-h-[44px] flex items-center justify-center">
                         Lihat Halaman Pesanan
                     </a>
                 </div>
+
+                @if (!empty($business['admin_whatsapp']))
+                    <div class="pt-4 border-t border-[#1e293b] text-center">
+                        <p class="text-[11px] text-slate-400 mb-2">Butuh bantuan transaksi atau konfirmasi?</p>
+                        <a href="{{ \App\Support\WhatsApp::link($business['admin_whatsapp'][0] ?? '08123456789', 'Halo Admin Padaidi, saya ingin konfirmasi pembayaran untuk pesanan ' . $booking->code . ' sebesar ' . rupiah($payment->amount)) }}" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 text-xs font-bold text-emerald-400 hover:text-emerald-300 py-2 px-4 rounded bg-emerald-950/40 border border-emerald-800/60 min-h-[44px] transition-colors">
+                            <x-icon name="whatsapp" class="w-4 h-4 text-emerald-400 shrink-0" />
+                            <span>Chat CS Pembayaran via WhatsApp</span>
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     @endif
 </div>
 
 <script>
-function copyVA() {
-    const text = document.getElementById('vaNumberText').innerText.trim();
-    navigator.clipboard.writeText(text).then(() => {
-        alert('Nomor Virtual Account disalin ke clipboard: ' + text);
-    });
+function copyVA(btn) {
+    const textEl = document.getElementById('vaNumberText');
+    if (!textEl) return;
+    const text = textEl.innerText.trim();
+    const onCopied = () => {
+        if (btn) {
+            const orig = btn.innerText;
+            btn.innerText = '✓ Tersalin!';
+            btn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600');
+            setTimeout(() => {
+                btn.innerText = orig;
+                btn.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+            }, 2500);
+        }
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(onCopied).catch(fallback);
+    } else {
+        fallback();
+    }
+    function fallback() {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand('copy'); onCopied(); } catch (e) {}
+        document.body.removeChild(ta);
+    }
 }
 </script>
 @endsection

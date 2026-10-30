@@ -8,17 +8,17 @@
                  width="40" 
                  height="40" />
             <div class="leading-none whitespace-nowrap">
-                <span class="block text-lg font-black tracking-wider text-[#f8fafc] uppercase whitespace-nowrap">
+                <span class="block text-base sm:text-lg font-black tracking-wider text-[#f8fafc] uppercase whitespace-nowrap">
                     <span class="text-[#F5A623]">PADAIDI</span> RENT CAR
                 </span>
-                <span class="block text-[10px] tracking-widest text-[#94a3b8] uppercase font-bold mt-1 whitespace-nowrap">
+                <span class="block text-[9px] sm:text-[10px] tracking-widest text-[#94a3b8] uppercase font-bold mt-0.5 whitespace-nowrap">
                     Makassar · 24 Jam
                 </span>
             </div>
         </a>
 
         {{-- Desktop Navigation Menu --}}
-        <nav class="site-nav-menu hidden items-center gap-7 text-xs font-bold uppercase tracking-wider md:flex" style="display: flex; align-items: center; gap: 1.75rem;" aria-label="Menu Utama">
+        <nav class="site-nav-menu hidden items-center gap-7 text-xs font-bold uppercase tracking-wider md:flex" aria-label="Menu Utama">
             <a href="{{ route('home') }}" class="site-nav-link text-[#94a3b8] transition hover:text-[#f8fafc] px-3 py-1.5 whitespace-nowrap {{ request()->routeIs('home') ? 'text-[#F5A623] font-black' : '' }}">
                 Beranda
             </a>
@@ -37,7 +37,7 @@
         </nav>
 
         {{-- Desktop Action Buttons / Auth --}}
-        <div class="hidden items-center gap-3 md:flex" style="display: flex; align-items: center; gap: 0.75rem;">
+        <div class="hidden items-center gap-3 md:flex">
             @auth
                 @if (auth()->user()->isMember())
                     @php($tier = auth()->user()->tier())
@@ -73,30 +73,33 @@
 
         {{-- Mobile Hamburger Button (Strict min 44x44px target) --}}
         <button type="button" 
-                class="flex h-11 w-11 items-center justify-center rounded border border-[#1e293b] bg-[#111827] text-[#94a3b8] hover:text-[#f8fafc] hover:border-[#F5A623] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5A623] md:hidden" 
+                id="mobile-menu-btn"
+                class="flex h-11 w-11 items-center justify-center rounded border border-[#1e293b] bg-[#111827] text-[#94a3b8] hover:text-[#f8fafc] hover:border-[#F5A623] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5A623] md:hidden cursor-pointer" 
                 data-toggle="#nav-mobile" 
+                aria-controls="nav-mobile"
                 aria-label="Buka navigasi menu"
                 aria-expanded="false">
-            <x-icon name="menu" class="h-6 w-6" />
+            <svg id="icon-menu-open" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg id="icon-menu-close" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
     </div>
 
     {{-- Mobile Navigation Drawer --}}
     <nav id="nav-mobile" class="hidden border-t border-[#1e293b] bg-[#0b1220] px-5 py-4 text-sm font-bold uppercase tracking-wider md:hidden" aria-label="Menu Seluler">
         <div class="space-y-1 pb-3">
-            <a href="{{ route('home') }}" class="block py-2.5 text-[#94a3b8] hover:text-[#F5A623] {{ request()->routeIs('home') ? 'text-[#F5A623]' : '' }}">
+            <a href="{{ route('home') }}" class="flex items-center min-h-[44px] py-2.5 text-[#94a3b8] hover:text-[#F5A623] {{ request()->routeIs('home') ? 'text-[#F5A623]' : '' }}">
                 Beranda
             </a>
-            <a href="{{ route('cars.index') }}" class="block py-2.5 text-[#94a3b8] hover:text-[#F5A623] {{ request()->routeIs('cars.*') ? 'text-[#F5A623]' : '' }}">
+            <a href="{{ route('cars.index') }}" class="flex items-center min-h-[44px] py-2.5 text-[#94a3b8] hover:text-[#F5A623] {{ request()->routeIs('cars.*') ? 'text-[#F5A623]' : '' }}">
                 Armada Mobil
             </a>
-            <a href="{{ route('terms') }}" class="block py-2.5 text-[#94a3b8] hover:text-[#F5A623] {{ request()->routeIs('terms') ? 'text-[#F5A623]' : '' }}">
+            <a href="{{ route('terms') }}" class="flex items-center min-h-[44px] py-2.5 text-[#94a3b8] hover:text-[#F5A623] {{ request()->routeIs('terms') ? 'text-[#F5A623]' : '' }}">
                 Syarat & Ketentuan
             </a>
-            <a href="{{ route('contact') }}" class="block py-2.5 text-[#94a3b8] hover:text-[#F5A623] {{ request()->routeIs('contact') ? 'text-[#F5A623]' : '' }}">
+            <a href="{{ route('contact') }}" class="flex items-center min-h-[44px] py-2.5 text-[#94a3b8] hover:text-[#F5A623] {{ request()->routeIs('contact') ? 'text-[#F5A623]' : '' }}">
                 Kontak & Lokasi
             </a>
-            <a href="{{ route('bookings.lookup') }}" class="block py-2.5 text-[#94a3b8] hover:text-[#F5A623] {{ request()->routeIs('bookings.lookup*') ? 'text-[#F5A623]' : '' }}">
+            <a href="{{ route('bookings.lookup') }}" class="flex items-center min-h-[44px] py-2.5 text-[#94a3b8] hover:text-[#F5A623] {{ request()->routeIs('bookings.lookup*') ? 'text-[#F5A623]' : '' }}">
                 Cek Status Pesanan
             </a>
         </div>

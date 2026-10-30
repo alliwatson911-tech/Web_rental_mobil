@@ -1,4 +1,4 @@
-<footer class="border-t border-[#1e293b] bg-[#0b1220] pt-16 pb-8 text-[#94a3b8] text-sm" role="contentinfo">
+<footer class="border-t border-[#1e293b] bg-[#0b1220] pt-16 pb-8 text-[#94a3b8] text-sm" style="padding-bottom: max(2rem, calc(2rem + env(safe-area-inset-bottom, 0px)));" role="contentinfo">
     <div class="site-container">
         <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4 pb-12 border-b border-[#1e293b]" style="display: grid; gap: 2.5rem;">
             {{-- Kolom 1: Profil Brand --}}
