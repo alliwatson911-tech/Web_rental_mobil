@@ -13,7 +13,7 @@ services:
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
-        value: "false"
+        value: "true"
       - key: APP_KEY
         value: "base64:c5L2n3padaidiSecretKeyProductionRun123456="
       - key: APP_TIMEZONE

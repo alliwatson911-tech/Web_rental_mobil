@@ -22,24 +22,34 @@ mkdir -p /var/www/html/storage/framework/cache/data \
          /var/www/html/database \
          /var/www/html/bootstrap/cache
 
-# 3. Handle SQLite database file
+# 3. Create default .env if not exists
+if [ ! -f /var/www/html/.env ]; then
+    echo "[Padaidi] Initializing .env configuration..."
+    if [ -f /var/www/html/.env.example ]; then
+        cp /var/www/html/.env.example /var/www/html/.env
+    else
+        touch /var/www/html/.env
+    fi
+fi
+
+# 4. Handle SQLite database file
 DB_PATH="${DB_DATABASE:-/var/www/html/database/database.sqlite}"
 if [ ! -f "$DB_PATH" ]; then
     echo "[Padaidi] Initializing SQLite database at ${DB_PATH}..."
     touch "$DB_PATH"
 fi
 
-# 4. Create storage symlink if not already created
+# 5. Create storage symlink if not already created
 if [ ! -L /var/www/html/public/storage ]; then
     echo "[Padaidi] Creating storage symlink..."
     php artisan storage:link || true
 fi
 
-# 5. Fix permissions for www-data before migration
+# 6. Fix permissions for www-data before migration
 chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
 chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
 
-# 6. Run database migrations & seeders if needed
+# 7. Run database migrations & seeders if needed
 AUTO_MIGRATE="${AUTO_MIGRATE:-true}"
 if [ "$AUTO_MIGRATE" = "true" ]; then
     echo "[Padaidi] Ensuring database migrations are up to date..."
@@ -50,12 +60,16 @@ if [ "$AUTO_MIGRATE" = "true" ]; then
     fi
 fi
 
-# 7. Re-apply strict permissions for SQLite writeability by www-data
+# 8. Re-apply permissions for SQLite writeability by www-data
 chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
 chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
 
-# 8. Warm up Laravel caches
-echo "[Padaidi] Caching configuration, routes, and views..."
+# 9. Clear and warm up Laravel caches
+echo "[Padaidi] Refreshing Laravel configuration, routes, and views..."
+php artisan config:clear || true
+php artisan route:clear || true
+php artisan view:clear || true
+
 php artisan config:cache || true
 php artisan route:cache || true
 php artisan view:cache || true

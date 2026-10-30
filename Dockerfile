@@ -83,6 +83,7 @@ RUN rm -rf /etc/nginx/conf.d/* /etc/nginx/http.d/* /etc/nginx/nginx.conf && \
 # Copy configuration files
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/php.ini /usr/local/etc/php/conf.d/padaidi.ini
+COPY docker/zz-fpm.conf /usr/local/etc/php-fpm.d/zz-fpm.conf
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
