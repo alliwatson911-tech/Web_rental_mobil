@@ -374,6 +374,26 @@ class Phase1MembershipTest extends TestCase
         $this->assertSame(MemberProfile::KYC_REJECTED, $member->memberProfile->kyc_status);
     }
 
+    public function test_admin_dapat_melihat_daftar_dan_detail_member_termasuk_badge_kyc(): void
+    {
+        $admin = User::factory()->create(['role' => User::ROLE_ADMIN]);
+        $member = User::factory()->create(['role' => User::ROLE_CUSTOMER]);
+        $profile = $member->ensureMemberProfile();
+
+        $this->assertNotEmpty($profile->kycBadgeClass());
+        $this->assertNotEmpty($profile->kycStatusLabel());
+
+        // Test render index admin member
+        $responseIndex = $this->actingAs($admin)->get(route('admin.members.index'));
+        $responseIndex->assertOk();
+        $responseIndex->assertSee($member->name);
+
+        // Test render show admin member
+        $responseShow = $this->actingAs($admin)->get(route('admin.members.show', $member));
+        $responseShow->assertOk();
+        $responseShow->assertSee($member->name);
+    }
+
     public function test_pemesanan_tamu_diperbolehkan_dan_member_id_otomatis_terisi_saat_login(): void
     {
         $cat = Category::create(['name' => 'City Car', 'slug' => 'city-car', 'sort_order' => 1]);

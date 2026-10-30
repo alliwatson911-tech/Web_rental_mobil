@@ -3,7 +3,7 @@
 @section('actions')
     <div class="flex items-center gap-2">
         <a href="{{ route('admin.members.index') }}" class="btn btn-outline text-xs">&larr; Kembali ke Daftar</a>
-        <form method="POST" action="{{ route('admin.members.toggle-status', $member) }}" class="inline"
+        <form method="POST" action="{{ route('admin.members.status.toggle', $member) }}" class="inline"
               data-confirm="Apakah Anda yakin ingin {{ $profile->is_active ? 'menonaktifkan' : 'mengaktifkan kembali' }} akun member ini?">
             @csrf
             @if ($profile->is_active)
@@ -122,7 +122,7 @@
                         <p class="font-bold text-amber-900">Saat ini menggunakan Tier Manual: {{ $profile->manualTier?->name }}</p>
                         <p class="text-amber-800 mt-1"><strong>Alasan:</strong> {{ $profile->manual_tier_notes }}</p>
                         <p class="text-[11px] text-amber-700 mt-1">
-                            Diatur oleh: {{ $profile->manualTierUpdater?->name ?? 'Admin' }} pada {{ $profile->manual_tier_set_at?->translatedFormat('d M Y, H:i') }}
+                            Diatur oleh: {{ $profile->manualTierUpdater?->name ?? 'Admin' }} pada {{ ($profile->manual_tier_updated_at ?? $profile->manual_tier_set_at)?->translatedFormat('d M Y, H:i') }}
                         </p>
                     </div>
 

@@ -107,9 +107,24 @@ class MemberProfile extends Model
         return $this->phone_verified_at !== null;
     }
 
+    public function kycBadgeClass(): string
+    {
+        return match ($this->kyc_status) {
+            self::KYC_VERIFIED => 'bg-emerald-100 text-emerald-800',
+            self::KYC_PENDING => 'bg-amber-100 text-amber-800',
+            self::KYC_REJECTED => 'bg-rose-100 text-rose-800',
+            default => 'bg-slate-100 text-slate-700',
+        };
+    }
+
     public function kycStatusLabel(): string
     {
         return self::KYC_STATUSES[$this->kyc_status] ?? ucfirst($this->kyc_status);
+    }
+
+    public function getManualTierSetAtAttribute()
+    {
+        return $this->manual_tier_updated_at;
     }
 }
 

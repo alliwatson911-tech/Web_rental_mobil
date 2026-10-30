@@ -23,8 +23,6 @@ mkdir -p /var/www/html/storage/framework/cache/data \
          /var/www/html/bootstrap/cache \
          /var/run
 
-rm -f /var/run/php-fpm.sock
-
 # 3. Create default .env if not exists
 if [ ! -f /var/www/html/.env ]; then
     echo "[Padaidi] Initializing .env configuration..."

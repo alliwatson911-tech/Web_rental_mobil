@@ -76,14 +76,15 @@ RUN chown -R www-data:www-data storage database bootstrap/cache public/storage &
     chmod -R 777 storage database bootstrap/cache
 
 # Setup Nginx runtime directories and clean default configs
-RUN rm -rf /etc/nginx/conf.d/* /etc/nginx/http.d/* /etc/nginx/nginx.conf && \
+# Setup Nginx and PHP-FPM configuration files
+RUN rm -rf /etc/nginx/conf.d/* /etc/nginx/http.d/* /etc/nginx/nginx.conf /usr/local/etc/php-fpm.d/* && \
     mkdir -p /var/lib/nginx/tmp /var/lib/nginx/html /var/log/nginx /var/run && \
     chown -R www-data:www-data /var/lib/nginx /var/log/nginx /var/run
 
 # Copy configuration files
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/php.ini /usr/local/etc/php/conf.d/padaidi.ini
-COPY docker/zz-fpm.conf /usr/local/etc/php-fpm.d/zz-fpm.conf
+COPY docker/zz-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

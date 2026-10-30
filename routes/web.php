@@ -104,6 +104,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/member/{member}/tier', [Admin\MemberController::class, 'updateTier'])->name('members.tier.update');
         Route::post('/member/{member}/tier-reset', [Admin\MemberController::class, 'resetTier'])->name('members.tier.reset');
         Route::post('/member/{member}/status', [Admin\MemberController::class, 'toggleStatus'])->name('members.status.toggle');
+        Route::post('/member/{member}/toggle-status', [Admin\MemberController::class, 'toggleStatus'])->name('members.toggle-status');
         Route::post('/member/{member}/dokumen/{document}/verifikasi', [Admin\MemberController::class, 'verifyDocument'])->name('members.documents.verify');
         Route::post('/member/{member}/dokumen/{document}/tolak', [Admin\MemberController::class, 'rejectDocument'])->name('members.documents.reject');
         Route::get('/log-dokumen', [Admin\MemberController::class, 'auditLogs'])->name('members.logs');

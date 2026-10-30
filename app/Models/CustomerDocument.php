@@ -63,6 +63,16 @@ class CustomerDocument extends Model
         return self::TYPES[$this->type] ?? strtoupper($this->type);
     }
 
+    public function statusBadgeClass(): string
+    {
+        return match ($this->status) {
+            self::STATUS_VERIFIED => 'bg-emerald-100 text-emerald-800',
+            self::STATUS_PENDING => 'bg-amber-100 text-amber-800',
+            self::STATUS_REJECTED => 'bg-rose-100 text-rose-800',
+            default => 'bg-slate-100 text-slate-700',
+        };
+    }
+
     public function statusLabel(): string
     {
         return self::STATUSES[$this->status] ?? ucfirst($this->status);
