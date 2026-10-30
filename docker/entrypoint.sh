@@ -22,14 +22,11 @@ mkdir -p /var/www/html/storage/framework/cache/data \
          /var/www/html/database \
          /var/www/html/bootstrap/cache
 
-# 3. Create default .env if not exists
-if [ ! -f /var/www/html/.env ]; then
-    echo "[Padaidi] Initializing .env configuration..."
-    if [ -f /var/www/html/.env.example ]; then
-        cp /var/www/html/.env.example /var/www/html/.env
-    else
-        touch /var/www/html/.env
-    fi
+# 3. Handle SQLite database file
+DB_PATH="${DB_DATABASE:-/var/www/html/database/database.sqlite}"
+if [ ! -f "$DB_PATH" ]; then
+    echo "[Padaidi] Initializing SQLite database at ${DB_PATH}..."
+    touch "$DB_PATH"
 fi
 
 # 4. Create storage symlink if not already created
@@ -38,44 +35,26 @@ if [ ! -L /var/www/html/public/storage ]; then
     php artisan storage:link || true
 fi
 
-# 5. Handle SQLite database as resilient default
-if [ -z "$DB_CONNECTION" ] || [ "$DB_CONNECTION" = "sqlite" ]; then
-    export DB_CONNECTION=sqlite
-    DB_PATH="${DB_DATABASE:-/var/www/html/database/database.sqlite}"
-    export DB_DATABASE="$DB_PATH"
-    mkdir -p "$(dirname "$DB_PATH")"
-    if [ ! -f "$DB_PATH" ]; then
-        echo "[Padaidi] Initializing SQLite database at ${DB_PATH}..."
-        touch "$DB_PATH"
-    fi
-    chown www-data:www-data "$DB_PATH"
-    chmod 664 "$DB_PATH"
-fi
-
-# 6. Ensure APP_KEY exists
-if [ -z "$APP_KEY" ]; then
-    echo "[Padaidi] Generating APP_KEY..."
-    php artisan key:generate --force || true
-fi
-
-# 7. Fix permissions for www-data
+# 5. Fix permissions for www-data before migration
 chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
-chmod -R 775 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
+chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
 
-# 8. Run database migration and seeder (default: enabled)
+# 6. Run database migrations & seeders if needed
 AUTO_MIGRATE="${AUTO_MIGRATE:-true}"
-AUTO_SEED="${AUTO_SEED:-true}"
-
 if [ "$AUTO_MIGRATE" = "true" ]; then
-    echo "[Padaidi] Running database migrations..."
+    echo "[Padaidi] Ensuring database migrations are up to date..."
     php artisan migrate --force --no-interaction || true
     if [ "$AUTO_SEED" = "true" ]; then
-        echo "[Padaidi] Running database seeders..."
+        echo "[Padaidi] Ensuring database seeds are up to date..."
         php artisan db:seed --force --no-interaction || true
     fi
 fi
 
-# 9. Warm up Laravel caches
+# 7. Re-apply strict permissions for SQLite writeability by www-data
+chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
+chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
+
+# 8. Warm up Laravel caches
 echo "[Padaidi] Caching configuration, routes, and views..."
 php artisan config:cache || true
 php artisan route:cache || true

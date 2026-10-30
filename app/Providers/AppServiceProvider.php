@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Paksa HTTPS di lingkungan produksi atau saat di balik reverse proxy HTTPS (Render/Cloud Run)
-        if (config('app.env') === 'production' || request()->header('x-forwarded-proto') === 'https') {
+        if (config('app.env') === 'production' || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')) {
             URL::forceScheme('https');
         }
 

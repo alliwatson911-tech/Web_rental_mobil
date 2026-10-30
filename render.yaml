@@ -20,14 +20,19 @@ services:
         value: Asia/Makassar
       - key: APP_LOCALE
         value: id
+      - key: APP_URL
+        value: "https://padaidirentcar.onrender.com"
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /var/www/html/database/database.sqlite
       - key: AUTO_MIGRATE
         value: "true"
       - key: AUTO_SEED
         value: "true"
       - key: SESSION_DRIVER
-        value: database
+        value: cookie
       - key: CACHE_STORE
-        value: database
+        value: file
       - key: FILESYSTEM_DISK
         value: public
-
