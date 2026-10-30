@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: padaidi-rent-car
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: master
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /up
+    envVars:
+      - key: APP_NAME
+        value: "Padaidi Rent Car"
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        value: "base64:c5L2n3padaidiSecretKeyProductionRun123456="
+      - key: APP_TIMEZONE
+        value: Asia/Makassar
+      - key: APP_LOCALE
+        value: id
+      - key: AUTO_MIGRATE
+        value: "true"
+      - key: AUTO_SEED
+        value: "true"
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: FILESYSTEM_DISK
+        value: public
