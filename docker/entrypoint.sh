@@ -45,12 +45,14 @@ if [ ! -L /var/www/html/public/storage ]; then
     php artisan storage:link || true
 fi
 
-# 6. Fix permissions for www-data before migration
+# 6. Apply full read/write permissions for www-data on SQLite and storage
 chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
 chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
 
-# 7. Run database migrations & seeders if needed
-AUTO_MIGRATE="${AUTO_MIGRATE:-true}"
+# 7. Run database migrations & seeders ONLY if explicitly requested (DB is already pre-baked in Dockerfile)
+AUTO_MIGRATE="${AUTO_MIGRATE:-false}"
+AUTO_SEED="${AUTO_SEED:-false}"
+
 if [ "$AUTO_MIGRATE" = "true" ]; then
     echo "[Padaidi] Ensuring database migrations are up to date..."
     php artisan migrate --force --no-interaction || true
@@ -60,7 +62,7 @@ if [ "$AUTO_MIGRATE" = "true" ]; then
     fi
 fi
 
-# 8. Re-apply permissions for SQLite writeability by www-data
+# 8. Re-apply permissions
 chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
 chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
 

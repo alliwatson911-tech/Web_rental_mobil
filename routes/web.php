@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 | Halaman publik
 |--------------------------------------------------------------------------
 */
+Route::get('/ping', fn () => response('PONG', 200))->name('ping');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/armada', [CarController::class, 'index'])->name('cars.index');
 Route::get('/mobil/{car}', [CarController::class, 'show'])->name('cars.show');
