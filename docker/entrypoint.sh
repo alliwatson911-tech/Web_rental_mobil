@@ -13,14 +13,17 @@ sed -i "s/listen \[::\]:8080/listen \[::\]:${TARGET_PORT}/g" /etc/nginx/nginx.co
 echo "[Padaidi] Validating Nginx configuration..."
 nginx -t
 
-# 2. Ensure storage, database, and bootstrap directories exist
+# 2. Ensure storage, database, run, and bootstrap directories exist
 mkdir -p /var/www/html/storage/framework/cache/data \
          /var/www/html/storage/framework/sessions \
          /var/www/html/storage/framework/views \
          /var/www/html/storage/logs \
          /var/www/html/storage/app/public/cars \
          /var/www/html/database \
-         /var/www/html/bootstrap/cache
+         /var/www/html/bootstrap/cache \
+         /var/run
+
+rm -f /var/run/php-fpm.sock
 
 # 3. Create default .env if not exists
 if [ ! -f /var/www/html/.env ]; then
@@ -45,9 +48,9 @@ if [ ! -L /var/www/html/public/storage ]; then
     php artisan storage:link || true
 fi
 
-# 6. Apply full read/write permissions for www-data on SQLite and storage
-chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
-chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
+# 6. Apply full read/write permissions for www-data on SQLite, sockets, and storage
+chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache /var/run
+chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache /var/run
 
 # 7. Run database migrations & seeders ONLY if explicitly requested (DB is already pre-baked in Dockerfile)
 AUTO_MIGRATE="${AUTO_MIGRATE:-false}"
@@ -63,8 +66,8 @@ if [ "$AUTO_MIGRATE" = "true" ]; then
 fi
 
 # 8. Re-apply permissions
-chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
-chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache
+chown -R www-data:www-data /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache /var/run
+chmod -R 777 /var/www/html/storage /var/www/html/database /var/www/html/bootstrap/cache /var/run
 
 # 9. Clear and warm up Laravel caches
 echo "[Padaidi] Refreshing Laravel configuration, routes, and views..."
