@@ -1,5 +1,5 @@
 {{-- Foto utama mobil, atau ilustrasi elegan bila belum ada foto. Butuh relasi primaryPhoto sudah dimuat. --}}
-@php($url = $car->relationLoaded('primaryPhoto') && $car->primaryPhoto ? $car->primaryPhoto->url() : null)
+@php($url = $car->primaryPhoto?->url())
 @if ($url)
     <img src="{{ $url }}" alt="{{ $car->name }}" class="{{ $class ?? 'h-48 w-full object-cover' }}" loading="lazy">
 @else

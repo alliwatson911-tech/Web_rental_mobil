@@ -2,7 +2,9 @@
 @section('title', 'Verifikasi Kontak Member - Padaidi Rent Car')
 
 @section('content')
-<div class="mx-auto max-w-md py-10 px-4">
+<div class="mx-auto max-w-md py-6 px-4">
+    <x-breadcrumb :back-url="route('member.account')" back-text="Kembali ke Dashboard Member" :crumbs="['Dashboard' => route('member.account'), 'Verifikasi Kontak' => null]" />
+
     <div class="card card-accent-top p-8 shadow-sm border border-slate-200 bg-white relative">
         <div class="text-center mb-6">
             <a href="{{ route('home') }}" class="inline-block mb-3" title="Padaidi Rent Car">

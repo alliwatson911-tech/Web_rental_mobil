@@ -30,7 +30,7 @@
         <div class="mt-4 pt-3.5 border-t border-slate-200 flex items-baseline justify-between">
             <div>
                 <span class="text-[11px] uppercase tracking-wider text-slate-500 block font-bold">Tarif Sewa</span>
-                <p class="text-xl font-black text-[#F5A623] leading-tight">{{ rupiah($car->daily_price) }} <span class="text-xs font-normal text-slate-500">/ hari</span></p>
+                <p class="text-xl font-black text-amber-700 leading-tight">{{ rupiah($car->daily_price) }} <span class="text-xs font-normal text-slate-500">/ hari</span></p>
             </div>
             @if (!empty($days))
                 <div class="text-right">

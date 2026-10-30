@@ -2,6 +2,8 @@
 @section('title', 'Pesan '.$car->name.' - Padaidi Rent Car')
 
 @section('content')
+<x-breadcrumb :back-url="route('cars.show', $car)" back-text="Kembali ke Detail Mobil" :crumbs="['Daftar Armada' => route('cars.index'), $car->name => route('cars.show', $car), 'Pesan Mobil' => null]" />
+
 <ol class="mb-6 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-wider">
     <li class="badge badge-accent px-3 py-1">1. Isi pesanan</li>
     <li class="badge bg-slate-100 text-slate-600 border border-slate-200 px-3 py-1">2. Ringkasan</li>
@@ -55,7 +57,7 @@
                                @checked(in_array($addon->id, old('addons', [])))>
                         <span class="flex-1">
                             <span class="font-bold text-slate-900 text-sm">{{ $addon->name }}</span>
-                            <span class="text-xs font-black text-[#F5A623] ml-2">· {{ rupiah($addon->price) }} {{ $addon->chargeLabel() }}</span>
+                            <span class="text-xs font-black text-amber-700 ml-2">· {{ rupiah($addon->price) }} {{ $addon->chargeLabel() }}</span>
                             @if ($addon->description)<span class="block text-xs text-slate-500 mt-0.5">{{ $addon->description }}</span>@endif
                         </span>
                     </label>
@@ -134,7 +136,7 @@
             @include('partials.car-image', ['car' => $car, 'class' => 'h-40 w-full object-cover'])
             <div class="p-6">
                 <h3 class="font-black text-lg uppercase text-slate-900 tracking-wide">{{ $car->name }}</h3>
-                <p class="text-xs text-slate-500 mt-0.5">{{ $car->category->name }} · <span class="text-[#F5A623] font-bold">{{ rupiah($car->daily_price) }} / hari</span></p>
+                <p class="text-xs text-slate-500 mt-0.5">{{ $car->category->name }} · <span class="text-amber-700 font-bold">{{ rupiah($car->daily_price) }} / hari</span></p>
 
                 <div class="mt-5 rounded bg-slate-50 border border-slate-200 p-4 text-xs space-y-2">
                     <div class="flex justify-between text-slate-500">
@@ -143,7 +145,7 @@
                     </div>
                     <div class="flex justify-between text-slate-700 pt-2 border-t border-slate-200 font-bold">
                         <span>Perkiraan total:</span>
-                        <span class="text-[#F5A623] text-sm font-black" id="est-total">-</span>
+                        <span class="text-amber-700 text-sm font-black" id="est-total">-</span>
                     </div>
                     <p class="text-[10px] text-slate-500 pt-1 italic">Perkiraan saja. Total final dihitung oleh sistem di halaman ringkasan.</p>
                 </div>

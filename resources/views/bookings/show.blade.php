@@ -15,14 +15,16 @@
 @endphp
 
 @section('content')
-<div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#1e293b] mb-6">
+<x-breadcrumb :crumbs="['Cek Pesanan' => route('bookings.lookup'), $booking->code => null]" />
+
+<div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 mb-6">
     <div>
-        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Kode pesanan</p>
-        <h1 class="text-2xl md:text-3xl font-mono font-black tracking-wider text-[#F5A623] mt-0.5">{{ $booking->code }}</h1>
+        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Kode pesanan</p>
+        <h1 class="text-2xl md:text-3xl font-mono font-black tracking-wider text-slate-900 mt-0.5">{{ $booking->code }}</h1>
     </div>
     <div class="flex flex-wrap items-center gap-3">
-        <a href="{{ route('bookings.invoice', $booking) }}" target="_blank" class="btn btn-outline text-xs py-2 px-3.5 uppercase font-bold flex items-center gap-1.5">
-            <x-icon name="printer" class="w-4 h-4 text-[#F5A623]" />
+        <a href="{{ route('bookings.invoice', $booking) }}" target="_blank" class="btn btn-outline text-xs py-2 px-3.5 uppercase font-bold flex items-center gap-1.5 border-slate-300 text-slate-700 hover:border-slate-400">
+            <x-icon name="printer" class="w-4 h-4 text-amber-600" />
             <span>Cetak Invoice</span>
         </a>
         @include('partials.status-badge', ['status' => $booking->status])

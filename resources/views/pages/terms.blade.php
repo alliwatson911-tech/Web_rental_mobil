@@ -2,8 +2,10 @@
 @section('title', 'Syarat & Ketentuan Sewa - Padaidi Rent Car')
 
 @section('content')
+<x-breadcrumb :crumbs="['Syarat & Ketentuan' => null]" />
+
 <div class="mb-8">
-    <span class="section-kicker text-[#F5A623]">KEBIJAKAN RENTAL</span>
+    <span class="section-kicker">KEBIJAKAN RENTAL</span>
     <h1 class="section-title text-slate-900 mb-2">Syarat Sewa</h1>
     <p class="text-slate-600 text-sm max-w-2xl">
         Mohon membaca syarat dan ketentuan sewa berikut demi keamanan, kenyamanan bersama, dan transparansi transaksi. Jika ada pertanyaan khusus, silakan hubungi kami di halaman <a href="{{ route('contact') }}" class="text-amber-600 underline font-semibold hover:text-amber-800">Kontak</a>.
@@ -116,7 +118,7 @@
     <div class="card p-6 md:p-8 bg-white border border-slate-200 shadow-sm md:col-span-2">
         <div class="flex items-center justify-between mb-4">
             <div>
-                <span class="section-kicker text-[#F5A623]">ADD-ON &amp; EKSTRA</span>
+                <span class="section-kicker">ADD-ON &amp; EKSTRA</span>
                 <h2 class="font-extrabold text-base uppercase text-slate-900 tracking-wide">Layanan tambahan</h2>
             </div>
             <span class="badge badge-accent">Opsi Saat Pemesanan</span>
@@ -134,7 +136,7 @@
                     @foreach ($addons as $addon)
                         <tr>
                             <td class="font-bold text-slate-900">{{ $addon->name }}</td>
-                            <td class="font-extrabold text-[#F5A623]">{{ rupiah($addon->price) }} <span class="text-[11px] font-normal text-slate-500">{{ $addon->chargeLabel() }}</span></td>
+                            <td class="font-extrabold text-amber-700">{{ rupiah($addon->price) }} <span class="text-[11px] font-normal text-slate-500">{{ $addon->chargeLabel() }}</span></td>
                             <td class="text-slate-600 text-xs">{{ $addon->description }}</td>
                         </tr>
                     @endforeach

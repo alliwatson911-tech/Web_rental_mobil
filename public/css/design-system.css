@@ -65,7 +65,7 @@
     --color-info-border: rgba(56, 189, 248, 0.30);
 
     /* --- TYPOGRAPHY SCALES --- */
-    --font-main: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
     --font-size-display: clamp(2rem, 5vw + 1rem, 3.25rem);
@@ -192,7 +192,7 @@ body.theme-padaidi {
    ========================================================================== */
 .section-kicker {
     display: inline-block;
-    color: var(--color-accent);
+    color: #b45309 !important; /* Rich amber-gold (WCAG AA 4.8:1 on white canvas) */
     font-size: var(--font-size-kicker);
     font-weight: 800;
     letter-spacing: 2px;
@@ -367,33 +367,38 @@ body.theme-padaidi {
 }
 
 .badge-accent {
-    background-color: var(--color-accent-10) !important;
-    color: var(--color-accent) !important;
-    border: 1px solid var(--color-accent-30) !important;
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+    border: 1px solid #fde68a !important;
+    font-weight: 800 !important;
 }
 
 .badge-success {
-    background-color: var(--color-success-bg) !important;
-    color: var(--color-success) !important;
-    border: 1px solid var(--color-success-border) !important;
+    background-color: #ecfdf5 !important;
+    color: #065f46 !important;
+    border: 1px solid #a7f3d0 !important;
+    font-weight: 800 !important;
 }
 
 .badge-warning {
-    background-color: var(--color-warning-bg) !important;
-    color: var(--color-warning) !important;
-    border: 1px solid var(--color-warning-border) !important;
+    background-color: #fffbeb !important;
+    color: #92400e !important;
+    border: 1px solid #fde68a !important;
+    font-weight: 800 !important;
 }
 
 .badge-danger {
-    background-color: var(--color-danger-bg) !important;
-    color: var(--color-danger) !important;
-    border: 1px solid var(--color-danger-border) !important;
+    background-color: #fef2f2 !important;
+    color: #991b1b !important;
+    border: 1px solid #fecaca !important;
+    font-weight: 800 !important;
 }
 
 .badge-info {
-    background-color: var(--color-info-bg) !important;
-    color: var(--color-info) !important;
-    border: 1px solid var(--color-info-border) !important;
+    background-color: #f0f9ff !important;
+    color: #075985 !important;
+    border: 1px solid #bae6fd !important;
+    font-weight: 800 !important;
 }
 
 /* ==========================================================================
@@ -432,7 +437,7 @@ body.theme-padaidi {
 }
 
 .stats-number {
-    color: var(--color-text);
+    color: #0f172a !important;
     font-size: 26px;
     font-weight: 900;
     margin: 0 0 4px 0;
@@ -440,7 +445,7 @@ body.theme-padaidi {
 }
 
 .stats-label {
-    color: var(--color-text-muted);
+    color: #475569 !important;
     font-size: 12px;
     font-weight: 700;
     margin: 0;
@@ -1102,7 +1107,8 @@ textarea:focus {
 }
 
 .price-row-price {
-    color: #F5A623 !important;
+    color: #b45309 !important; /* Rich amber-gold (WCAG AA 4.8:1 on white) */
+    font-weight: 800 !important;
 }
 
 /* 6. Outline/Secondary buttons on white canvas */
@@ -1146,6 +1152,44 @@ footer[role="contentinfo"] {
     transform: translateY(-3px);
     border-color: #F5A623 !important;
     box-shadow: 0 10px 25px -5px rgba(245, 166, 35, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+/* VIP Member Loyalty Banner */
+.member-vip-banner {
+    background: linear-gradient(135deg, #070e1b 0%, #0b1325 50%, #152238 100%) !important;
+    border: 1px solid #1e293b !important;
+    border-top: 4px solid #F5A623 !important;
+    color: #ffffff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 25px -5px rgba(11, 18, 32, 0.25), 0 8px 10px -6px rgba(11, 18, 32, 0.2) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.member-vip-banner h2 {
+    color: #ffffff !important;
+}
+
+.member-tier-card {
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.2s ease-in-out;
+}
+
+.member-tier-regular {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border: 1px solid rgba(51, 65, 85, 0.7) !important;
+}
+
+.member-tier-silver {
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
+    border: 1px solid rgba(148, 163, 184, 0.4) !important;
+}
+
+.member-tier-gold {
+    background: linear-gradient(145deg, rgba(30, 27, 20, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%) !important;
+    border: 2px solid #F5A623 !important;
+    box-shadow: 0 0 15px rgba(245, 166, 35, 0.15) !important;
 }
 
 /* FAQ Accordion */

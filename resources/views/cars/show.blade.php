@@ -2,12 +2,7 @@
 @section('title', $car->name . ' - Padaidi Rent Car')
 
 @section('content')
-<div class="mb-4">
-    <a href="{{ route('cars.index', array_filter($filters)) }}" class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-600 hover:text-amber-700">
-        <span>←</span>
-        <span>Kembali ke daftar armada</span>
-    </a>
-</div>
+<x-breadcrumb :back-url="route('cars.index', array_filter($filters))" back-text="Kembali ke Daftar Armada" :crumbs="['Daftar Armada' => route('cars.index', array_filter($filters)), $car->name => null]" />
 
 <div class="grid gap-8 lg:grid-cols-5 items-start">
     {{-- Kolom Kiri: Galeri Foto, Spesifikasi, dan Ulasan --}}
@@ -31,7 +26,7 @@
         {{-- Spesifikasi Armada --}}
         <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-200 shadow-sm">
             <div class="mb-4">
-                <span class="section-kicker text-[#F5A623]">INFORMASI LENGKAP</span>
+                <span class="section-kicker">INFORMASI LENGKAP</span>
                 <h2 class="text-xl font-black uppercase text-slate-900 tracking-wide">Spesifikasi Kendaraan</h2>
             </div>
 
@@ -50,7 +45,7 @@
                 </div>
                 <div class="bg-slate-50 p-3 rounded border border-slate-200">
                     <dt class="text-slate-500 font-semibold uppercase tracking-wider text-[10px]">Transmisi</dt>
-                    <dd class="text-sm font-bold text-[#F5A623] mt-1">{{ $car->transmissionLabel() }}</dd>
+                    <dd class="text-sm font-bold text-slate-900 mt-1">{{ $car->transmissionLabel() }}</dd>
                 </div>
                 <div class="bg-slate-50 p-3 rounded border border-slate-200">
                     <dt class="text-slate-500 font-semibold uppercase tracking-wider text-[10px]">Kapasitas Kursi</dt>
@@ -74,7 +69,7 @@
         @if ($car->reviews->isNotEmpty())
             <div class="card p-6 md:p-8 bg-white border border-slate-200 shadow-sm">
                 <div class="mb-4">
-                    <span class="section-kicker text-[#F5A623]">TESTIMONI</span>
+                    <span class="section-kicker">TESTIMONI</span>
                     <h2 class="text-xl font-black uppercase text-slate-900 tracking-wide">Ulasan Pelanggan</h2>
                 </div>
                 <div class="space-y-4 pt-2 border-t border-slate-200">
@@ -102,7 +97,7 @@
             
             <div class="mt-3 pt-3 border-t border-slate-200">
                 <span class="text-[11px] uppercase tracking-wider text-slate-500 block font-bold">Tarif Sewa Harian:</span>
-                <p class="text-2xl font-black text-[#F5A623] mt-0.5">
+                <p class="text-2xl font-black text-amber-700 mt-0.5">
                     {{ rupiah($car->daily_price) }} <span class="text-xs font-normal text-slate-500">/ hari</span>
                 </p>
             </div>

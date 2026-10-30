@@ -3,6 +3,8 @@
 
 @section('content')
 <div class="mx-auto max-w-3xl py-4 space-y-6">
+    <x-breadcrumb :back-url="route('member.account')" back-text="Kembali ke Dashboard Member" :crumbs="['Dashboard Member' => route('member.account'), 'Verifikasi Dokumen' => null]" />
+
     <div class="card card-accent-top p-6 md:p-8 bg-[#111827] border border-[#1e293b] shadow-xl">
         <div class="flex items-center justify-between pb-4 border-b border-[#1e293b]">
             <div>

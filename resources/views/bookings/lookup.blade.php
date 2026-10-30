@@ -2,10 +2,12 @@
 @section('title', 'Cek Pesanan - Padaidi Rent Car')
 
 @section('content')
-<div class="mx-auto max-w-md py-6">
+<div class="mx-auto max-w-md py-4">
+    <x-breadcrumb :crumbs="['Cek Pesanan' => null]" />
+
     <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-200 shadow-sm">
         <div class="mb-5 text-center">
-            <span class="section-kicker text-[#F5A623] mb-1">LACAK PESANAN</span>
+            <span class="section-kicker mb-1">LACAK PESANAN</span>
             <h1 class="text-xl md:text-2xl font-black uppercase text-slate-900 tracking-wide">Cek status pesanan</h1>
             <p class="mt-1.5 text-xs text-slate-500 leading-relaxed">
                 Masukkan kode pesanan (contoh: <code>PDD-AB12CD</code>) dan nomor HP/WhatsApp yang digunakan saat memesan.

@@ -2,8 +2,10 @@
 @section('title', 'Daftar Armada - Padaidi Rent Car')
 
 @section('content')
+<x-breadcrumb :crumbs="['Daftar Armada' => null]" />
+
 <div class="mb-6">
-    <span class="section-kicker text-[#F5A623]">KATALOG LENGKAP</span>
+    <span class="section-kicker">KATALOG LENGKAP</span>
     <h1 class="section-title text-slate-900 mb-2">Daftar Armada</h1>
     <p class="text-slate-600 text-sm max-w-2xl">Pilihan mobil terawat untuk sewa lepas kunci maupun dengan sopir di Makassar. Sesuaikan tanggal perjalanan untuk memeriksa ketersediaan langsung.</p>
 </div>

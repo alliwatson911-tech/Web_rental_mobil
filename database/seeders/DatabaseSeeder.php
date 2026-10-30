@@ -6,6 +6,7 @@ use App\Enums\BookingStatus;
 use App\Models\Addon;
 use App\Models\Car;
 use App\Models\CarBlock;
+use App\Models\CarPhoto;
 use App\Models\Category;
 use App\Models\Location;
 use App\Models\User;
@@ -71,7 +72,7 @@ class DatabaseSeeder extends Seeder
 
         $created = [];
         foreach ($cars as [$cat, $name, $brand, $year, $plate, $trans, $seats, $price]) {
-            $created[$name] = Car::create([
+            $carModel = Car::create([
                 'category_id' => $categories[$cat]->id,
                 'name' => $name,
                 'slug' => Str::slug($name),
@@ -85,6 +86,18 @@ class DatabaseSeeder extends Seeder
                 'status' => Car::STATUS_AVAILABLE,
                 'description' => "{$name} {$year}, transmisi ".($trans === 'manual' ? 'manual' : 'otomatis').', AC dingin, bersih dan terawat.',
             ]);
+
+            $photoPath = 'cars/' . Str::slug($name) . '.jpg';
+            if (file_exists(storage_path('app/public/' . $photoPath))) {
+                CarPhoto::create([
+                    'car_id' => $carModel->id,
+                    'path' => $photoPath,
+                    'is_primary' => true,
+                    'sort_order' => 1,
+                ]);
+            }
+
+            $created[$name] = $carModel;
         }
 
         // Contoh jadwal servis

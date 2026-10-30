@@ -447,6 +447,141 @@ Seluruh emoji yang tidak konsisten antar sistem operasi (Windows vs Android/iOS)
      - 100% lolos pengujian PHPUnit (73 tests, 473 assertions).
      - Tidak merusak rute, controller, database, atau logika bisnis rental yang ada.
 
+### 12.8. Perbaikan Kontras Teks Statistik, Pembersihan Teks Bawah Logo, & Pemisahan Spasi Reservasi Fleksibel
+* **Identifikasi Isu dari Tangkapan Layar Pengguna**:
+  1. **Teks Blok Statistik Tidak Terlihat (Putih di Atas Putih)**:
+     - Angka statistik (*"50+ Unit"*, *"24 Jam"*, *"100%"*, *"4.9 ★"*) dan labelnya (*"ARMADA TERAWAT"*, *"ANTAR BANDARA UPG"*, dll.) memiliki warna bawaan `var(--color-text)` (`#f8fafc`) dari sistem tema gelap lama, sehingga di atas latar kanvas putih teks menjadi tidak terlihat kecuali diblok/disorot kursor.
+  2. **Kalimat di Bawah Gambar Logo Menumpuk & Mengganggu**:
+     - Pada aset gambar hero `padaidi-hero.jpg` terdapat kotak teks *"PADAIDI RENT CAR - MAKASSAR 24 JAM"* dan *"Layanan Sewa Lepas Kunci & Driver Profesional Terpercaya"* serta badge mengambang yang membuat tampilan visual hero terasa padat dan tidak rapi.
+  3. **Garis Emas Reservasi Fleksibel Menabrak / Menyatu dengan Hero**:
+     - Garis atas aksen emas kartu reservasi fleksibel (`card-accent-top`) menempel langsung dengan bayangan offset (`-15px 15px 0px #F5A623`) dari bingkai hero karena ukuran gambar hero terlalu besar (`max-w-md`, 448px) dan spasi vertikal antar-seksi kurang lega.
+* **Solusi & Hasil Perbaikan**:
+  1. **Warna Teks Statistik Diubah Menjadi Hitam Pekat & Slate Kontras**:
+     - Kelas `.stats-number` dikunci ke warna `#0f172a !important` (hitam navy pekat) di berkas `public/css/design-system.css`, `resources/css/design-system.css`, dan langsung di `home.blade.php`.
+     - Kelas `.stats-label` dikunci ke warna `#475569 !important` (slate gelap tegas, font-weight 700).
+     - Ikon bintang rating 4.9 diganti menggunakan SVG inline `<x-icon name="star" class="w-5 h-5 text-[#F5A623]" />` untuk menghindari masalah encoding karakter pada berbagai sistem operasi/browser.
+  2. **Regenerasi Aset `padaidi-hero.jpg` Bersih Tanpa Teks**:
+     - Berkas `public/images/brand/padaidi-hero.jpg` digenerasi ulang secara murni hanya memuat emblem logo resmi Padaidi yang elegan dan terpusat di atas latar belakang gradien navy mewah (`#0b1220` ke `#111827`) dengan garis kisi halus. Seluruh kotak teks dan kalimat di bawah logo telah dihapus total.
+     - Elemen badge mengambang di atas gambar juga dihilangkan dari `home.blade.php`, menghasilkan tampilan kartu visual yang bersih, prestisius, dan minimalis.
+  3. **Penyesuaian Skala Ukuran Logo & Pemisahan Spasi Garis Kuning**:
+     - Ukuran bingkai visual hero disesuaikan proporsional dari `max-w-md` (448px) menjadi `max-w-[320px] sm:max-w-[340px]`, sehingga tidak mendominasi layar dan tinggi visual menjadi ramping (~250px).
+     - Hero section diberi bantalan bawah lega `pb-16 md:pb-24` dan kartu pencarian `#cari-mobil` diberi jarak atas `mt-12 md:mt-16`.
+     - Garis kuning aksen atas kartu reservasi fleksibel kini terpisah dengan jarak lapang (>50px) dari bagian bawah gambar logo dan bayangan offset, tanpa ada tabrakan visual.
+
+### 12.9. Peningkatan Tipografi Modern (Plus Jakarta Sans) & Standarisasi Rasio Kontras Teks (WCAG AA)
+* **Latar Belakang & Rekomendasi Font**:
+  - Menggantikan font sistem generik (`Segoe UI`, `Arial`) dengan **Plus Jakarta Sans** (Google Fonts). Plus Jakarta Sans dipilih karena:
+    1. Dirancang khusus untuk antarmuka digital dan web modern dengan proporsi geometris yang bersih, modern, dan sangat nyaman dibaca (*high legibility*).
+    2. Mendukung rentang *font-weight* lengkap (Light 300 hingga Black 800) yang memberikan hierarki visual tegas antara display hero, judul seksi, subjudul, label, dan angka harga.
+    3. Diimpor dengan optimasi `<link rel="preconnect">` untuk performa muat secepat kilat tanpa layout shift.
+* **Audit & Perbaikan Warna Font (Accessibility & Contrast Ratio)**:
+  - **Identifikasi Masalah Kontras**:
+    - Warna emas terang `#F5A623` memiliki rasio kontras hanya **2.03:1** terhadap latar belakang kanvas putih (`#ffffff`), yang gagal memenuhi standar aksesibilitas web (WCAG AA mewajibkan minimal **4.5:1** untuk teks reguler).
+    - Ketika teks seperti kategori kicker (`.section-kicker`), harga sewa mobil harian (`rupiah($car->daily_price)`), atau teks deskripsi diwarnai dengan `#F5A623` di atas kartu putih, tulisan terlihat pudar/silau dan sulit terbaca.
+  - **Solusi Penerapan Dual-Palette Aksen Brand**:
+    1. **Teks & Label di Atas Kanvas / Kartu Putih**:
+       - Menggunakan *rich amber-gold* `#b45309` (Amber-700) untuk `.section-kicker`, harga sewa harian (`.price-row-price`), dan tautan penting. Rasio kontras mencapai **4.8:1** (Lolos WCAG AA).
+       - Untuk badge status/kategori di kanvas terang (`.badge-accent`), menggunakan kombinasi latar kuning lembut `#fef3c7` dengan teks gelap amber pekat `#92400e` (Amber-800, rasio **5.6:1**).
+    2. **Teks & Elemen di Atas Latar Gelap (Header, Footer, Dark Card, Banner Member)**:
+       - Mempertahankan warna emas brand resmi `#F5A623` yang sangat kontras (**> 10:1**) dan bersinar di atas latar navy pekat (`#0b1220` dan `#111827`).
+       - Ikon SVG dekoratif (`<x-icon>`) tetap mempertahankan `#F5A623` sebagai aksen visual brand yang konsisten.
+  - **Halaman yang Diselaraskan**:
+    - `resources/views/layouts/app.blade.php` & `admin.blade.php`: Integrasi Google Fonts Plus Jakarta Sans.
+    - `resources/views/home.blade.php`: Pembersihan warna kicker, angka step pemesanan, dan FAQ link.
+    - `resources/views/partials/car-card.blade.php`: Harga rental harian diubah ke `text-amber-700 font-black`.
+    - `resources/views/cars/show.blade.php`: Tombol kembali, spesifikasi transmisi, dan harga harian di kartu sticky.
+    - `resources/views/cars/index.blade.php`: Kicker katalog dan badge kategori.
+    - `resources/views/bookings/create.blade.php`: Harga add-on dan estimasi total biaya.
+    - `resources/views/bookings/lookup.blade.php` & `show.blade.php`: Kicker status dan kode booking header.
+    - `resources/views/pages/contact.blade.php`: Jam operasional dan email resmi.
+    - `resources/views/pages/terms.blade.php`: Tabel harga tarif add-on dan bullet poin kebijakan.
+* **Hasil Pengujian**:
+  - Seluruh 73 pengujian otomatis PHPUnit (473 assertions) lulus 100% tanpa ada regresi fitur.
+
+### 12.10. Integrasi Foto Riil Armada Mobil, Redesain Banner VIP Member, & Navigasi Konfigurasi Rute Destinasi
+* **1. Integrasi Foto Riil Seluruh Armada Mobil (Pilihan Mobil Populer & Detail)**:
+  - **Masalah**: Sebelumnya, kartu mobil di halaman depan dan katalog hanya menampilkan ikon siluet generik karena tabel `car_photos` masih kosong (`count = 0`).
+  - **Solusi**:
+    - Mengunduh dan menempatkan foto resolusi tinggi berlisensi resmi/terbuka untuk 8 unit kendaraan di Padaidi Rent Car ke dalam direktori `storage/app/public/cars/`:
+      1. **Toyota Agya** (`toyota-agya.jpg` - City Car, Compact White)
+      2. **Honda Brio** (`honda-brio.jpg` - City Car, Hatchback)
+      3. **Toyota Avanza** (`toyota-avanza.jpg` - MPV Keluarga)
+      4. **Mitsubishi Xpander** (`mitsubishi-xpander.jpg` - MPV Dynamic Shield)
+      5. **Toyota Innova Zenix** (`toyota-innova-zenix.jpg` - MPV Modern)
+      6. **Toyota Fortuner** (`toyota-fortuner.jpg` - SUV Gagah TRD)
+      7. **Mitsubishi Pajero Sport** (`mitsubishi-pajero-sport.jpg` - SUV Dakar)
+      8. **Toyota Alphard** (`toyota-alphard.jpg` - MPV Premium Luxury)
+    - Menyimpan relasi foto utama (`is_primary = true`) pada tabel `car_photos` dan mengintegrasikannya secara permanen pada `database/seeders/DatabaseSeeder.php`.
+    - Menyempurnakan pemanggilan foto pada `resources/views/partials/car-image.blade.php` dengan `$url = $car->primaryPhoto?->url()` agar foto selalu tampil presisi baik saat di-eager-load maupun dipanggil langsung.
+
+* **2. Redesain & Peningkatan Kontras Banner VIP Member (Program Loyalitas)**:
+  - **Masalah**: Aturan CSS `.card { background-color: #ffffff !important; }` menimpa gradien gelap latar belakang, sehingga teks putih (`text-white`) dan deskripsi (`text-slate-300`) menjadi tidak terlihat (*white-on-white*).
+  - **Solusi**:
+    - Dibuat komponen khusus `.member-vip-banner` yang terisolasi dari kelas `.card`, menggunakan gradien midnight navy mewah (`linear-gradient(135deg, #070e1b 0%, #0b1325 50%, #152238 100%) !important;`), garis batas atas emas 4px (`border-top: 4px solid #F5A623`), dan bayangan elevasi dalam.
+    - Struktur 3 Tier Membership dipercantik:
+      - **Tier Reguler**: Box navy gelap dengan teks putih tegas dan deskripsi pendaftaran instan.
+      - **Tier Silver**: Aksen metallic silver dengan label *2x Sewa* dan diskon 5% berwarna amber terang.
+      - **Tier Gold**: Border aksen emas 2px `#F5A623`, badge *VIP*, dan teks diskon 10% mencolok.
+    - Tombol aksi utama (CTA) diperjelas dengan ukuran lebih besar, bayangan tegas, dan mikro-interaksi hover, dilengkapi 3 jaminan kepercayaan (*100% Gratis*, *Verifikasi Cepat*, *Diskon Otomatis*).
+
+* **3. Navigasi Konfigurasi Interaktif Rute Destinasi Wisata & Bisnis**:
+  - **Kebutuhan**: Pengguna menginginkan setiap kartu pilihan rute dapat ditekan dan langsung mengarahkan pengunjung ke jenis mobil yang direkomendasikan untuk rute tersebut.
+  - **Implementasi**:
+    - Mengubah kartu statis `<div>` menjadi elemen navigasi interaktif `<a>` berkelas `.destination-card` dengan efek hover elevasi, garis batas emas, dan indikator panah dinamis.
+    - Menghubungkan masing-masing dari 5 rute ke filter armada yang sesuai:
+      1. **Bandara Sultan Hasanuddin** (*Cocok Semua Tipe Mobil*) → Mengarahkan ke `route('cars.index')` (Katalog lengkap semua armada).
+      2. **Rammang-Rammang & Maros** (*City Car / MPV Hemat*) → Mengarahkan ke `route('cars.index', ['category' => 'city-car'])` (Filter mobil kompak hemat BBM).
+      3. **Malino Highland, Gowa** (*MPV / SUV Tangguh*) → Mengarahkan ke `route('cars.index', ['category' => 'mpv'])` (Filter MPV tangguh untuk tanjakan).
+      4. **Tanjung Bira, Bulukumba** (*Innova / SUV Nyaman*) → Mengarahkan ke `route('cars.index', ['category' => 'suv'])` (Filter SUV berjarak tempuh jauh).
+      5. **Tana Toraja & Kete Kesu** (*Fortuner / Pajero / Hiace*) → Mengarahkan ke `route('cars.index', ['category' => 'suv'])` (Filter kendaraan tangguh lintas kabupaten).
+    - Menambahkan tombol aksi kecil *"Pilih →"* di pojok kanan bawah setiap kartu rute yang bereaksi saat kursor melayang di atasnya.
+
+### 12.11. Sistem Navigasi Flowchart Terpadu: Tombol "Kembali ke Beranda" & Alur Mundur Halaman Sebelumnya
+* **Latar Belakang & Kebutuhan Pengguna**:
+  - Pada halaman katalog armada (`/armada`) dan halaman sub-fitur lainnya, pengguna belum memiliki alur mundur yang eksplisit selain navbar utama. Pengguna meminta fitur tombol "Kembali ke Beranda" dan alur mundur ke halaman sebelumnya di seluruh halaman yang tersedia tanpa jalan buntu (*dead-ends*).
+* **Komponen Baru**: `resources/views/components/breadcrumb.blade.php`:
+  - Menampilkan dua elemen dalam satu baris fleksibel (`flex-wrap justify-between`):
+    1. **Aksi Mundur Cepat (`← Kembali ke [Halaman/Beranda]`)**: Tombol teks tebal amber (`text-amber-700 hover:text-amber-900`) yang mengarahkan langsung ke langkah sebelumnya (misal: dari Form Pemesanan kembali ke Detail Mobil), plus pemisah pipa dan tautan cepat ke *Beranda*.
+    2. **Jejak Navigasi (*Breadcrumbs*)**: Menampilkan hierarki halaman aktif (`Beranda / Armada / Toyota Fortuner / Pesan`) menggunakan elemen semantik `<nav aria-label="Navigasi Halaman">` dan `<ol>` yang ramah SEO serta *screen-reader*.
+* **Audit & Implementasi Alur Flowchart Seluruh Halaman**:
+  1. **Katalog Armada (`/armada`)**:
+     - `← Kembali ke Beranda` | Breadcrumb: `Beranda / Daftar Armada`.
+  2. **Detail Mobil (`/mobil/{car}`)**:
+     - `← Kembali ke Daftar Armada` + Tautan cepat `Beranda` | Breadcrumb: `Beranda / Daftar Armada / [Nama Mobil]`.
+  3. **Form Pemesanan (`/pesan/{car}`)**:
+     - `← Kembali ke Detail Mobil` + Tautan cepat `Beranda` | Breadcrumb: `Beranda / Daftar Armada / [Nama Mobil] / Pesan Mobil`.
+  4. **Ringkasan Pesanan (`/pesan/{car}/ringkasan`)**:
+     - `← Kembali ke Form Pemesanan` + Tautan cepat `Beranda` | Breadcrumb: `Beranda / Daftar Armada / [Nama Mobil] / Ringkasan Pesanan`.
+  5. **Status & Detail Pesanan (`/pesanan/{booking}`)**:
+     - `← Kembali ke Beranda` | Breadcrumb: `Beranda / Cek Pesanan / [Kode Booking]`.
+  6. **Cek Status Pesanan (`/cek-pesanan`)**:
+     - `← Kembali ke Beranda` | Breadcrumb: `Beranda / Cek Pesanan`.
+  7. **Pembayaran Online (`/pesanan/{booking}/bayar`)**:
+     - `← Kembali ke Detail Pesanan` + Tautan cepat `Beranda` | Breadcrumb: `Beranda / Pesanan / Pembayaran Online`.
+  8. **Instruksi Pembayaran QRIS / VA (`/pesanan/{booking}/bayar/{payment}`)**:
+     - `← Kembali ke Detail Pesanan` + Tautan cepat `Beranda` | Breadcrumb: `Beranda / Pesanan / Instruksi Pembayaran`.
+  9. **Syarat & Ketentuan Sewa (`/syarat-sewa`)**:
+     - `← Kembali ke Beranda` | Breadcrumb: `Beranda / Syarat & Ketentuan`.
+  10. **Kontak & Lokasi Pool (`/kontak`)**:
+      - `← Kembali ke Beranda` | Breadcrumb: `Beranda / Kontak & Bantuan`.
+  11. **Masuk Member (`/member/login`) & Daftar Member (`/member/register`)**:
+      - `← Kembali ke Beranda` | Breadcrumb: `Beranda / Masuk Member` atau `Daftar Member`.
+  12. **Lupa Kata Sandi (`/forgot-password`) & Reset Sandi (`/reset-password`)**:
+      - `← Kembali ke Masuk Member` + Tautan cepat `Beranda` | Breadcrumb: `Beranda / Masuk Member / Lupa Sandi`.
+  13. **Dashboard Akun Member (`/member/akun`)**:
+      - `← Kembali ke Beranda` | Breadcrumb: `Beranda / Dashboard Member`.
+  14. **Ubah Profil Member (`/member/profil`)**:
+      - `← Kembali ke Dashboard Member` + Tautan cepat `Beranda` | Breadcrumb: `Beranda / Dashboard Member / Ubah Profil`.
+  15. **Kelola Dokumen e-KYC (`/member/dokumen`)**:
+      - `← Kembali ke Dashboard Member` + Tautan cepat `Beranda` | Breadcrumb: `Beranda / Dashboard Member / Verifikasi Dokumen`.
+  16. **Riwayat Pesanan Member (`/member/pesanan`)**:
+      - `← Kembali ke Dashboard Member` + Tautan cepat `Beranda` | Breadcrumb: `Beranda / Dashboard Member / Riwayat Pesanan`.
+  17. **Verifikasi Kontak WhatsApp (`/member/verifikasi-kontak`)**:
+      - `← Kembali ke Dashboard Member` + Tautan cepat `Beranda` | Breadcrumb: `Beranda / Dashboard / Verifikasi Kontak`.
+* **Hasil Verifikasi**:
+  - 100% lulus pengujian PHPUnit (73 test, 473 assertions). Halaman publik status HTTP 200 OK.
+
+
 
 
 

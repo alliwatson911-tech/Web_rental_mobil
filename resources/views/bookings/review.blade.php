@@ -2,6 +2,8 @@
 @section('title', 'Ringkasan Pesanan - Padaidi Rent Car')
 
 @section('content')
+<x-breadcrumb :back-url="route('bookings.create', ['car' => $car] + array_intersect_key($data, array_flip(['pickup_location_id', 'pickup_date', 'return_date'])))" back-text="Kembali ke Form Pemesanan" :crumbs="['Daftar Armada' => route('cars.index'), $car->name => route('cars.show', $car), 'Ringkasan Pesanan' => null]" />
+
 <ol class="mb-6 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-wider">
     <li class="badge bg-slate-800 text-slate-400 border border-slate-700 px-3 py-1">1. Isi pesanan</li>
     <li class="badge badge-accent px-3 py-1">2. Ringkasan</li>

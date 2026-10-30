@@ -2,8 +2,10 @@
 @section('title', 'Kontak & Lokasi Pool - Padaidi Rent Car')
 
 @section('content')
+<x-breadcrumb :crumbs="['Kontak & Bantuan' => null]" />
+
 <div class="mb-8">
-    <span class="section-kicker text-[#F5A623]">INFORMASI &amp; RESERVASI</span>
+    <span class="section-kicker">INFORMASI &amp; RESERVASI</span>
     <h1 class="section-title text-slate-900 mb-2">Kontak</h1>
     <p class="text-slate-600 text-sm max-w-2xl">
         Hubungi tim customer service dan operasional Padaidi Rent Car. Kami siap melayani kebutuhan konsultasi armada, konfirmasi booking mendesak, hingga antar jemput bandara 24 jam nonstop.
@@ -31,13 +33,13 @@
 
             <div>
                 <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Jam layanan:</span>
-                <p class="text-sm font-bold text-[#F5A623]">{{ $business['hours'] }} (Setiap Hari Termasuk Hari Libur)</p>
+                <p class="text-sm font-bold text-amber-800">{{ $business['hours'] }} (Setiap Hari Termasuk Hari Libur)</p>
             </div>
 
             <div>
                 <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Email Resmi:</span>
                 <p class="text-sm font-medium text-slate-800">
-                    <a class="text-amber-600 underline hover:text-amber-800" href="mailto:{{ $business['email'] }}">{{ $business['email'] }}</a>
+                    <a class="text-amber-700 underline hover:text-amber-900" href="mailto:{{ $business['email'] }}">{{ $business['email'] }}</a>
                 </p>
             </div>
         </div>

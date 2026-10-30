@@ -3,6 +3,8 @@
 
 @section('content')
 <div class="space-y-6">
+    <x-breadcrumb :crumbs="['Dashboard Member' => null]" />
+
     {{-- Header Profil & Tier --}}
     <div class="card card-accent-top p-6 md:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 bg-[#111827] border border-[#1e293b] text-white">
         <div class="flex items-center gap-4">

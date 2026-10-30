@@ -3,11 +3,7 @@
 
 @section('content')
 <div class="mx-auto max-w-2xl py-4">
-    <div class="mb-4">
-        <a href="{{ route('bookings.show', $booking) }}" class="text-xs font-bold uppercase tracking-wider text-amber-400 hover:text-amber-300">
-            &larr; Kembali ke Detail Pesanan ({{ $booking->code }})
-        </a>
-    </div>
+    <x-breadcrumb :back-url="route('bookings.show', $booking)" back-text="Kembali ke Detail Pesanan" :crumbs="['Pesanan' => route('bookings.show', $booking), 'Instruksi Pembayaran' => null]" />
 
     @if (session('success'))
         <div class="mb-6 rounded border border-emerald-500/50 bg-emerald-950/80 p-4 text-xs text-emerald-200 flex items-center gap-2">

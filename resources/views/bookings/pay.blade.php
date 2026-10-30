@@ -3,6 +3,8 @@
 
 @section('content')
 <div class="mx-auto max-w-3xl">
+    <x-breadcrumb :back-url="route('bookings.show', $booking)" back-text="Kembali ke Detail Pesanan" :crumbs="['Pesanan' => route('bookings.show', $booking), 'Pembayaran Online' => null]" />
+
     <div class="flex items-center justify-between pb-4 border-b border-[#1e293b] mb-6">
         <div>
             <a href="{{ route('bookings.show', $booking) }}" class="text-xs font-bold uppercase tracking-wider text-amber-400 hover:text-amber-300">

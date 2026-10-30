@@ -3,13 +3,10 @@
 
 @section('content')
 <div class="space-y-6">
+    <x-breadcrumb :back-url="route('member.account')" back-text="Kembali ke Dashboard Member" :crumbs="['Dashboard Member' => route('member.account'), 'Riwayat Pesanan' => null]" />
+
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <div class="flex items-center gap-2 text-xs text-slate-400 mb-1">
-                <a href="{{ route('member.dashboard') }}" class="hover:text-amber-400 transition-colors">Akun Saya</a>
-                <span>/</span>
-                <span class="text-slate-300 font-semibold">Riwayat Pesanan</span>
-            </div>
             <h1 class="text-2xl font-black uppercase text-white tracking-wide">Riwayat Pesanan Rental</h1>
             <p class="text-xs text-slate-400 mt-1">Daftar seluruh transaksi sewa mobil Anda di Padaidi Rent Car.</p>
         </div>
