@@ -46,7 +46,7 @@
         </p>
 
         <div class="mt-6 border-t border-slate-200 pt-4 text-center">
-            <a href="{{ route('admin.login') }}" class="text-xs text-slate-400 hover:text-amber-600 transition-colors">Masuk sebagai Pengelola / Admin ↗</a>
+            <a href="{{ route('admin.login') }}" class="text-xs text-slate-600 font-semibold hover:text-amber-700 transition-colors">Masuk sebagai Pengelola / Admin ↗</a>
         </div>
     </div>
 </div>

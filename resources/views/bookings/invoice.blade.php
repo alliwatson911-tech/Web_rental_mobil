@@ -44,9 +44,9 @@
                 </div>
             </div>
             <div class="text-right">
-                <span class="inline-block text-xs font-bold uppercase tracking-wider text-slate-400">FAKTUR SEWA / INVOICE</span>
+                <span class="inline-block text-xs font-bold uppercase tracking-wider text-slate-600">FAKTUR SEWA / INVOICE</span>
                 <p class="text-2xl font-extrabold text-slate-900 font-mono mt-0.5">INV-{{ $booking->code }}</p>
-                <p class="text-xs text-slate-500 mt-1">Tanggal: {{ tanggal($booking->created_at, 'd F Y') }}</p>
+                <p class="text-xs text-slate-600 mt-1">Tanggal: {{ tanggal($booking->created_at, 'd F Y') }}</p>
                 
                 {{-- Cap Status Pembayaran --}}
                 <div class="mt-2">
@@ -70,7 +70,7 @@
         {{-- Data Penyewa & Detail Sewa --}}
         <div class="grid grid-cols-2 gap-8 py-6 text-xs border-b border-slate-200">
             <div>
-                <h3 class="font-bold uppercase tracking-wider text-slate-400 mb-2">Tagihan Ditujukan Kepada:</h3>
+                <h3 class="font-bold uppercase tracking-wider text-slate-700 mb-2">Tagihan Ditujukan Kepada:</h3>
                 <p class="text-sm font-bold text-slate-900">{{ $booking->customer_name }}</p>
                 <p class="text-slate-600 mt-0.5">Telepon/WA: {{ $booking->customer_phone }}</p>
                 @if ($booking->member)
@@ -85,7 +85,7 @@
             </div>
 
             <div>
-                <h3 class="font-bold uppercase tracking-wider text-slate-400 mb-2">Detail Penggunaan Armada:</h3>
+                <h3 class="font-bold uppercase tracking-wider text-slate-700 mb-2">Detail Penggunaan Armada:</h3>
                 <p class="text-sm font-bold text-slate-900">{{ $booking->car->name }} ({{ $booking->car->license_plate ?: 'TBA' }})</p>
                 <p class="text-slate-600 mt-0.5">Kategori: {{ $booking->car->category->name }} · {{ ucfirst($booking->car->transmission) }}</p>
                 <p class="text-slate-600 mt-0.5">Lokasi Ambil: {{ $booking->pickupLocation->name }}</p>
@@ -182,7 +182,7 @@
 
         {{-- Riwayat Pembayaran --}}
         <div class="py-6 border-b border-slate-200">
-            <h3 class="font-bold uppercase tracking-wider text-slate-400 text-xs mb-3">Catatan Riwayat Pembayaran:</h3>
+            <h3 class="font-bold uppercase tracking-wider text-slate-700 text-xs mb-3">Catatan Riwayat Pembayaran:</h3>
             @if ($booking->payments->isNotEmpty())
                 <table class="w-full text-xs">
                     <thead>
@@ -235,7 +235,7 @@
                 </ol>
             </div>
             <div class="text-center flex flex-col items-center justify-end">
-                <p class="text-slate-400 text-[11px]">Makassar, {{ tanggal(now(), 'd F Y') }}</p>
+                <p class="text-slate-600 text-[11px]">Makassar, {{ tanggal(now(), 'd F Y') }}</p>
                 <div class="h-16 flex items-center justify-center font-serif text-brand-700 text-lg font-bold italic tracking-wider">
                     Padaidi Official
                 </div>

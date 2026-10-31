@@ -71,10 +71,6 @@
         @yield('content')
     </main>
 </div>
-        @include('partials.flash')
-        @yield('content')
-    </main>
-</div>
 @stack('scripts')
 </body>
 </html>
