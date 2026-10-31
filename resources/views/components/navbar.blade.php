@@ -1,4 +1,4 @@
-<header class="site-header sticky top-0 z-50 border-b border-[#1e293b] bg-[#0b1220]/95 backdrop-blur" style="position: sticky; top: 0; z-index: 1000;">
+<header class="site-header sticky top-0 z-50 border-b border-[#1e293b] bg-[#0b1220]/95 backdrop-blur" style="position: -webkit-sticky; position: sticky; top: 0; z-index: 1000;">
     <div class="site-container flex items-center justify-between py-3.5">
         {{-- Brand Logo & Name --}}
         <a href="{{ route('home') }}" class="flex items-center gap-3 text-decoration-none group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5A623] rounded p-1 shrink-0" aria-label="Padaidi Rent Car Beranda">

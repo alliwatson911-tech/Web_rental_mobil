@@ -34,18 +34,18 @@
         ['admin.members.logs', 'Audit Akses Dokumen', 'admin.members.logs'],
     ];
 @endphp
-<div class="md:flex">
-    <aside class="admin-sidebar bg-[#0b1220] border-r border-[#1e293b] text-slate-200 md:min-h-screen md:w-64 md:shrink-0" style="background-color: #0b1220; border-color: #1e293b;">
-        <div class="flex items-center justify-between px-4 py-4 border-b border-[#1e293b]">
+<div class="min-h-screen md:flex">
+    <aside class="admin-sidebar sticky top-0 z-50 bg-[#0b1220] border-b border-[#1e293b] text-slate-200 md:border-b-0 md:border-r md:min-h-screen md:w-64 md:shrink-0 md:h-screen md:overflow-y-auto" style="position: -webkit-sticky; position: sticky; top: 0; z-index: 1000; background-color: #0b1220; border-color: #1e293b;">
+        <div class="flex items-center justify-between px-4 py-3.5 border-b border-[#1e293b] bg-[#0b1220]">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2.5 text-xs font-black tracking-wider text-white uppercase whitespace-nowrap shrink-0">
                 <img src="{{ asset('images/brand/padaidi-logo.png') }}" alt="Padaidi Emblem" class="h-8 w-auto object-contain shrink-0" width="32" height="32" />
                 <span><span class="text-[#F5A623]">PADAIDI</span> ADMIN</span>
             </a>
-            <button type="button" class="md:hidden text-slate-400 hover:text-white p-2 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer" data-toggle="#admin-nav" aria-label="Menu" aria-controls="admin-nav" aria-expanded="false">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <button type="button" class="md:hidden text-slate-400 hover:text-white p-2 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer rounded border border-[#1e293b] bg-[#111827]" data-toggle="#admin-nav" aria-label="Menu Navigasi Admin" aria-controls="admin-nav" aria-expanded="false">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
         </div>
-        <nav id="admin-nav" class="hidden space-y-1 px-3 py-4 text-xs font-bold uppercase tracking-wider md:block">
+        <nav id="admin-nav" class="hidden space-y-1 px-3 py-4 text-xs font-bold uppercase tracking-wider md:block max-h-[calc(100dvh-65px)] overflow-y-auto">
             @foreach ($menu as [$route, $label, $patterns])
                 @php
                     $isActive = is_array($patterns) ? request()->routeIs(...$patterns) : request()->routeIs($patterns);
