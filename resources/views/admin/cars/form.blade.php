@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('title', $car->exists ? 'Ubah mobil: '.$car->name : 'Tambah mobil')
 
+@section('actions')
+    <a href="{{ route('admin.cars.index') }}" class="btn btn-outline text-xs">&larr; Kembali ke Daftar Armada</a>
+@endsection
+
 @section('content')
 <form method="POST" enctype="multipart/form-data" action="{{ $car->exists ? route('admin.cars.update', $car) : route('admin.cars.store') }}" class="card space-y-4 p-5 md:p-6 bg-[#111827] border border-[#1e293b]">
     @csrf

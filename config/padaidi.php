@@ -14,6 +14,8 @@ return [
     'address' => env('PADAIDI_ADDRESS', 'Jl. Perintis Kemerdekaan No.1, Daya, Kec. Biringkanaya, Kota Makassar, Sulawesi Selatan'),
     'hours' => env('PADAIDI_HOURS', 'Buka 24 jam'),
     'email' => env('PADAIDI_EMAIL', 'info@padaidi.test'),
+    'instagram' => env('PADAIDI_INSTAGRAM', 'https://www.instagram.com/cv.padaidirentcarmks/'),
+    'instagram_handle' => env('PADAIDI_INSTAGRAM_HANDLE', '@cv.padaidirentcarmks'),
 
     // Nomor WhatsApp admin, format internasional tanpa tanda + (contoh: 6282197233174).
     'admin_whatsapp' => array_values(array_filter(array_map(

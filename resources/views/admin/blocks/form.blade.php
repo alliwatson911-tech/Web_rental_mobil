@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('title', $block->exists ? 'Ubah jadwal servis' : 'Tambah jadwal servis')
 
+@section('actions')
+    <a href="{{ route('admin.blocks.index') }}" class="btn btn-outline text-xs">&larr; Kembali ke Jadwal Servis</a>
+@endsection
+
 @section('content')
 <form method="POST" action="{{ $block->exists ? route('admin.blocks.update', $block) : route('admin.blocks.store') }}" class="card max-w-xl space-y-4 p-5 md:p-6 bg-[#111827] border border-[#1e293b]">
     @csrf

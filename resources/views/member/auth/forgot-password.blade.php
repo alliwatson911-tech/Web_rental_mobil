@@ -25,8 +25,8 @@
             <button type="submit" class="btn btn-primary w-full py-3 font-extrabold uppercase tracking-wider text-xs shadow-md">Kirim Tautan Pemulihan</button>
         </form>
 
-        <div class="mt-6 text-center border-t border-slate-200 pt-4">
-            <a href="{{ route('login') }}" class="text-sm font-bold text-amber-600 hover:text-amber-800 hover:underline">← Kembali ke Halaman Masuk</a>
+        <div class="mt-6 text-center border-t border-slate-200 pt-4 text-sm text-slate-500">
+            Sudah ingat kata sandi Anda? <a href="{{ route('login') }}" class="font-bold text-amber-600 hover:text-amber-800 hover:underline">Masuk di sini</a>
         </div>
     </div>
 </div>

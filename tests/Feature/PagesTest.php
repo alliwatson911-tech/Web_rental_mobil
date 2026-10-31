@@ -35,7 +35,12 @@ class PagesTest extends TestCase
         $this->get(route('cars.show', $car))->assertOk()->assertSee($car->name);
         $this->get(route('cars.show', ['car' => $car, 'pickup_date' => $this->day(20), 'return_date' => $this->day(22)]))->assertOk()->assertSee('Tersedia untuk');
         $this->get(route('terms'))->assertOk()->assertSee('Deposit')->assertSee('Batas kilometer');
-        $this->get(route('contact'))->assertOk()->assertSee('wa.me/6282197233174', false)->assertSee('wa.me/6282235585445', false);
+        $this->get(route('contact'))
+            ->assertOk()
+            ->assertSee('wa.me/6282197233174', false)
+            ->assertSee('wa.me/6282235585445', false)
+            ->assertSee('instagram.com/cv.padaidirentcarmks', false)
+            ->assertSee('@cv.padaidirentcarmks');
         $this->get(route('bookings.create', ['car' => $car, 'pickup_date' => $this->day(20), 'return_date' => $this->day(22)]))->assertOk()->assertSee('Lihat ringkasan');
         $this->get(route('bookings.lookup'))->assertOk();
     }

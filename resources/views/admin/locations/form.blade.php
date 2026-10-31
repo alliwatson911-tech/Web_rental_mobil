@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('title', $location->exists ? 'Ubah lokasi' : 'Tambah lokasi')
 
+@section('actions')
+    <a href="{{ route('admin.locations.index') }}" class="btn btn-outline text-xs">&larr; Kembali ke Daftar Lokasi</a>
+@endsection
+
 @section('content')
 <form method="POST" action="{{ $location->exists ? route('admin.locations.update', $location) : route('admin.locations.store') }}" class="card max-w-xl space-y-4 p-5 md:p-6 bg-[#111827] border border-[#1e293b]">
     @csrf

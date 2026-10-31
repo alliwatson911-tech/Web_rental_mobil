@@ -98,6 +98,12 @@
                             {{ $business['email'] ?? 'info@padaidirentcar.com' }}
                         </a>
                     </div>
+                    <div class="flex items-center gap-2.5">
+                        <x-icon name="instagram" class="w-4 h-4 text-[#F5A623] shrink-0" />
+                        <a href="{{ $business['instagram'] ?? 'https://www.instagram.com/cv.padaidirentcarmks/' }}" target="_blank" rel="noopener noreferrer" class="hover:text-[#F5A623] transition font-bold text-[#f8fafc]">
+                            {{ $business['instagram_handle'] ?? '@cv.padaidirentcarmks' }} ↗
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

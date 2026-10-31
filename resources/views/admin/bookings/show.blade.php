@@ -7,7 +7,10 @@
 @endphp
 
 @section('actions')
-    @include('partials.status-badge', ['status' => $booking->status])
+    <div class="flex items-center gap-2">
+        <a href="{{ route('admin.bookings.index') }}" class="btn btn-outline text-xs">&larr; Kembali ke Daftar Pesanan</a>
+        @include('partials.status-badge', ['status' => $booking->status])
+    </div>
 @endsection
 
 @section('content')

@@ -8,7 +8,14 @@
 @endphp
 
 @section('content')
-<x-breadcrumb :back-url="route('home')" back-text="Kembali ke Beranda" :crumbs="['Daftar Armada' => route('cars.index'), 'Pesanan '.$booking->code => null]" />
+@php
+    $showBackUrl = auth()->check() ? route('member.bookings') : route('bookings.lookup');
+    $showBackText = auth()->check() ? 'Kembali ke Riwayat Pesanan' : 'Kembali ke Cek Pesanan';
+    $showCrumbs = auth()->check()
+        ? ['Dashboard Member' => route('member.account'), 'Riwayat Pesanan' => route('member.bookings'), 'Pesanan '.$booking->code => null]
+        : ['Cek Pesanan' => route('bookings.lookup'), 'Pesanan '.$booking->code => null];
+@endphp
+<x-breadcrumb :back-url="$showBackUrl" :back-text="$showBackText" :crumbs="$showCrumbs" />
 
 <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200 mb-6">
     <div>

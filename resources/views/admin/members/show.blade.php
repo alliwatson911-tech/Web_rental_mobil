@@ -2,7 +2,7 @@
 @section('title', 'Detail Member: ' . $member->name)
 @section('actions')
     <div class="flex items-center gap-2">
-        <a href="{{ route('admin.members.index') }}" class="btn btn-outline text-xs">&larr; Kembali ke Daftar</a>
+        <a href="{{ route('admin.members.index') }}" class="btn btn-outline text-xs">&larr; Kembali ke Daftar Member</a>
         <form method="POST" action="{{ route('admin.members.status.toggle', $member) }}" class="inline"
               data-confirm="Apakah Anda yakin ingin {{ $profile->is_active ? 'menonaktifkan' : 'mengaktifkan kembali' }} akun member ini?">
             @csrf

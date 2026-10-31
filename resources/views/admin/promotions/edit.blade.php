@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Ubah Promo: ' . $promotion->name)
 @section('actions')
-    <a href="{{ route('admin.promotions.index') }}" class="btn btn-outline text-xs">&larr; Kembali ke Daftar</a>
+    <a href="{{ route('admin.promotions.index') }}" class="btn btn-outline text-xs">&larr; Kembali ke Daftar Promo</a>
 @endsection
 
 @section('content')

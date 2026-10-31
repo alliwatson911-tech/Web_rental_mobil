@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('title', $addon->exists ? 'Ubah tambahan' : 'Tambah tambahan')
 
+@section('actions')
+    <a href="{{ route('admin.addons.index') }}" class="btn btn-outline text-xs">&larr; Kembali ke Daftar Tambahan</a>
+@endsection
+
 @section('content')
 <form method="POST" action="{{ $addon->exists ? route('admin.addons.update', $addon) : route('admin.addons.store') }}" class="card max-w-xl space-y-4 p-5 md:p-6 bg-[#111827] border border-[#1e293b]">
     @csrf

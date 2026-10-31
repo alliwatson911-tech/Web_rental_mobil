@@ -7,10 +7,7 @@
 
     <div class="flex items-center justify-between pb-4 border-b border-slate-200 mb-6">
         <div>
-            <a href="{{ route('bookings.show', $booking) }}" class="text-xs font-bold uppercase tracking-wider text-amber-700 hover:text-amber-800">
-                &larr; Kembali ke Detail Pesanan
-            </a>
-            <h1 class="mt-2 text-2xl font-black uppercase text-slate-900 tracking-wide">Pembayaran Online Otomatis</h1>
+            <h1 class="text-2xl font-black uppercase text-slate-900 tracking-wide">Pembayaran Online Otomatis</h1>
             <p class="text-xs text-slate-600 mt-0.5">Pilih metode pembayaran QRIS atau Virtual Account bank untuk verifikasi instan 24 jam.</p>
         </div>
         <span class="badge badge-accent font-mono text-sm py-1.5 px-3">

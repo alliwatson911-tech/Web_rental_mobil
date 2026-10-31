@@ -1,19 +1,15 @@
 @extends('layouts.admin')
-@section('title', 'Kelola Transaksi & Pembayaran')
+@section('title', 'Transaksi & Pembayaran')
+
+@section('actions')
+    <a href="{{ route('admin.payments.export', request()->query()) }}" class="btn btn-outline text-xs flex items-center gap-1.5 py-2 min-h-[44px]">
+        <x-icon name="download" class="w-4 h-4 text-amber-400" />
+        <span class="font-bold">Ekspor Data (CSV)</span>
+    </a>
+@endsection
 
 @section('content')
-<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-    <div>
-        <h1 class="text-2xl font-black uppercase text-white tracking-wide">Transaksi &amp; Pembayaran</h1>
-        <p class="text-xs text-slate-400 mt-0.5">Monitoring pembayaran gateway (QRIS, VA Bank), mutasi transfer manual, dan kelola refund.</p>
-    </div>
-    <div class="flex items-center gap-2">
-        <a href="{{ route('admin.payments.export', request()->query()) }}" class="btn btn-outline text-xs flex items-center gap-1.5 py-2 min-h-[44px]">
-            <x-icon name="download" class="w-4 h-4 text-amber-400" />
-            <span class="font-bold">Ekspor Data (CSV)</span>
-        </a>
-    </div>
-</div>
+<p class="text-xs text-slate-400 -mt-3 mb-6">Monitoring pembayaran gateway (QRIS, VA Bank), mutasi transfer manual, dan kelola refund.</p>
 
 {{-- Kartu Ringkasan Metrik --}}
 <div class="grid gap-4 sm:grid-cols-3 mb-6">

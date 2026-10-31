@@ -30,8 +30,8 @@
             <button type="submit" class="btn btn-primary w-full py-3 font-extrabold uppercase tracking-wider text-xs shadow-md">Verifikasi Sekarang</button>
         </form>
 
-        <div class="mt-6 text-center border-t border-slate-200 pt-4">
-            <a href="{{ route('member.account') }}" class="text-sm font-bold text-amber-600 hover:text-amber-800 hover:underline">← Kembali ke Akun Saya</a>
+        <div class="mt-6 text-center border-t border-slate-200 pt-4 text-xs text-slate-500">
+            Ingin verifikasi nanti? <a href="{{ route('member.account') }}" class="font-bold text-amber-600 hover:text-amber-800 hover:underline">Lewati ke Dashboard</a>
         </div>
     </div>
 </div>

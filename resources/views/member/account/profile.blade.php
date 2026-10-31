@@ -6,13 +6,10 @@
     <x-breadcrumb :back-url="route('member.account')" back-text="Kembali ke Dashboard Member" :crumbs="['Dashboard Member' => route('member.account'), 'Ubah Profil' => null]" />
 
     <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-200 shadow-sm">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
-            <div>
-                <span class="section-kicker mb-1">AKUN SAYA</span>
-                <h1 class="text-xl font-black uppercase text-slate-900 tracking-wide">Ubah Profil Keanggotaan</h1>
-                <p class="text-xs text-slate-600 mt-0.5">Perbarui informasi kontak dan data diri resmi Anda.</p>
-            </div>
-            <a href="{{ route('member.account') }}" class="btn btn-outline text-xs py-1.5 px-3 uppercase font-bold">← Kembali</a>
+        <div class="pb-4 border-b border-slate-200">
+            <span class="section-kicker mb-1">AKUN SAYA</span>
+            <h1 class="text-xl font-black uppercase text-slate-900 tracking-wide">Ubah Profil Keanggotaan</h1>
+            <p class="text-xs text-slate-600 mt-0.5">Perbarui informasi kontak dan data diri resmi Anda.</p>
         </div>
 
         <form method="POST" action="{{ route('member.profile.update') }}" class="mt-6 space-y-4">

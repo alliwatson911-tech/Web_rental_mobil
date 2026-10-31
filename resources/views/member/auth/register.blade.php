@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="mx-auto max-w-md py-6 px-4">
-    <x-breadcrumb :crumbs="['Daftar Member' => null]" />
+    <x-breadcrumb :back-url="route('login')" back-text="Kembali ke Masuk Member" :crumbs="['Masuk Member' => route('login'), 'Daftar Member' => null]" />
 
     <div class="card card-accent-top p-8 shadow-sm border border-slate-200 bg-white relative">
         <div class="text-center">

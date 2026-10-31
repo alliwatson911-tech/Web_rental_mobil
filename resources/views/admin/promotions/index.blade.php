@@ -3,7 +3,7 @@
 @section('actions')
     <div class="flex items-center gap-2">
         <a href="{{ route('admin.promotions.report') }}" class="btn btn-outline text-xs flex items-center gap-1.5">
-            <x-icon name="chart-bar" class="w-4 h-4 text-slate-700" />
+            <x-icon name="chart-bar" class="w-4 h-4 text-amber-400" />
             <span>Laporan Pemakaian</span>
         </a>
         <a href="{{ route('admin.promotions.create') }}" class="btn btn-primary text-xs">+ Tambah Promo Baru</a>
