@@ -78,7 +78,8 @@
                 data-toggle="#nav-mobile" 
                 aria-controls="nav-mobile"
                 aria-label="Buka navigasi menu"
-                aria-expanded="false">
+                aria-expanded="false"
+                onclick="const d = document.getElementById('nav-mobile'); if (d) { d.classList.toggle('hidden'); const o = document.getElementById('icon-menu-open'); const c = document.getElementById('icon-menu-close'); if (o && c) { o.classList.toggle('hidden'); c.classList.toggle('hidden'); } }">
             <svg id="icon-menu-open" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <svg id="icon-menu-close" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>

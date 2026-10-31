@@ -114,7 +114,7 @@
 html {
     scroll-behavior: smooth;
     color-scheme: dark;
-    overflow-x: clip;
+    overflow-x: visible;
 }
 
 body.theme-padaidi {
@@ -128,7 +128,7 @@ body.theme-padaidi {
     min-height: 100dvh;
     padding-left: var(--safe-area-left, 0px);
     padding-right: var(--safe-area-right, 0px);
-    overflow-x: clip;
+    overflow-x: visible;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -1307,9 +1307,20 @@ details.faq-item .faq-body {
    Additive rules strictly protecting desktop contracts (>= 768px untouched)
    ========================================================================== */
 @media (max-width: 767px) {
-    /* 1. Prevent accidental horizontal scroll & constrain max viewport width without breaking position: sticky */
-    html, body {
-        overflow-x: clip !important;
+    /* 1. Ensure root viewport has pure visible overflow for 100% reliable position: sticky */
+    html {
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+    }
+
+    body,
+    body.theme-padaidi,
+    body.theme-admin {
+        display: block !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+        position: relative !important;
+        width: 100% !important;
         max-width: 100% !important;
     }
 
@@ -1320,7 +1331,24 @@ details.faq-item .faq-body {
         position: -webkit-sticky !important;
         position: sticky !important;
         top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
         z-index: 1000 !important;
+        margin: 0 !important;
+    }
+
+    /* Contain horizontal overflow safely on main and footer, leaving header unconstrained */
+    main,
+    main#main-content,
+    #main-content,
+    footer,
+    footer[role="contentinfo"] {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: clip !important;
+        position: relative !important;
     }
 
     /* Mobile Drawer Max Height & Scroll */

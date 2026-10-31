@@ -32,7 +32,7 @@
 
     {{-- Asset Stylesheets --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}?v={{ filemtime(public_path('css/design-system.css')) }}">
 </head>
 <body class="theme-padaidi flex min-h-screen flex-col bg-white font-sans text-slate-800 antialiased">
     {{-- Accessibility Skip Link --}}
@@ -42,7 +42,7 @@
     <x-navbar />
 
     {{-- Main Page Content --}}
-    <main id="main-content" class="flex-1 bg-white" style="position: relative; z-index: 1;">
+    <main id="main-content" class="flex-1 bg-white" style="position: relative; z-index: 1; overflow-x: clip; max-width: 100%;">
         @hasSection('hero')
             @yield('hero')
         @endif
