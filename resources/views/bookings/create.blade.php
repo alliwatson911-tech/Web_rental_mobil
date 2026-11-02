@@ -10,7 +10,7 @@
     <li class="badge bg-slate-100 text-slate-600 border border-slate-200 px-3 py-1">3. Selesai</li>
 </ol>
 
-<form method="POST" action="{{ route('bookings.review', $car) }}" class="grid gap-6 lg:grid-cols-3 items-start pb-24 lg:pb-0" id="booking-form">
+<form method="POST" action="{{ route('bookings.review', $car) }}" class="grid gap-6 lg:grid-cols-3 items-start pb-32 lg:pb-0" id="booking-form">
     @csrf
     <div class="space-y-6 lg:col-span-2">
         {{-- Jadwal & Lokasi --}}
@@ -39,7 +39,7 @@
             </div>
             <div class="mt-4" id="delivery-address-wrap">
                 <label class="label text-slate-700 font-bold" for="delivery_address">Alamat antar (wajib bila memilih "antar ke alamat")</label>
-                <input class="input" id="delivery_address" name="delivery_address" value="{{ old('delivery_address') }}" placeholder="Nama jalan, nomor rumah/kantor, kelurahan, patokan" maxlength="255">
+                <input class="input" id="delivery_address" name="delivery_address" value="{{ old('delivery_address', $prefill['delivery_address'] ?? '') }}" placeholder="Nama jalan, nomor rumah/kantor, kelurahan, patokan" maxlength="255">
                 @error('delivery_address')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
                 <p class="mt-1.5 text-xs text-slate-500">Biaya antar-jemput otomatis ditambahkan bila memilih lokasi antar ke alamat.</p>
             </div>
@@ -54,7 +54,7 @@
                     <label class="flex cursor-pointer items-start gap-3 rounded bg-slate-50 border border-slate-200 p-3.5 hover:border-slate-300 transition-colors">
                         <input type="checkbox" class="mt-1 rounded border-slate-300 text-[#F5A623] focus:ring-[#F5A623]" name="addons[]" value="{{ $addon->id }}"
                                data-price="{{ $addon->price }}" data-type="{{ $addon->charge_type }}" data-code="{{ $addon->code }}"
-                               @checked(in_array($addon->id, old('addons', [])))>
+                               @checked(in_array($addon->id, old('addons', $prefill['addons'] ?? [])))>
                         <span class="flex-1">
                             <span class="font-bold text-slate-900 text-sm">{{ $addon->name }}</span>
                             <span class="text-xs font-black text-amber-700 ml-2">· {{ rupiah($addon->price) }} {{ $addon->chargeLabel() }}</span>
@@ -86,8 +86,8 @@
             <div class="mt-3">
                 <input class="input font-mono uppercase max-w-xs text-sm tracking-wider font-bold" 
                        id="promo_code" name="promo_code" 
-                       value="{{ old('promo_code', request('promo_code')) }}" 
-                       placeholder="Contoh: HEMAT50K"
+                       value="{{ old('promo_code', $prefill['promo_code'] ?? request('promo_code')) }}" 
+                       placeholder="CONTOH: HEMAT50K"
                        maxlength="50"
                        autocomplete="off">
                 @error('promo_code')
@@ -102,26 +102,26 @@
             <div class="grid gap-4 md:grid-cols-2">
                 <div>
                     <label class="label text-slate-700 font-bold" for="customer_name">Nama lengkap (sesuai KTP)</label>
-                    <input class="input" id="customer_name" name="customer_name" value="{{ old('customer_name', auth()->user()?->name) }}" required maxlength="100">
+                    <input class="input" id="customer_name" name="customer_name" value="{{ old('customer_name', $prefill['customer_name'] ?? auth()->user()?->name) }}" required maxlength="100">
                     @error('customer_name')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="label text-slate-700 font-bold" for="customer_phone">Nomor HP/WhatsApp</label>
-                    <input class="input" id="customer_phone" name="customer_phone" value="{{ old('customer_phone', auth()->user()?->phone) }}" required inputmode="tel" placeholder="08xxxxxxxxxx" maxlength="20">
+                    <input class="input" id="customer_phone" name="customer_phone" value="{{ old('customer_phone', $prefill['customer_phone'] ?? auth()->user()?->phone) }}" required inputmode="tel" placeholder="08xxxxxxxxxx" maxlength="20">
                     @error('customer_phone')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="label text-slate-700 font-bold" for="customer_email">Email (opsional)</label>
-                    <input class="input" type="email" id="customer_email" name="customer_email" value="{{ old('customer_email', auth()->user()?->email) }}" maxlength="150">
+                    <input class="input" type="email" id="customer_email" name="customer_email" value="{{ old('customer_email', $prefill['customer_email'] ?? auth()->user()?->email) }}" maxlength="150">
                     @error('customer_email')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="label text-slate-700 font-bold" for="customer_address">Alamat domisili (opsional)</label>
-                    <input class="input" id="customer_address" name="customer_address" value="{{ old('customer_address', auth()->user()?->memberProfile?->address) }}" maxlength="255">
+                    <input class="input" id="customer_address" name="customer_address" value="{{ old('customer_address', $prefill['customer_address'] ?? auth()->user()?->memberProfile?->address) }}" maxlength="255">
                 </div>
                 <div class="md:col-span-2">
                     <label class="label text-slate-700 font-bold" for="notes">Catatan (opsional)</label>
-                    <textarea class="input" id="notes" name="notes" rows="2" maxlength="500" placeholder="Mis. jam ambil, nomor penerbangan pesawat">{{ old('notes') }}</textarea>
+                    <textarea class="input" id="notes" name="notes" rows="2" maxlength="500" placeholder="Mis. jam ambil, nomor penerbangan pesawat">{{ old('notes', $prefill['notes'] ?? '') }}</textarea>
                 </div>
             </div>
             <label class="mt-5 flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">

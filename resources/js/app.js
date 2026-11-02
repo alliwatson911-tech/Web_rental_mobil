@@ -175,3 +175,37 @@ document.addEventListener('submit', (e) => {
         initDatePickers();
     }
 })();
+
+// Proteksi Double Submit & Feedback Loading State (F2-UI-01)
+document.addEventListener('submit', (e) => {
+    const form = e.target;
+    if (form.dataset.noDisable || e.defaultPrevented) return;
+
+    const submitBtn = form.querySelector('button[type="submit"]:not([data-no-disable])');
+    if (submitBtn && !submitBtn.disabled) {
+        setTimeout(() => {
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            const processingText = submitBtn.dataset.loadingText || 'Memproses...';
+            submitBtn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-current inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+                <span>${processingText}</span>
+            `;
+        }, 10);
+    }
+});
+
+// Auto Uppercase untuk Input Kode Promo (F1-TXT-02)
+document.addEventListener('input', (e) => {
+    if (e.target && (e.target.name === 'promo_code' || e.target.id === 'promo_code')) {
+        const start = e.target.selectionStart;
+        const end = e.target.selectionEnd;
+        e.target.value = e.target.value.toUpperCase();
+        if (start !== null && end !== null) {
+            e.target.setSelectionRange(start, end);
+        }
+    }
+});

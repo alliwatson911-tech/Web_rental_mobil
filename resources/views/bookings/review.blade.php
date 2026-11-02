@@ -149,10 +149,12 @@
         </form>
 
         <form method="GET" action="{{ route('bookings.create', $car) }}" class="mt-2.5">
-            <input type="hidden" name="pickup_location_id" value="{{ $data['pickup_location_id'] }}">
-            <input type="hidden" name="pickup_date" value="{{ $data['pickup_date'] }}">
-            <input type="hidden" name="return_date" value="{{ $data['return_date'] }}">
-            @if (! empty($data['promo_code']))<input type="hidden" name="promo_code" value="{{ $data['promo_code'] }}">@endif
+            @foreach (['pickup_location_id', 'pickup_date', 'return_date', 'delivery_address', 'customer_name', 'customer_phone', 'customer_email', 'customer_address', 'notes', 'promo_code'] as $field)
+                @if (! empty($data[$field]))<input type="hidden" name="{{ $field }}" value="{{ $data[$field] }}">@endif
+            @endforeach
+            @foreach ($data['addons'] ?? [] as $addonId)
+                <input type="hidden" name="addons[]" value="{{ $addonId }}">
+            @endforeach
             <button class="btn btn-outline w-full py-2 text-xs uppercase font-bold tracking-wider">
                 Ubah pesanan
             </button>

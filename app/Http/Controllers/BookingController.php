@@ -40,7 +40,11 @@ class BookingController extends Controller
             'car' => $car,
             'locations' => Location::active()->orderBy('id')->get(),
             'addons' => Addon::active()->orderBy('id')->get(),
-            'prefill' => $request->only(['pickup_location_id', 'pickup_date', 'return_date']),
+            'prefill' => $request->only([
+                'pickup_location_id', 'pickup_date', 'return_date',
+                'delivery_address', 'customer_name', 'customer_phone',
+                'customer_email', 'customer_address', 'notes', 'promo_code', 'addons',
+            ]),
         ]);
     }
 
@@ -269,8 +273,18 @@ class BookingController extends Controller
 
     protected function hasAccess(Request $request, Booking $booking): bool
     {
-        return in_array($booking->code, $request->session()->get('booking_access', []), true)
-            || (bool) $request->user()?->isAdmin();
+        if ($request->user() && $request->user()->isAdmin()) {
+            return true;
+        }
+
+        if ($request->user() && (
+            $request->user()->id === $booking->member_id ||
+            $request->user()->id === $booking->user_id
+        )) {
+            return true;
+        }
+
+        return in_array($booking->code, $request->session()->get('booking_access', []), true);
     }
 
     protected function samePhone(string $a, string $b): bool

@@ -1,5 +1,5 @@
 {{-- Form pencarian: lokasi ambil, tanggal ambil, tanggal kembali (+ kategori opsional) --}}
-<form method="GET" action="{{ route('cars.index') }}" class="grid gap-4 {{ ($withCategory ?? false) ? 'md:grid-cols-5' : 'md:grid-cols-4' }} items-end">
+<form method="GET" action="{{ route('cars.index') }}" class="grid gap-4 sm:grid-cols-2 {{ ($withCategory ?? false) ? 'lg:grid-cols-5' : 'lg:grid-cols-4' }} items-end">
     <div>
         <label class="label text-slate-700 font-bold flex items-center gap-1.5 mb-1.5 text-xs uppercase tracking-wider" for="pickup_location_id">
             <x-icon name="map-pin" class="w-3.5 h-3.5 text-[#F5A623]" />
