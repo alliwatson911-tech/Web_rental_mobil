@@ -1534,20 +1534,21 @@ body.theme-admin aside nav a[class*="bg-[#F5A623]"] {
 }
 
 body.theme-admin main {
-    background-color: #0b1220 !important;
-    color: #f8fafc !important;
+    background-color: #f8fafc !important;
+    color: #1e293b !important;
 }
 
 body.theme-admin h1,
 body.theme-admin h2,
 body.theme-admin h3 {
-    color: #ffffff !important;
+    color: #0f172a !important;
 }
 
 body.theme-admin .card {
-    background-color: #111827 !important;
-    border-color: #1e293b !important;
-    color: #f8fafc !important;
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06) !important;
 }
 
 body.theme-admin .card.card-accent-top {
@@ -1564,15 +1565,15 @@ body.theme-admin input[type="tel"],
 body.theme-admin input[type="date"],
 body.theme-admin select,
 body.theme-admin textarea {
-    background-color: #0b1220 !important;
-    border-color: #334155 !important;
-    color: #ffffff !important;
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
 }
 
 body.theme-admin .input::placeholder,
 body.theme-admin input::placeholder,
 body.theme-admin textarea::placeholder {
-    color: #64748b !important;
+    color: #94a3b8 !important;
 }
 
 body.theme-admin .input:focus,
@@ -1585,43 +1586,44 @@ body.theme-admin textarea:focus {
 }
 
 body.theme-admin .label {
-    color: #cbd5e1 !important;
+    color: #334155 !important;
     font-weight: 700 !important;
 }
 
 /* Tables */
 body.theme-admin .table-base {
     width: 100% !important;
-    color: #e2e8f0 !important;
+    color: #1e293b !important;
+    background-color: #ffffff !important;
 }
 
 body.theme-admin .table-base th {
-    background-color: #0b1220 !important;
-    color: #F5A623 !important;
-    border-bottom: 2px solid #1e293b !important;
+    background-color: #f8fafc !important;
+    color: #334155 !important;
+    border-bottom: 2px solid #e2e8f0 !important;
     font-weight: 800 !important;
     letter-spacing: 0.05em !important;
 }
 
 body.theme-admin .table-base td {
-    border-bottom: 1px solid #1e293b !important;
-    color: #cbd5e1 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    color: #334155 !important;
 }
 
 body.theme-admin .table-base tr:hover td {
-    background-color: rgba(30, 41, 59, 0.45) !important;
+    background-color: rgba(245, 166, 35, 0.06) !important;
 }
 
 /* Buttons */
 body.theme-admin .btn-outline {
-    background-color: transparent !important;
-    border-color: #334155 !important;
-    color: #cbd5e1 !important;
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #334155 !important;
 }
 
 body.theme-admin .btn-outline:hover {
-    border-color: #F5A623 !important;
-    color: #F5A623 !important;
+    border-color: #d97706 !important;
+    color: #d97706 !important;
     background-color: rgba(245, 166, 35, 0.08) !important;
 }
 
@@ -1638,34 +1640,50 @@ body.theme-admin .btn-primary:hover {
 }
 
 /* High-Contrast Color Normalization inside Admin */
-body.theme-admin .text-slate-900,
-body.theme-admin .text-slate-800,
-body.theme-admin .text-slate-700 {
-    color: #f8fafc !important;
+body.theme-admin .text-slate-900 {
+    color: #0f172a !important;
 }
-
-body.theme-admin .text-slate-600,
+body.theme-admin .text-slate-800 {
+    color: #1e293b !important;
+}
+body.theme-admin .text-slate-700 {
+    color: #334155 !important;
+}
+body.theme-admin .text-slate-600 {
+    color: #475569 !important;
+}
 body.theme-admin .text-slate-500 {
+    color: #64748b !important;
+}
+body.theme-admin .text-slate-400 {
     color: #94a3b8 !important;
 }
 
-body.theme-admin .text-slate-400 {
-    color: #cbd5e1 !important;
+body.theme-admin .border-slate-100 {
+    border-color: #f1f5f9 !important;
 }
-
-body.theme-admin .border-slate-100,
-body.theme-admin .border-slate-200,
+body.theme-admin .border-slate-200 {
+    border-color: #e2e8f0 !important;
+}
 body.theme-admin .border-slate-300 {
-    border-color: #1e293b !important;
+    border-color: #cbd5e1 !important;
 }
 
 body.theme-admin .bg-white {
-    background-color: #111827 !important;
+    background-color: #ffffff !important;
 }
 
-body.theme-admin .bg-slate-50,
+body.theme-admin .bg-slate-50 {
+    background-color: #f8fafc !important;
+}
 body.theme-admin .bg-slate-100 {
-    background-color: #0b1220 !important;
+    background-color: #f1f5f9 !important;
+}
+
+/* Guard: Prevent white text on white background inside cards and tables */
+body.theme-admin .card .text-white:not(.btn):not(.badge),
+body.theme-admin table .text-white:not(.btn):not(.badge) {
+    color: #0f172a !important;
 }
 
 /* ==========================================================================

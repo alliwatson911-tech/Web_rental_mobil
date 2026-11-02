@@ -18,7 +18,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/design-system.css') }}?v={{ filemtime(public_path('css/design-system.css')) }}">
 </head>
-<body class="theme-admin min-h-screen bg-[#0b1220] font-sans text-slate-100 antialiased" style="background-color: #0b1220; color: #f8fafc;">
+<body class="theme-admin min-h-screen bg-slate-50 font-sans text-slate-800 antialiased" style="background-color: #f8fafc; color: #1e293b;">
 @php
     $menu = [
         ['admin.dashboard', 'Dasbor', 'admin.dashboard'],
@@ -62,9 +62,9 @@
             </div>
         </nav>
     </aside>
-    <main class="flex-1 p-4 md:p-8 bg-[#0b1220]" style="background-color: #0b1220;">
+    <main class="flex-1 p-4 md:p-8 bg-slate-50" style="background-color: #f8fafc; min-height: 100vh;">
         <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-            <h1 class="text-2xl font-black uppercase tracking-wide text-white">@yield('title', 'Dasbor')</h1>
+            <h1 class="text-2xl font-black uppercase tracking-wide text-slate-900">@yield('title', 'Dasbor')</h1>
             @yield('actions')
         </div>
         @include('partials.flash')

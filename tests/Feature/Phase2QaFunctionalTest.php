@@ -252,6 +252,37 @@ class Phase2QaFunctionalTest extends TestCase
     }
 
     /**
+     * UJI HALAMAN ADMIN TRANSAKSI & PEMBAYARAN:
+     * Memastikan halaman dapat diakses admin dengan filter tanggal dan tabel sejajar.
+     */
+    public function test_admin_dapat_melihat_halaman_pembayaran_dengan_filter_tanggal(): void
+    {
+        $admin = User::factory()->admin()->create();
+
+        $booking = Booking::factory()->create([
+            'car_id' => $this->car->id,
+            'status' => BookingStatus::Confirmed,
+        ]);
+
+        $payment = $booking->payments()->create([
+            'reference_id' => 'TRX-TEST-2026',
+            'amount' => 700000,
+            'channel' => 'manual_transfer',
+            'status' => 'pending',
+            'created_at' => now(),
+        ]);
+
+        $response = $this->actingAs($admin)->get(route('admin.payments.index', [
+            'start_date' => now()->subDay()->toDateString(),
+        ]));
+
+        $response->assertOk();
+        $response->assertSee('Transaksi & Pembayaran');
+        $response->assertSee('TRX-TEST-2026');
+        $response->assertSee($booking->code);
+    }
+
+    /**
      * UJI ATURAN BISNIS KETERSEDIAAN [ambil, kembali):
      * Mobil yang kembali tanggal 12 boleh diambil pelanggan lain tanggal 12.
      */

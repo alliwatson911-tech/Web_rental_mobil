@@ -20,7 +20,7 @@
             $displayVal = $rawVal;
         }
     }
-    $minVal = $min ?: now()->toDateString();
+    $minVal = $min;
 @endphp
 
 <div class="padaidi-datepicker-wrapper" data-datepicker-wrapper style="position: relative; display: flex; align-items: center; width: 100%;">
@@ -42,11 +42,9 @@
            id="{{ $id }}"
            name="{{ $inputName }}"
            value="{{ $rawVal }}"
-           min="{{ $minVal }}"
-           @if($max) max="{{ $max }}" @endif
+           @if(!empty($minVal)) min="{{ $minVal }}" data-min="{{ $minVal }}" @endif
+           @if($max) max="{{ $max }}" data-max="{{ $max }}" @endif
            data-datepicker-value
-           data-min="{{ $minVal }}"
-           data-max="{{ $max }}"
            style="position: absolute; right: 0; top: 0; width: 44px; height: 100%; opacity: 0; cursor: pointer; z-index: 20;"
            aria-label="Pilih tanggal">
 
