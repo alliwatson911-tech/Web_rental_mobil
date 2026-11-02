@@ -27,13 +27,13 @@
                     @error('pickup_location_id')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
                 </div>
                 <div>
-                    <label class="label text-slate-700 font-bold" for="pickup_date">Tanggal ambil</label>
-                    <input class="input" type="date" id="pickup_date" name="pickup_date" min="{{ now()->toDateString() }}" value="{{ old('pickup_date', $prefill['pickup_date'] ?? '') }}" required>
+                    <label class="label text-slate-700 font-bold" for="pickup_date_display">Tanggal ambil</label>
+                    <x-date-picker id="pickup_date" name="pickup_date" :value="old('pickup_date', $prefill['pickup_date'] ?? '')" :min="now()->toDateString()" required />
                     @error('pickup_date')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
                 </div>
                 <div>
-                    <label class="label text-slate-700 font-bold" for="return_date">Tanggal kembali</label>
-                    <input class="input" type="date" id="return_date" name="return_date" min="{{ now()->addDay()->toDateString() }}" value="{{ old('return_date', $prefill['return_date'] ?? '') }}" required>
+                    <label class="label text-slate-700 font-bold" for="return_date_display">Tanggal kembali</label>
+                    <x-date-picker id="return_date" name="return_date" :value="old('return_date', $prefill['return_date'] ?? '')" :min="now()->addDay()->toDateString()" required />
                     @error('return_date')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
                 </div>
             </div>

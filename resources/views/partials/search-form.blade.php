@@ -12,18 +12,18 @@
         </select>
     </div>
     <div>
-        <label class="label text-slate-700 font-bold flex items-center gap-1.5 mb-1.5 text-xs uppercase tracking-wider" for="pickup_date">
+        <label class="label text-slate-700 font-bold flex items-center gap-1.5 mb-1.5 text-xs uppercase tracking-wider" for="pickup_date_display">
             <x-icon name="calendar" class="w-3.5 h-3.5 text-[#F5A623]" />
             <span>Tanggal Ambil</span>
         </label>
-        <input class="input bg-white border border-slate-300 text-slate-800 rounded px-3 py-2.5 w-full focus:border-[#F5A623] focus:ring-1 focus:ring-[#F5A623] text-sm font-semibold transition" type="date" id="pickup_date" name="pickup_date" min="{{ now()->toDateString() }}" value="{{ $filters['pickup_date'] ?? '' }}" required>
+        <x-date-picker id="pickup_date" name="pickup_date" :value="$filters['pickup_date'] ?? ''" :min="now()->toDateString()" required />
     </div>
     <div>
-        <label class="label text-slate-700 font-bold flex items-center gap-1.5 mb-1.5 text-xs uppercase tracking-wider" for="return_date">
+        <label class="label text-slate-700 font-bold flex items-center gap-1.5 mb-1.5 text-xs uppercase tracking-wider" for="return_date_display">
             <x-icon name="calendar" class="w-3.5 h-3.5 text-[#F5A623]" />
             <span>Tanggal Kembali</span>
         </label>
-        <input class="input bg-white border border-slate-300 text-slate-800 rounded px-3 py-2.5 w-full focus:border-[#F5A623] focus:ring-1 focus:ring-[#F5A623] text-sm font-semibold transition" type="date" id="return_date" name="return_date" min="{{ now()->addDay()->toDateString() }}" value="{{ $filters['return_date'] ?? '' }}" required>
+        <x-date-picker id="return_date" name="return_date" :value="$filters['return_date'] ?? ''" :min="now()->addDay()->toDateString()" required />
     </div>
     @if ($withCategory ?? false)
         <div>
