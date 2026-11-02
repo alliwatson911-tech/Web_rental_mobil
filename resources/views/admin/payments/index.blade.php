@@ -35,7 +35,7 @@
     <form method="GET" action="{{ route('admin.payments.index') }}" class="grid gap-3 md:grid-cols-5 text-xs">
         <div>
             <label class="label text-xs">Cari Transaksi / Pesanan</label>
-            <input type="text" name="q" value="{{ request('q') }}" placeholder="Ref ID, Kode, Nama..." class="input text-xs">
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="Ref ID, Kode, Nama..." class="input text-xs" maxlength="100">
         </div>
         <div>
             <label class="label text-xs">Status Pembayaran</label>
@@ -189,12 +189,12 @@
             @csrf
             <div>
                 <label class="label text-xs">Jumlah Refund (Rp)</label>
-                <input type="number" id="refundAmountInput" name="amount" min="1000" step="1" required class="input text-xs font-bold text-slate-900">
+                <input type="number" id="refundAmountInput" name="amount" min="1000" max="1000000000" step="1" required class="input text-xs font-bold text-slate-900">
                 <p class="text-[10px] text-slate-400 mt-1">Maksimal pengembalian: <span id="maxRefundText" class="font-bold text-slate-700"></span></p>
             </div>
             <div>
                 <label class="label text-xs">Alasan Refund</label>
-                <textarea name="reason" rows="2" required placeholder="Contoh: Pembatalan sewa atas permintaan pelanggan, kelebihan transfer..." class="input text-xs"></textarea>
+                <textarea name="reason" rows="2" required placeholder="Contoh: Pembatalan sewa atas permintaan pelanggan, kelebihan transfer..." class="input text-xs" maxlength="500"></textarea>
             </div>
             <div class="pt-3 border-t border-slate-100 flex justify-end gap-2">
                 <button type="button" onclick="closeRefundModal()" class="btn btn-outline text-xs py-1.5">Batal</button>

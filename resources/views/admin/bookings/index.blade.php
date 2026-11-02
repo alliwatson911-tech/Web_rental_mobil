@@ -3,7 +3,7 @@
 
 @section('content')
 <form class="mb-4 flex flex-wrap gap-2">
-    <input class="input max-w-xs" name="q" value="{{ request('q') }}" placeholder="Kode / nama / HP">
+    <input class="input max-w-xs" name="q" value="{{ request('q') }}" placeholder="Kode / nama / HP" maxlength="100">
     <select class="input max-w-xs" name="status">
         <option value="">Semua status</option>
         @foreach (\App\Enums\BookingStatus::cases() as $s)<option value="{{ $s->value }}" @selected(request('status') === $s->value)>{{ $s->label() }}</option>@endforeach

@@ -17,14 +17,14 @@
                 <div>
                     <label class="label text-xs text-slate-300">Nama Promo <span class="text-rose-400">*</span></label>
                     <input type="text" name="name" class="input text-xs" required
-                           value="{{ old('name', $promotion->name) }}">
+                           value="{{ old('name', $promotion->name) }}" maxlength="100">
                     @error('name') <p class="text-xs text-rose-400 mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
                     <label class="label text-xs text-slate-300">Kode Voucher (Kosongkan bila otomatis)</label>
                     <input type="text" name="code" class="input text-xs font-mono uppercase text-[#F5A623]"
-                           value="{{ old('code', $promotion->code) }}">
+                           value="{{ old('code', $promotion->code) }}" maxlength="50">
                     @error('code') <p class="text-xs text-rose-400 mt-1">{{ $message }}</p> @enderror
                 </div>
 
@@ -41,7 +41,7 @@
                 <div>
                     <label class="label text-xs text-slate-300">Deskripsi / Syarat & Ketentuan</label>
                     <input type="text" name="description" class="input text-xs"
-                           value="{{ old('description', $promotion->description) }}">
+                           value="{{ old('description', $promotion->description) }}" maxlength="255">
                 </div>
             </div>
         </div>
@@ -60,14 +60,14 @@
 
                 <div>
                     <label class="label text-xs">Besaran Nilai Diskon <span class="text-rose-500">*</span></label>
-                    <input type="number" name="value" class="input text-xs" required min="1"
+                    <input type="number" name="value" class="input text-xs" required min="1" max="1000000000"
                            value="{{ old('value', $promotion->value) }}">
                     @error('value') <p class="text-xs text-rose-600 mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
                     <label class="label text-xs">Maksimal Potongan (Rp)</label>
-                    <input type="number" name="max_discount" class="input text-xs" min="1"
+                    <input type="number" name="max_discount" class="input text-xs" min="1" max="1000000000"
                            value="{{ old('max_discount', $promotion->max_discount) }}">
                 </div>
             </div>
@@ -79,26 +79,26 @@
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
                 <div>
                     <label class="label text-xs">Minimal Subtotal Sewa (Rp)</label>
-                    <input type="number" name="min_order_amount" class="input text-xs" min="0" step="10000"
+                    <input type="number" name="min_order_amount" class="input text-xs" min="0" max="1000000000" step="10000"
                            value="{{ old('min_order_amount', $promotion->min_order_amount) }}">
                 </div>
 
                 <div>
                     <label class="label text-xs">Minimal Hari Sewa</label>
-                    <input type="number" name="min_days" class="input text-xs" min="1"
+                    <input type="number" name="min_days" class="input text-xs" min="1" max="365"
                            value="{{ old('min_days', $promotion->min_days) }}">
                 </div>
 
                 <div>
                     <label class="label text-xs">Kuota Pemakaian Global</label>
-                    <input type="number" name="usage_limit" class="input text-xs" min="1"
+                    <input type="number" name="usage_limit" class="input text-xs" min="1" max="1000000"
                            value="{{ old('usage_limit', $promotion->usage_limit) }}">
                     <p class="text-[11px] text-slate-400 mt-1">Saat ini terpakai: {{ $promotion->used_count }}x</p>
                 </div>
 
                 <div>
                     <label class="label text-xs">Kuota per Member/User</label>
-                    <input type="number" name="usage_limit_per_user" class="input text-xs" min="1"
+                    <input type="number" name="usage_limit_per_user" class="input text-xs" min="1" max="10000"
                            value="{{ old('usage_limit_per_user', $promotion->usage_limit_per_user) }}">
                 </div>
             </div>

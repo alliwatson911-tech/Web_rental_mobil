@@ -18,26 +18,26 @@
 
             <div>
                 <label class="label text-slate-700 font-bold text-xs" for="name">Nama Lengkap (sesuai KTP)</label>
-                <input class="input text-xs bg-white text-slate-900 border-slate-300" id="name" name="name" value="{{ old('name', $user->name) }}" required>
+                <input class="input text-xs bg-white text-slate-900 border-slate-300" id="name" name="name" value="{{ old('name', $user->name) }}" required maxlength="100">
                 @error('name')<p class="text-xs text-rose-600 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
 
             <div class="grid gap-3 sm:grid-cols-2">
                 <div>
                     <label class="label text-slate-700 font-bold text-xs" for="email">Alamat Email</label>
-                    <input class="input text-xs bg-white text-slate-900 border-slate-300" type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required>
+                    <input class="input text-xs bg-white text-slate-900 border-slate-300" type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required maxlength="150">
                     @error('email')<p class="text-xs text-rose-600 mt-1 font-semibold">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="label text-slate-700 font-bold text-xs" for="phone">Nomor WhatsApp / HP</label>
-                    <input class="input text-xs bg-white text-slate-900 border-slate-300" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" required>
+                    <input class="input text-xs bg-white text-slate-900 border-slate-300" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" required maxlength="20">
                     @error('phone')<p class="text-xs text-rose-600 mt-1 font-semibold">{{ $message }}</p>@enderror
                 </div>
             </div>
 
             <div>
                 <label class="label text-slate-700 font-bold text-xs" for="address">Alamat Domisili Lengkap</label>
-                <textarea class="input text-xs bg-white text-slate-900 border-slate-300" id="address" name="address" rows="2">{{ old('address', $profile->address) }}</textarea>
+                <textarea class="input text-xs bg-white text-slate-900 border-slate-300" id="address" name="address" rows="2" maxlength="255">{{ old('address', $profile->address) }}</textarea>
             </div>
 
             <div class="grid gap-3 sm:grid-cols-2">
@@ -48,7 +48,7 @@
                 </div>
                 <div>
                     <label class="label text-slate-700 font-bold text-xs" for="sim_number">Nomor SIM A</label>
-                    <input class="input text-xs bg-white text-slate-900 border-slate-300" id="sim_number" name="sim_number" value="{{ old('sim_number', $profile->sim_number) }}" placeholder="Nomor SIM A Anda">
+                    <input class="input text-xs bg-white text-slate-900 border-slate-300" id="sim_number" name="sim_number" value="{{ old('sim_number', $profile->sim_number) }}" placeholder="Nomor SIM A Anda" maxlength="30">
                 </div>
             </div>
 
@@ -59,18 +59,18 @@
                 <div class="space-y-3">
                     <div>
                         <label class="label text-slate-700 font-bold text-xs" for="current_password">Kata Sandi Saat Ini</label>
-                        <input class="input text-xs bg-white text-slate-900 border-slate-300" type="password" id="current_password" name="current_password" placeholder="••••••••">
+                        <input class="input text-xs bg-white text-slate-900 border-slate-300" type="password" id="current_password" name="current_password" placeholder="••••••••" maxlength="100">
                         @error('current_password')<p class="text-xs text-rose-600 mt-1 font-semibold">{{ $message }}</p>@enderror
                     </div>
                     <div class="grid gap-3 sm:grid-cols-2">
                         <div>
                             <label class="label text-slate-700 font-bold text-xs" for="password">Kata Sandi Baru</label>
-                            <input class="input text-xs bg-white text-slate-900 border-slate-300" type="password" id="password" name="password" placeholder="Min. 6 karakter">
+                            <input class="input text-xs bg-white text-slate-900 border-slate-300" type="password" id="password" name="password" placeholder="Min. 6 karakter" maxlength="100">
                             @error('password')<p class="text-xs text-rose-600 mt-1 font-semibold">{{ $message }}</p>@enderror
                         </div>
                         <div>
                             <label class="label text-slate-700 font-bold text-xs" for="password_confirmation">Ulangi Sandi Baru</label>
-                            <input class="input text-xs bg-white text-slate-900 border-slate-300" type="password" id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi sandi baru">
+                            <input class="input text-xs bg-white text-slate-900 border-slate-300" type="password" id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi sandi baru" maxlength="100">
                         </div>
                     </div>
                 </div>

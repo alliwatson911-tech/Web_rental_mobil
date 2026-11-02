@@ -9,8 +9,8 @@
 <form method="POST" action="{{ $location->exists ? route('admin.locations.update', $location) : route('admin.locations.store') }}" class="card max-w-xl space-y-4 p-5 md:p-6 bg-[#111827] border border-[#1e293b]">
     @csrf
     @if ($location->exists) @method('PUT') @endif
-    <div><label class="label">Nama lokasi</label><input class="input" name="name" value="{{ old('name', $location->name) }}" required></div>
-    <div><label class="label">Keterangan</label><input class="input" name="description" value="{{ old('description', $location->description) }}"></div>
+    <div><label class="label">Nama lokasi</label><input class="input" name="name" value="{{ old('name', $location->name) }}" required maxlength="100"></div>
+    <div><label class="label">Keterangan</label><input class="input" name="description" value="{{ old('description', $location->description) }}" maxlength="500"></div>
     <input type="hidden" name="requires_address" value="0">
     <label class="flex items-center gap-2 text-sm text-slate-300"><input type="checkbox" name="requires_address" value="1" @checked(old('requires_address', $location->requires_address))> Pelanggan wajib mengisi alamat antar (biaya antar-jemput otomatis)</label>
     <input type="hidden" name="is_active" value="0">

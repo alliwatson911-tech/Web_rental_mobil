@@ -3,7 +3,7 @@
 @section('actions')<a href="{{ route('admin.cars.create') }}" class="btn btn-primary min-h-[44px] px-4 font-black uppercase text-xs">+ Tambah mobil</a>@endsection
 
 @section('content')
-<form class="mb-4 flex flex-wrap gap-2"><input class="input max-w-xs" name="q" value="{{ request('q') }}" placeholder="Cari nama / nomor polisi"><button class="btn btn-outline min-h-[44px] px-4 font-bold">Cari</button></form>
+<form class="mb-4 flex flex-wrap gap-2"><input class="input max-w-xs" name="q" value="{{ request('q') }}" placeholder="Cari nama / nomor polisi" maxlength="100"><button class="btn btn-outline min-h-[44px] px-4 font-bold">Cari</button></form>
 <div class="card overflow-x-auto bg-[#111827] border border-[#1e293b]">
     <table class="table-base text-xs">
         <thead><tr><th>Foto</th><th>Nama</th><th>Kategori</th><th>No. Polisi</th><th>Harga/hari</th><th>Status</th><th></th></tr></thead>

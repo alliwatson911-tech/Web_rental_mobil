@@ -39,7 +39,7 @@
             </div>
             <div class="mt-4" id="delivery-address-wrap">
                 <label class="label text-slate-700 font-bold" for="delivery_address">Alamat antar (wajib bila memilih "antar ke alamat")</label>
-                <input class="input" id="delivery_address" name="delivery_address" value="{{ old('delivery_address') }}" placeholder="Nama jalan, nomor rumah/kantor, kelurahan, patokan">
+                <input class="input" id="delivery_address" name="delivery_address" value="{{ old('delivery_address') }}" placeholder="Nama jalan, nomor rumah/kantor, kelurahan, patokan" maxlength="255">
                 @error('delivery_address')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
                 <p class="mt-1.5 text-xs text-slate-500">Biaya antar-jemput otomatis ditambahkan bila memilih lokasi antar ke alamat.</p>
             </div>
@@ -87,7 +87,9 @@
                 <input class="input font-mono uppercase max-w-xs text-sm tracking-wider font-bold" 
                        id="promo_code" name="promo_code" 
                        value="{{ old('promo_code', request('promo_code')) }}" 
-                       placeholder="Contoh: HEMAT50K">
+                       placeholder="Contoh: HEMAT50K"
+                       maxlength="50"
+                       autocomplete="off">
                 @error('promo_code')
                     <p class="text-xs text-rose-500 mt-1.5 font-semibold">{{ $message }}</p>
                 @enderror
@@ -105,17 +107,17 @@
                 </div>
                 <div>
                     <label class="label text-slate-700 font-bold" for="customer_phone">Nomor HP/WhatsApp</label>
-                    <input class="input" id="customer_phone" name="customer_phone" value="{{ old('customer_phone', auth()->user()?->phone) }}" required inputmode="tel" placeholder="08xxxxxxxxxx">
+                    <input class="input" id="customer_phone" name="customer_phone" value="{{ old('customer_phone', auth()->user()?->phone) }}" required inputmode="tel" placeholder="08xxxxxxxxxx" maxlength="20">
                     @error('customer_phone')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="label text-slate-700 font-bold" for="customer_email">Email (opsional)</label>
-                    <input class="input" type="email" id="customer_email" name="customer_email" value="{{ old('customer_email', auth()->user()?->email) }}">
+                    <input class="input" type="email" id="customer_email" name="customer_email" value="{{ old('customer_email', auth()->user()?->email) }}" maxlength="150">
                     @error('customer_email')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="label text-slate-700 font-bold" for="customer_address">Alamat domisili (opsional)</label>
-                    <input class="input" id="customer_address" name="customer_address" value="{{ old('customer_address', auth()->user()?->memberProfile?->address) }}">
+                    <input class="input" id="customer_address" name="customer_address" value="{{ old('customer_address', auth()->user()?->memberProfile?->address) }}" maxlength="255">
                 </div>
                 <div class="md:col-span-2">
                     <label class="label text-slate-700 font-bold" for="notes">Catatan (opsional)</label>

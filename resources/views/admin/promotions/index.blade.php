@@ -13,7 +13,7 @@
 @section('content')
 <div class="mb-4 flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center">
     <form class="flex flex-wrap items-center gap-2 w-full sm:w-auto" method="GET" action="{{ route('admin.promotions.index') }}">
-        <input class="input max-w-xs text-xs" name="q" value="{{ request('q') }}" placeholder="Cari nama atau kode promo...">
+        <input class="input max-w-xs text-xs" name="q" value="{{ request('q') }}" placeholder="Cari nama atau kode promo..." maxlength="100">
 
         <select name="target_type" class="input max-w-[160px] text-xs">
             <option value="">Semua Tipe Target</option>

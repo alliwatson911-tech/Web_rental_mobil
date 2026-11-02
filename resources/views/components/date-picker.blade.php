@@ -32,6 +32,7 @@
            placeholder="{{ $placeholder }}"
            value="{{ $displayVal }}"
            autocomplete="off"
+           maxlength="10"
            data-datepicker-display
            readonly
            {{ $required ? 'required' : '' }}>

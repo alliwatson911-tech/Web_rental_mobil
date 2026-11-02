@@ -20,19 +20,19 @@
 
             <div>
                 <label class="label text-slate-700 font-bold" for="email">Alamat Email</label>
-                <input class="input" type="email" id="email" name="email" value="{{ old('email', $email) }}" required autofocus>
+                <input class="input" type="email" id="email" name="email" value="{{ old('email', $email) }}" required autofocus maxlength="150">
                 @error('email')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
 
             <div>
                 <label class="label text-slate-700 font-bold" for="password">Kata Sandi Baru</label>
-                <input class="input" type="password" id="password" name="password" required placeholder="Min. 6 karakter">
+                <input class="input" type="password" id="password" name="password" required placeholder="Min. 6 karakter" maxlength="100">
                 @error('password')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
 
             <div>
                 <label class="label text-slate-700 font-bold" for="password_confirmation">Konfirmasi Kata Sandi Baru</label>
-                <input class="input" type="password" id="password_confirmation" name="password_confirmation" required placeholder="Ulangi kata sandi">
+                <input class="input" type="password" id="password_confirmation" name="password_confirmation" required placeholder="Ulangi kata sandi" maxlength="100">
             </div>
 
             <button type="submit" class="btn btn-primary w-full py-3 font-extrabold uppercase tracking-wider text-xs shadow-md">Simpan Kata Sandi Baru</button>

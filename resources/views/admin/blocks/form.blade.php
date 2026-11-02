@@ -18,8 +18,8 @@
         <div><label class="label">Tanggal mulai</label><input class="input" type="date" name="start_date" value="{{ old('start_date', $block->start_date?->toDateString()) }}" required></div>
         <div><label class="label">Tanggal selesai (termasuk)</label><input class="input" type="date" name="end_date" value="{{ old('end_date', $block->end_date?->toDateString()) }}" required></div>
     </div>
-    <div><label class="label">Alasan</label><input class="input" name="reason" value="{{ old('reason', $block->reason) }}" required></div>
-    <div><label class="label">Catatan</label><textarea class="input" name="notes" rows="2">{{ old('notes', $block->notes) }}</textarea></div>
+    <div><label class="label">Alasan</label><input class="input" name="reason" value="{{ old('reason', $block->reason) }}" required maxlength="100"></div>
+    <div><label class="label">Catatan</label><textarea class="input" name="notes" rows="2" maxlength="500">{{ old('notes', $block->notes) }}</textarea></div>
     <div class="flex gap-2 pt-2"><button class="btn btn-primary min-h-[44px] px-5 font-black uppercase text-xs">Simpan</button><a href="{{ route('admin.blocks.index') }}" class="btn btn-outline min-h-[44px] px-5 font-bold text-xs flex items-center justify-center">Kembali</a></div>
 </form>
 @endsection

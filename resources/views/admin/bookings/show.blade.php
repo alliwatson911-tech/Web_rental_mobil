@@ -35,7 +35,7 @@
                         @csrf
                         <div>
                             <label class="label text-slate-300">Odometer Awal (KM)</label>
-                            <input class="input" type="number" min="0" name="start_odometer" value="{{ old('start_odometer', $booking->start_odometer) }}" placeholder="Contoh: 45000" required>
+                            <input class="input" type="number" min="0" max="9999999" name="start_odometer" value="{{ old('start_odometer', $booking->start_odometer) }}" placeholder="Contoh: 45000" required>
                         </div>
                         <div>
                             <label class="label text-slate-300">Indikator BBM Awal</label>
@@ -48,15 +48,15 @@
                         </div>
                         <div>
                             <label class="label text-slate-300">Nama Sopir (Jika Paket Sopir)</label>
-                            <input class="input" name="driver_name" value="{{ old('driver_name', $booking->driver_name) }}" placeholder="Nama sopir bertugas">
+                            <input class="input" name="driver_name" value="{{ old('driver_name', $booking->driver_name) }}" placeholder="Nama sopir bertugas" maxlength="100">
                         </div>
                         <div>
                             <label class="label text-slate-300">No. HP Sopir</label>
-                            <input class="input" name="driver_phone" value="{{ old('driver_phone', $booking->driver_phone) }}" placeholder="08xxxxxxxxxx">
+                            <input class="input" name="driver_phone" value="{{ old('driver_phone', $booking->driver_phone) }}" placeholder="08xxxxxxxxxx" maxlength="20">
                         </div>
                         <div class="sm:col-span-2">
                             <label class="label text-slate-300">Catatan Baret / Kondisi Bodi Awal</label>
-                            <textarea class="input" name="handover_notes" rows="2" placeholder="Contoh: Baret halus bumper depan kiri, ban serep lengkap, dongkrak ada">{{ old('handover_notes', $booking->handover_notes) }}</textarea>
+                            <textarea class="input" name="handover_notes" rows="2" placeholder="Contoh: Baret halus bumper depan kiri, ban serep lengkap, dongkrak ada" maxlength="1000">{{ old('handover_notes', $booking->handover_notes) }}</textarea>
                         </div>
                         <div class="sm:col-span-2">
                             <button class="btn btn-primary w-full">Konfirmasi Serah Terima & Tandai Diambil</button>
@@ -74,7 +74,7 @@
                         @csrf
                         <div>
                             <label class="label text-slate-300">Odometer Akhir (KM)</label>
-                            <input class="input" type="number" min="{{ $booking->start_odometer ?? 0 }}" name="end_odometer" value="{{ old('end_odometer', $booking->end_odometer) }}" placeholder="Contoh: 45450" required>
+                            <input class="input" type="number" min="{{ $booking->start_odometer ?? 0 }}" max="9999999" name="end_odometer" value="{{ old('end_odometer', $booking->end_odometer) }}" placeholder="Contoh: 45450" required>
                             @if ($booking->start_odometer)
                                 <span class="text-xs text-slate-400">KM awal: {{ number_format($booking->start_odometer) }} KM</span>
                             @endif
@@ -90,23 +90,23 @@
                         </div>
                         <div>
                             <label class="label text-slate-300">Keterlambatan (Jam Overtime)</label>
-                            <input class="input" type="number" min="0" name="overtime_hours" value="{{ old('overtime_hours', $booking->overtime_hours ?? 0) }}" placeholder="0">
+                            <input class="input" type="number" min="0" max="720" name="overtime_hours" value="{{ old('overtime_hours', $booking->overtime_hours ?? 0) }}" placeholder="0">
                         </div>
                         <div>
                             <label class="label text-slate-300">Denda Overtime (Rp)</label>
-                            <input class="input" type="number" min="0" step="1000" name="overtime_fee" value="{{ old('overtime_fee', $booking->overtime_fee ?? 0) }}" placeholder="0">
+                            <input class="input" type="number" min="0" max="1000000000" step="1000" name="overtime_fee" value="{{ old('overtime_fee', $booking->overtime_fee ?? 0) }}" placeholder="0">
                         </div>
                         <div>
                             <label class="label text-slate-300">Biaya Ekstra (Baret / Selisih BBM)</label>
-                            <input class="input" type="number" min="0" step="1000" name="extra_fee" value="{{ old('extra_fee', $booking->extra_fee ?? 0) }}" placeholder="0">
+                            <input class="input" type="number" min="0" max="1000000000" step="1000" name="extra_fee" value="{{ old('extra_fee', $booking->extra_fee ?? 0) }}" placeholder="0">
                         </div>
                         <div>
                             <label class="label text-slate-300">Keterangan Biaya Ekstra</label>
-                            <input class="input" name="extra_fee_notes" value="{{ old('extra_fee_notes', $booking->extra_fee_notes) }}" placeholder="Contoh: Selisih BBM 1/4 bar">
+                            <input class="input" name="extra_fee_notes" value="{{ old('extra_fee_notes', $booking->extra_fee_notes) }}" placeholder="Contoh: Selisih BBM 1/4 bar" maxlength="255">
                         </div>
                         <div class="sm:col-span-2">
                             <label class="label text-slate-300">Catatan Kondisi Kembali</label>
-                            <textarea class="input" name="return_notes" rows="2" placeholder="Catatan kebersihan bodi, interior, perlengkapan">{{ old('return_notes', $booking->return_notes) }}</textarea>
+                            <textarea class="input" name="return_notes" rows="2" placeholder="Catatan kebersihan bodi, interior, perlengkapan" maxlength="1000">{{ old('return_notes', $booking->return_notes) }}</textarea>
                         </div>
                         <div class="sm:col-span-2">
                             <button class="btn btn-success w-full">Pemeriksaan Selesai & Tandai Selesai</button>
@@ -118,7 +118,7 @@
             @if ($booking->status->canTransitionTo(BookingStatus::Cancelled))
                 <form method="POST" action="{{ route('admin.bookings.reject', $booking) }}" class="mt-4 flex flex-wrap gap-2" data-confirm="Tolak/batalkan pesanan ini?">
                     @csrf
-                    <input class="input max-w-sm" name="reason" placeholder="Alasan penolakan/pembatalan (opsional)">
+                    <input class="input max-w-sm" name="reason" placeholder="Alasan penolakan/pembatalan (opsional)" maxlength="255">
                     <button class="btn btn-danger">{{ $booking->status === BookingStatus::Pending ? 'Tolak' : 'Batalkan' }}</button>
                 </form>
             @endif
@@ -216,7 +216,7 @@
             <form method="POST" action="{{ route('admin.bookings.notes', $booking) }}" class="mt-4">
                 @csrf
                 <label class="label text-slate-300">Catatan internal admin</label>
-                <textarea class="input" name="admin_notes" rows="2">{{ old('admin_notes', $booking->admin_notes) }}</textarea>
+                <textarea class="input" name="admin_notes" rows="2" maxlength="2000">{{ old('admin_notes', $booking->admin_notes) }}</textarea>
                 <button class="btn btn-outline mt-2 border-[#1e293b] text-slate-200 hover:text-[#F5A623] hover:border-[#F5A623]">Simpan catatan</button>
             </form>
         </section>
@@ -253,12 +253,12 @@
             <h3 class="mt-5 text-sm font-bold text-white">Catat pembayaran (langsung terverifikasi)</h3>
             <form method="POST" action="{{ route('admin.payments.store', $booking) }}" enctype="multipart/form-data" class="mt-2 grid gap-3 md:grid-cols-3">
                 @csrf
-                <div><label class="label text-slate-300">Jumlah (Rp)</label><input class="input" type="number" min="1" name="amount" value="{{ old('amount', $booking->remainingAmount()) }}" required></div>
+                <div><label class="label text-slate-300">Jumlah (Rp)</label><input class="input" type="number" min="1" max="1000000000" name="amount" value="{{ old('amount', $booking->remainingAmount()) }}" required></div>
                 <div><label class="label text-slate-300">Metode</label><select class="input" name="method">@foreach (\App\Models\Payment::METHODS as $k => $v)<option value="{{ $k }}">{{ $v }}</option>@endforeach</select></div>
                 <div><label class="label text-slate-300">Tanggal bayar</label><input class="input" type="datetime-local" name="paid_at" value="{{ old('paid_at', now()->format('Y-m-d\TH:i')) }}" required></div>
-                <div><label class="label text-slate-300">Nama pengirim</label><input class="input" name="sender_name" value="{{ old('sender_name') }}"></div>
+                <div><label class="label text-slate-300">Nama pengirim</label><input class="input" name="sender_name" value="{{ old('sender_name') }}" maxlength="100"></div>
                 <div><label class="label text-slate-300">Bukti (opsional)</label><input class="input" type="file" name="proof"></div>
-                <div><label class="label text-slate-300">Catatan</label><input class="input" name="notes" value="{{ old('notes') }}"></div>
+                <div><label class="label text-slate-300">Catatan</label><input class="input" name="notes" value="{{ old('notes') }}" maxlength="500"></div>
                 <div class="md:col-span-3"><button class="btn btn-primary">Simpan pembayaran</button></div>
             </form>
         </section>

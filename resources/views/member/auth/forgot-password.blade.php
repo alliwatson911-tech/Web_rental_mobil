@@ -18,7 +18,7 @@
             @csrf
             <div>
                 <label class="label text-slate-700 font-bold" for="email">Alamat Email Terdaftar</label>
-                <input class="input" type="email" id="email" name="email" value="{{ old('email') }}" required autofocus placeholder="nama@domain.com">
+                <input class="input" type="email" id="email" name="email" value="{{ old('email') }}" required autofocus placeholder="nama@domain.com" maxlength="150">
                 @error('email')<p class="text-xs text-rose-500 mt-1 font-semibold">{{ $message }}</p>@enderror
             </div>
 

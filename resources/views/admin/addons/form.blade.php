@@ -9,11 +9,11 @@
 <form method="POST" action="{{ $addon->exists ? route('admin.addons.update', $addon) : route('admin.addons.store') }}" class="card max-w-xl space-y-4 p-5 md:p-6 bg-[#111827] border border-[#1e293b]">
     @csrf
     @if ($addon->exists) @method('PUT') @endif
-    <div><label class="label">Kode (huruf kecil, tanpa spasi)</label><input class="input" name="code" value="{{ old('code', $addon->code) }}" required></div>
-    <div><label class="label">Nama</label><input class="input" name="name" value="{{ old('name', $addon->name) }}" required></div>
-    <div><label class="label">Deskripsi</label><input class="input" name="description" value="{{ old('description', $addon->description) }}"></div>
+    <div><label class="label">Kode (huruf kecil, tanpa spasi)</label><input class="input" name="code" value="{{ old('code', $addon->code) }}" required maxlength="50"></div>
+    <div><label class="label">Nama</label><input class="input" name="name" value="{{ old('name', $addon->name) }}" required maxlength="100"></div>
+    <div><label class="label">Deskripsi</label><input class="input" name="description" value="{{ old('description', $addon->description) }}" maxlength="500"></div>
     <div class="grid grid-cols-2 gap-3">
-        <div><label class="label">Harga (Rp)</label><input class="input" type="number" min="0" name="price" value="{{ old('price', $addon->price) }}" required></div>
+        <div><label class="label">Harga (Rp)</label><input class="input" type="number" min="0" max="1000000000" name="price" value="{{ old('price', $addon->price) }}" required></div>
         <div><label class="label">Jenis biaya</label>
             <select class="input" name="charge_type">
                 <option value="per_day" @selected(old('charge_type', $addon->charge_type) === 'per_day')>Per hari</option>

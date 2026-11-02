@@ -33,12 +33,12 @@
             @csrf
             <div>
                 <label class="label text-xs uppercase font-bold tracking-wider text-[#94a3b8]" for="email">Alamat Email</label>
-                <input class="input" type="email" id="email" name="email" value="{{ old('email') }}" required autofocus placeholder="admin@padaidi.test">
+                <input class="input" type="email" id="email" name="email" value="{{ old('email') }}" required autofocus placeholder="admin@padaidi.test" maxlength="150">
             </div>
             <div>
                 <label class="label text-xs uppercase font-bold tracking-wider text-[#94a3b8]" for="password">Kata Sandi</label>
                 <div class="relative">
-                    <input class="input pr-10" type="password" id="password" name="password" required placeholder="••••••••">
+                    <input class="input pr-10" type="password" id="password" name="password" required placeholder="••••••••" maxlength="100">
                     <button type="button" onclick="const p = document.getElementById('password'); p.type = p.type === 'password' ? 'text' : 'password';" class="absolute inset-y-0 right-0 flex items-center pr-3 text-[#64748b] hover:text-[#f8fafc]" title="Tampilkan/sembunyikan kata sandi">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />

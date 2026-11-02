@@ -155,7 +155,7 @@
                     <label class="label text-xs text-slate-300">Catatan / Alasan Perubahan Manual <span class="text-rose-400">*</span></label>
                     <input type="text" name="notes" class="input text-xs" required
                            placeholder="Contoh: Tamu VIP direksi instansi rekanan, upgrade khusus, dsb."
-                           value="{{ old('notes') }}">
+                           value="{{ old('notes') }}" maxlength="255">
                 </div>
             </div>
 
@@ -227,7 +227,7 @@
 
                         <form method="POST" action="{{ route('admin.members.documents.reject', [$member, $ktpDoc]) }}" class="flex items-center gap-1">
                             @csrf
-                            <input type="text" name="notes" placeholder="Alasan tolak (buram/kadaluwarsa)" required class="input text-xs py-1 px-2 w-48">
+                            <input type="text" name="notes" placeholder="Alasan tolak (buram/kadaluwarsa)" required class="input text-xs py-1 px-2 w-48" maxlength="255">
                             <button class="btn btn-danger text-xs py-1 px-2.5">Tolak</button>
                         </form>
                     </div>
@@ -280,7 +280,7 @@
 
                         <form method="POST" action="{{ route('admin.members.documents.reject', [$member, $simDoc]) }}" class="flex items-center gap-1">
                             @csrf
-                            <input type="text" name="notes" placeholder="Alasan tolak (buram/kadaluwarsa)" required class="input text-xs py-1 px-2 w-48">
+                            <input type="text" name="notes" placeholder="Alasan tolak (buram/kadaluwarsa)" required class="input text-xs py-1 px-2 w-48" maxlength="255">
                             <button class="btn btn-danger text-xs py-1 px-2.5">Tolak</button>
                         </form>
                     </div>

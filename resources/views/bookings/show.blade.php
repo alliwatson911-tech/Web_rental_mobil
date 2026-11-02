@@ -320,11 +320,11 @@
                         @csrf
                         <div>
                             <label class="label text-xs text-slate-700" for="amount">Jumlah transfer (Rp)</label>
-                            <input class="input text-xs" type="number" min="1000" step="1" id="amount" name="amount" value="{{ old('amount', $booking->remainingAmount()) }}" required>
+                            <input class="input text-xs" type="number" min="1000" max="1000000000" step="1" id="amount" name="amount" value="{{ old('amount', $booking->remainingAmount()) }}" required>
                         </div>
                         <div>
                             <label class="label text-xs text-slate-700" for="sender_name">Nama pengirim</label>
-                            <input class="input text-xs" id="sender_name" name="sender_name" value="{{ old('sender_name', $booking->customer_name) }}" required>
+                            <input class="input text-xs" id="sender_name" name="sender_name" value="{{ old('sender_name', $booking->customer_name) }}" required maxlength="100">
                         </div>
                         <div>
                             <label class="label text-xs text-slate-700" for="proof">Bukti transfer (JPG/PNG/PDF)</label>
@@ -362,7 +362,7 @@
                         </div>
                         <div>
                             <label class="label text-slate-700" for="comment">Komentar Pengalaman</label>
-                            <textarea class="input text-xs" id="comment" name="comment" rows="3" placeholder="Bagaimana kondisi mobil dan pelayanan kami?"></textarea>
+                            <textarea class="input text-xs" id="comment" name="comment" rows="3" placeholder="Bagaimana kondisi mobil dan pelayanan kami?" maxlength="1000"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary text-xs py-2 px-5 uppercase font-black">
                             Kirim ulasan

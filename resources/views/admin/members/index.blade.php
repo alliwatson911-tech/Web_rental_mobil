@@ -4,7 +4,7 @@
 @section('content')
 <div class="mb-4 flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center">
     <form class="flex flex-wrap items-center gap-2 w-full sm:w-auto" method="GET" action="{{ route('admin.members.index') }}">
-        <input class="input max-w-xs text-xs" name="q" value="{{ request('q') }}" placeholder="Cari nama, email, no HP...">
+        <input class="input max-w-xs text-xs" name="q" value="{{ request('q') }}" placeholder="Cari nama, email, no HP..." maxlength="100">
         
         <select name="tier" class="input max-w-[140px] text-xs">
             <option value="">Semua Tier</option>
