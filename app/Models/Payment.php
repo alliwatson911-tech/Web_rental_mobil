@@ -180,12 +180,12 @@ class Payment extends Model
     public function badgeClass(): string
     {
         return match ($this->status) {
-            self::STATUS_PAID, self::STATUS_VERIFIED => 'bg-emerald-100 text-emerald-800',
-            self::STATUS_PENDING => 'bg-amber-100 text-amber-800',
-            self::STATUS_REJECTED, self::STATUS_FAILED => 'bg-rose-100 text-rose-800',
-            self::STATUS_EXPIRED, self::STATUS_CANCELLED => 'bg-slate-200 text-slate-700',
-            self::STATUS_REFUNDED, self::STATUS_PARTIALLY_REFUNDED => 'bg-purple-100 text-purple-800',
-            default => 'bg-slate-100 text-slate-700',
+            self::STATUS_PAID, self::STATUS_VERIFIED => 'bg-emerald-50 text-emerald-800 border-emerald-300',
+            self::STATUS_PENDING => 'bg-amber-50 text-amber-800 border-amber-300',
+            self::STATUS_REJECTED, self::STATUS_FAILED => 'bg-rose-50 text-rose-800 border-rose-300',
+            self::STATUS_EXPIRED, self::STATUS_CANCELLED => 'bg-slate-100 text-slate-700 border-slate-300',
+            self::STATUS_REFUNDED, self::STATUS_PARTIALLY_REFUNDED => 'bg-purple-50 text-purple-800 border-purple-300',
+            default => 'bg-slate-50 text-slate-700 border-slate-300',
         };
     }
 }

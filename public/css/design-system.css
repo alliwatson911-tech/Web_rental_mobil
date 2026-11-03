@@ -1655,8 +1655,20 @@ body.theme-admin .text-slate-600 {
 body.theme-admin .text-slate-500 {
     color: #64748b !important;
 }
-body.theme-admin .text-slate-400 {
-    color: #94a3b8 !important;
+/* WCAG AA contrast normalization: Ensure secondary text has >= 4.5:1 ratio on light background */
+body.theme-admin main .text-slate-400,
+body.theme-admin .card .text-slate-400 {
+    color: #64748b !important;
+}
+body.theme-admin main .text-slate-300,
+body.theme-admin .card .text-slate-300 {
+    color: #334155 !important;
+}
+body.theme-admin main .text-slate-200,
+body.theme-admin main .text-slate-100,
+body.theme-admin .card .text-slate-200,
+body.theme-admin .card .text-slate-100 {
+    color: #1e293b !important;
 }
 
 body.theme-admin .border-slate-100 {
@@ -1680,9 +1692,19 @@ body.theme-admin .bg-slate-100 {
     background-color: #f1f5f9 !important;
 }
 
-/* Guard: Prevent white text on white background inside cards and tables */
-body.theme-admin .card .text-white:not(.btn):not(.badge),
-body.theme-admin table .text-white:not(.btn):not(.badge) {
+/* Guard: Prevent white text on white/light background anywhere in Admin main content */
+body.theme-admin main .text-white:not(.btn):not(.badge):not([class*="bg-emerald-"]):not([class*="bg-rose-"]):not([class*="bg-indigo-"]):not([class*="bg-blue-"]):not([class*="bg-slate-900"]):not([class*="bg-slate-800"]),
+body.theme-admin main strong.text-white,
+body.theme-admin main span.text-white:not(.badge):not(.btn),
+body.theme-admin main p.text-white,
+body.theme-admin main h1.text-white,
+body.theme-admin main h2.text-white,
+body.theme-admin main h3.text-white,
+body.theme-admin main td.text-white,
+body.theme-admin main th.text-white,
+body.theme-admin main div.text-white:not(.badge):not(.btn),
+body.theme-admin .card .text-white:not(.btn):not(.badge):not([class*="bg-emerald-"]):not([class*="bg-rose-"]):not([class*="bg-indigo-"]):not([class*="bg-blue-"]):not([class*="bg-slate-900"]):not([class*="bg-slate-800"]),
+body.theme-admin table .text-white:not(.btn):not(.badge):not([class*="bg-emerald-"]):not([class*="bg-rose-"]):not([class*="bg-indigo-"]):not([class*="bg-blue-"]):not([class*="bg-slate-900"]):not([class*="bg-slate-800"]) {
     color: #0f172a !important;
 }
 
@@ -1760,7 +1782,9 @@ body.theme-admin table .text-white:not(.btn):not(.badge) {
     cursor: pointer !important;
 }
 
-body.theme-admin .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+body.theme-admin .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #f1f5f9 !important;
+}
 body.theme-admin .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
-    border-color: #1e293b !important;
+    border-color: #e2e8f0 !important;
 }

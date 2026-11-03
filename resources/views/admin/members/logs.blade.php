@@ -6,63 +6,63 @@
 
 @section('content')
 <div class="space-y-4">
-    <div class="card p-4 bg-[#111827] border border-[#1e293b]">
+    <div class="card p-4 bg-white border border-slate-200 border-l-4 border-l-amber-500 shadow-sm rounded-xl">
         <div class="flex items-start gap-3">
-            <x-icon name="lock" class="w-5 h-5 text-[#F5A623] shrink-0 mt-0.5" />
-            <div class="text-xs text-slate-300">
-                <strong class="text-white">Kepatuhan Privasi Data & Perlindungan Data Pribadi (UU PDP):</strong>
+            <x-icon name="lock" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <div class="text-xs text-slate-700 leading-relaxed">
+                <strong class="text-slate-900 font-bold">Kepatuhan Privasi Data & Perlindungan Data Pribadi (UU PDP):</strong>
                 Seluruh aktivitas unggah, preview, maupun unduh berkas identitas pelanggan (KTP dan SIM A) dicatat secara permanen dengan IP Address dan User-Agent untuk memastikan akuntabilitas akses dan mencegah kebocoran data.
             </div>
         </div>
     </div>
 
-    <div class="card overflow-x-auto border border-[#1e293b] bg-[#111827]">
-        <table class="table-base text-xs">
+    <div class="card overflow-x-auto border border-slate-200 bg-white shadow-sm rounded-xl p-0">
+        <table class="table-base text-xs w-full min-w-[960px]">
             <thead>
-                <tr>
-                    <th>Waktu (WITA)</th>
-                    <th>Pengakses (User / Admin)</th>
-                    <th>Dokumen</th>
-                    <th>Tindakan (Action)</th>
-                    <th>IP Address</th>
-                    <th>User Agent / Perangkat</th>
+                <tr class="bg-slate-50 border-b border-slate-200">
+                    <th class="py-3 px-4 text-left font-black text-slate-700 uppercase tracking-wider text-[11px]">Waktu (WITA)</th>
+                    <th class="py-3 px-4 text-left font-black text-slate-700 uppercase tracking-wider text-[11px]">Pengakses (User / Admin)</th>
+                    <th class="py-3 px-4 text-left font-black text-slate-700 uppercase tracking-wider text-[11px]">Dokumen</th>
+                    <th class="py-3 px-4 text-left font-black text-slate-700 uppercase tracking-wider text-[11px]">Tindakan (Action)</th>
+                    <th class="py-3 px-4 text-left font-black text-slate-700 uppercase tracking-wider text-[11px]">IP Address</th>
+                    <th class="py-3 px-4 text-left font-black text-slate-700 uppercase tracking-wider text-[11px]">User Agent / Perangkat</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-[#1e293b]">
+            <tbody class="divide-y divide-slate-100 bg-white">
             @forelse ($logs as $log)
-                <tr class="hover:bg-[#1e293b]/50 transition">
-                    <td class="whitespace-nowrap text-slate-400 font-mono text-[11px]">
-                        {{ $log->created_at->translatedFormat('d M Y, H:i:s') }}
+                <tr class="hover:bg-amber-50/40 transition-colors">
+                    <td class="py-3 px-4 whitespace-nowrap text-slate-600 font-mono text-[11px]">
+                        {{ tanggal($log->created_at, 'd/m/Y, H:i:s') }}
                     </td>
-                    <td class="font-medium text-slate-100">
+                    <td class="py-3 px-4 font-medium text-slate-900">
                         @if ($log->user)
-                            <div class="font-bold text-[#F5A623]">{{ $log->user->name }}</div>
-                            <div class="text-[10px] text-slate-400">{{ $log->user->role }} · ID #{{ $log->user_id }}</div>
+                            <div class="font-bold text-amber-800">{{ $log->user->name }}</div>
+                            <div class="text-[10px] text-slate-500 font-semibold">{{ $log->user->role }} · ID #{{ $log->user_id }}</div>
                         @else
-                            <span class="text-slate-400">Tamu / Sistem</span>
+                            <span class="text-slate-500 italic">Tamu / Sistem</span>
                         @endif
                     </td>
-                    <td>
-                        <span class="badge {{ $log->document_type === 'ktp' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' }} uppercase text-[10px] font-bold">
+                    <td class="py-3 px-4">
+                        <span class="badge {{ $log->document_type === 'ktp' ? 'bg-indigo-100 text-indigo-800 border border-indigo-300' : 'bg-emerald-100 text-emerald-800 border border-emerald-300' }} uppercase text-[10px] font-bold">
                             {{ $log->document_type }}
                         </span>
-                        <span class="text-slate-400 text-[10px] ml-1">#{{ $log->document_id }}</span>
+                        <span class="text-slate-500 text-[10px] font-medium ml-1">#{{ $log->document_id }}</span>
                     </td>
-                    <td>
-                        <span class="badge {{ $log->action === 'view' ? 'bg-sky-500/20 text-sky-300 border border-sky-500/40' : ($log->action === 'upload' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-slate-800 text-slate-300 border border-[#1e293b]') }} font-semibold">
+                    <td class="py-3 px-4">
+                        <span class="badge {{ $log->action === 'view' ? 'bg-sky-100 text-sky-800 border border-sky-300' : ($log->action === 'upload' ? 'bg-amber-100 text-amber-800 border border-amber-300' : 'bg-slate-100 text-slate-800 border border-slate-300') }} font-bold text-[10px]">
                             {{ strtoupper($log->action) }}
                         </span>
                     </td>
-                    <td class="font-mono text-slate-300 text-[11px]">
+                    <td class="py-3 px-4 font-mono text-slate-700 text-[11px]">
                         {{ $log->ip_address ?? '-' }}
                     </td>
-                    <td class="text-slate-400 text-[11px] max-w-xs truncate" title="{{ $log->user_agent }}">
+                    <td class="py-3 px-4 text-slate-500 text-[11px] max-w-xs truncate" title="{{ $log->user_agent }}">
                         {{ $log->user_agent ?? '-' }}
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="py-8 text-center text-slate-400">
+                    <td colspan="6" class="py-8 text-center text-slate-500 italic bg-slate-50/50">
                         Belum ada aktivitas akses dokumen yang tercatat.
                     </td>
                 </tr>
@@ -76,4 +76,3 @@
     </div>
 </div>
 @endsection
-
