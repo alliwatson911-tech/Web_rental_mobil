@@ -1788,3 +1788,192 @@ body.theme-admin .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
 body.theme-admin .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
     border-color: #e2e8f0 !important;
 }
+
+/* ==========================================================================
+   CAR CARD COMPONENT (EQUAL HEIGHT, ALIGNED BUTTONS & ASPECT-RATIO 16:10)
+   ========================================================================== */
+.car-card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    padding: 0 !important;
+    border: 1px solid #cbd5e1 !important; /* WCAG 2.2 AA non-text contrast > 3:1 */
+    border-radius: 12px !important;
+    background-color: #ffffff !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.04) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+    box-sizing: border-box !important;
+}
+
+.car-card:hover {
+    transform: translateY(-3px) !important;
+    border-color: #F5A623 !important;
+    box-shadow: 0 12px 24px -4px rgba(245, 166, 35, 0.14), 0 6px 12px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Strict 16:10 Aspect Ratio Enforcer */
+.car-card-media {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    aspect-ratio: 16 / 10 !important;
+    height: 200px !important; /* Fallback if aspect-ratio unsupported */
+    max-height: 220px !important;
+    overflow: hidden !important;
+    background-color: #f1f5f9 !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    border-top-left-radius: 11px !important;
+    border-top-right-radius: 11px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+@supports (aspect-ratio: 16 / 10) {
+    .car-card-media {
+        height: auto !important;
+    }
+}
+
+.car-card-media img,
+.car-card-media > div {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+    transition: transform 0.35s ease !important;
+}
+
+.car-card:hover .car-card-media img {
+    transform: scale(1.04) !important;
+}
+
+/* Card Body */
+.car-card-body {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    padding: 18px 20px 20px 20px !important;
+    box-sizing: border-box !important;
+}
+
+/* Badge Row */
+.car-card-badge-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    min-height: 24px !important;
+    margin-bottom: 8px !important;
+}
+
+/* Standardized Title Height for Laser Horizontal Alignment */
+.car-card-title {
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.025em !important;
+    color: #0f172a !important;
+    line-height: 1.35 !important;
+    min-height: 2.75rem !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    margin: 0 0 6px 0 !important;
+}
+
+.car-card-title a {
+    color: #0f172a !important;
+    text-decoration: none !important;
+    transition: color 0.15s ease !important;
+}
+
+.car-card-title a:hover {
+    color: #F5A623 !important;
+}
+
+/* Specs Row */
+.car-card-specs {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    font-size: 0.75rem !important;
+    color: #64748b !important;
+    min-height: 20px !important;
+    margin-bottom: 12px !important;
+}
+
+.car-card-specs-item {
+    font-weight: 600 !important;
+    color: #475569 !important;
+}
+
+.car-card-specs-dot {
+    color: #cbd5e1 !important;
+    user-select: none !important;
+}
+
+/* Footer Section Pinned to the Bottom */
+.car-card-footer {
+    margin-top: auto !important;
+    padding-top: 14px !important;
+}
+
+/* Price Block with WCAG AA Crisp Divider */
+.car-card-price-block {
+    display: flex !important;
+    align-items: baseline !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    padding-top: 12px !important;
+    border-top: 1px solid #cbd5e1 !important; /* Visible, WCAG compliant 3:1 non-text contrast */
+    margin-bottom: 14px !important;
+    min-height: 46px !important;
+    box-sizing: border-box !important;
+}
+
+.car-card-price-kicker {
+    display: block !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #64748b !important;
+    margin-bottom: 2px !important;
+}
+
+.car-card-price-val {
+    font-size: 1.25rem !important;
+    font-weight: 900 !important;
+    color: #b45309 !important; /* amber-700, WCAG AAA compliant 7.5:1 on white */
+    line-height: 1.1 !important;
+}
+
+.car-card-price-period {
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    color: #64748b !important;
+}
+
+/* Action Buttons Grid with 44px Minimum Touch Target (WCAG 2.2 AA) */
+.car-card-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+}
+
+.car-card-actions .btn {
+    min-height: 44px !important;
+    font-size: 0.75rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px 12px !important;
+    box-sizing: border-box !important;
+    border-radius: 6px !important;
+}

@@ -131,14 +131,14 @@
     />
     <div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
         @foreach ($categories as $category)
-            <a href="{{ route('cars.index', ['category' => $category->slug]) }}" class="card card-hover p-5 border border-slate-200 bg-white flex flex-col justify-between group shadow-sm hover:shadow-md">
+            <a href="{{ route('cars.index', ['category' => $category->slug]) }}" class="card card-hover p-5 border border-slate-300 bg-white rounded-xl flex flex-col justify-between group shadow-xs hover:shadow-md transition-all h-full">
                 <div>
                     <div class="h-12 w-12 rounded bg-slate-50 border border-slate-200 flex items-center justify-center text-[#F5A623] mb-3 group-hover:border-[#F5A623] transition-colors">
                         <x-icon name="car" class="w-6 h-6" />
                     </div>
                     <p class="font-extrabold text-base uppercase text-slate-900 tracking-wide group-hover:text-amber-600 transition-colors">{{ $category->name }}</p>
                 </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div class="mt-auto pt-3 border-t border-slate-200 flex items-center justify-between">
                     <span class="text-xs text-slate-500 font-semibold">{{ $category->cars_count }} unit siap</span>
                     <span class="text-xs text-amber-600 font-bold group-hover:translate-x-1 transition-transform">→</span>
                 </div>
@@ -252,14 +252,14 @@
 
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {{-- Destinasi 1: Bandara --}}
-        <a href="{{ route('cars.index') }}" class="destination-card group card p-5 bg-white border border-slate-200 shadow-sm hover:border-[#F5A623] hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer rounded-lg">
+        <a href="{{ route('cars.index') }}" class="destination-card group card p-5 bg-white border border-slate-300 shadow-xs hover:border-[#F5A623] hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer rounded-xl h-full">
             <div>
                 <span class="badge badge-accent mb-2">Paling Sering</span>
-                <h3 class="font-extrabold text-sm uppercase text-slate-900 group-hover:text-amber-700 transition-colors mb-1">Bandara Sultan Hasanuddin</h3>
+                <h3 class="font-extrabold text-sm uppercase text-slate-900 group-hover:text-amber-700 transition-colors mb-1 min-h-[2.5rem] flex items-center">Bandara Sultan Hasanuddin</h3>
                 <p class="text-xs text-slate-500 font-semibold mb-2">± 20 - 30 Menit</p>
                 <p class="text-xs text-slate-600 leading-relaxed">Layanan antar-jemput 24 jam nonstop langsung di terminal kedatangan/keberangkatan.</p>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-700">
+            <div class="mt-auto pt-3.5 border-t border-slate-200 flex items-center justify-between text-[11px] font-bold text-slate-700">
                 <span class="flex items-center gap-1">
                     <x-icon name="car" class="w-3.5 h-3.5 text-[#F5A623]" /> Cocok Semua Tipe Mobil
                 </span>
@@ -270,14 +270,14 @@
         </a>
 
         {{-- Destinasi 2: Maros & Rammang-rammang --}}
-        <a href="{{ route('cars.index', ['category' => 'city-car']) }}" class="destination-card group card p-5 bg-white border border-slate-200 shadow-sm hover:border-[#F5A623] hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer rounded-lg">
+        <a href="{{ route('cars.index', ['category' => 'city-car']) }}" class="destination-card group card p-5 bg-white border border-slate-300 shadow-xs hover:border-[#F5A623] hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer rounded-xl h-full">
             <div>
                 <span class="inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 mb-2">Wisata Alam</span>
-                <h3 class="font-extrabold text-sm uppercase text-slate-900 group-hover:text-amber-700 transition-colors mb-1">Rammang-Rammang &amp; Maros</h3>
+                <h3 class="font-extrabold text-sm uppercase text-slate-900 group-hover:text-amber-700 transition-colors mb-1 min-h-[2.5rem] flex items-center">Rammang-Rammang &amp; Maros</h3>
                 <p class="text-xs text-slate-500 font-semibold mb-2">± 45 - 60 Menit</p>
                 <p class="text-xs text-slate-600 leading-relaxed">Kawasan gugusan karst terbesar ke-2 di dunia dan air terjun Bantimurung yang memukau.</p>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-700">
+            <div class="mt-auto pt-3.5 border-t border-slate-200 flex items-center justify-between text-[11px] font-bold text-slate-700">
                 <span class="flex items-center gap-1">
                     <x-icon name="car" class="w-3.5 h-3.5 text-[#F5A623]" /> City Car / MPV Hemat
                 </span>
@@ -288,14 +288,14 @@
         </a>
 
         {{-- Destinasi 3: Malino --}}
-        <a href="{{ route('cars.index', ['category' => 'mpv']) }}" class="destination-card group card p-5 bg-white border border-slate-200 shadow-sm hover:border-[#F5A623] hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer rounded-lg">
+        <a href="{{ route('cars.index', ['category' => 'mpv']) }}" class="destination-card group card p-5 bg-white border border-slate-300 shadow-xs hover:border-[#F5A623] hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer rounded-xl h-full">
             <div>
                 <span class="inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 mb-2">Pegunungan</span>
-                <h3 class="font-extrabold text-sm uppercase text-slate-900 group-hover:text-amber-700 transition-colors mb-1">Malino Highland, Gowa</h3>
+                <h3 class="font-extrabold text-sm uppercase text-slate-900 group-hover:text-amber-700 transition-colors mb-1 min-h-[2.5rem] flex items-center">Malino Highland, Gowa</h3>
                 <p class="text-xs text-slate-500 font-semibold mb-2">± 2 - 2.5 Jam</p>
                 <p class="text-xs text-slate-600 leading-relaxed">Kota bunga berhawa sejuk dengan panorama hutan pinus, kebun teh, dan kafe pegunungan.</p>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-700">
+            <div class="mt-auto pt-3.5 border-t border-slate-200 flex items-center justify-between text-[11px] font-bold text-slate-700">
                 <span class="flex items-center gap-1">
                     <x-icon name="car" class="w-3.5 h-3.5 text-[#F5A623]" /> MPV / SUV Tangguh
                 </span>
@@ -306,14 +306,14 @@
         </a>
 
         {{-- Destinasi 4: Tanjung Bira --}}
-        <a href="{{ route('cars.index', ['category' => 'suv']) }}" class="destination-card group card p-5 bg-white border border-slate-200 shadow-sm hover:border-[#F5A623] hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer rounded-lg">
+        <a href="{{ route('cars.index', ['category' => 'suv']) }}" class="destination-card group card p-5 bg-white border border-slate-300 shadow-xs hover:border-[#F5A623] hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer rounded-xl h-full">
             <div>
                 <span class="inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 mb-2">Pantai Pasir Putih</span>
-                <h3 class="font-extrabold text-sm uppercase text-slate-900 group-hover:text-amber-700 transition-colors mb-1">Tanjung Bira, Bulukumba</h3>
+                <h3 class="font-extrabold text-sm uppercase text-slate-900 group-hover:text-amber-700 transition-colors mb-1 min-h-[2.5rem] flex items-center">Tanjung Bira, Bulukumba</h3>
                 <p class="text-xs text-slate-500 font-semibold mb-2">± 4.5 - 5 Jam</p>
                 <p class="text-xs text-slate-600 leading-relaxed">Pesona laut jernih, pasir selembut tepung, serta sentra pembuatan kapal Pinisi bersejarah.</p>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-700">
+            <div class="mt-auto pt-3.5 border-t border-slate-200 flex items-center justify-between text-[11px] font-bold text-slate-700">
                 <span class="flex items-center gap-1">
                     <x-icon name="car" class="w-3.5 h-3.5 text-[#F5A623]" /> Innova / SUV Nyaman
                 </span>
@@ -324,14 +324,14 @@
         </a>
 
         {{-- Destinasi 5: Toraja --}}
-        <a href="{{ route('cars.index', ['category' => 'suv']) }}" class="destination-card group card p-5 bg-white border border-slate-200 shadow-sm hover:border-[#F5A623] hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer rounded-lg">
+        <a href="{{ route('cars.index', ['category' => 'suv']) }}" class="destination-card group card p-5 bg-white border border-slate-300 shadow-xs hover:border-[#F5A623] hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer rounded-xl h-full">
             <div>
                 <span class="inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200 mb-2">Budaya Warisan</span>
-                <h3 class="font-extrabold text-sm uppercase text-slate-900 group-hover:text-amber-700 transition-colors mb-1">Tana Toraja &amp; Kete Kesu</h3>
+                <h3 class="font-extrabold text-sm uppercase text-slate-900 group-hover:text-amber-700 transition-colors mb-1 min-h-[2.5rem] flex items-center">Tana Toraja &amp; Kete Kesu</h3>
                 <p class="text-xs text-slate-500 font-semibold mb-2">± 7 - 8 Jam</p>
                 <p class="text-xs text-slate-600 leading-relaxed">Eksplorasi budaya Tongkonan, kuburan batu Lemo &amp; Londa dengan driver berpengalaman.</p>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-700">
+            <div class="mt-auto pt-3.5 border-t border-slate-200 flex items-center justify-between text-[11px] font-bold text-slate-700">
                 <span class="flex items-center gap-1">
                     <x-icon name="car" class="w-3.5 h-3.5 text-[#F5A623]" /> Fortuner / Pajero / Hiace
                 </span>
@@ -352,7 +352,7 @@
     </div>
 
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="card card-accent-top p-6 bg-white border border-slate-200 shadow-sm">
+        <div class="card card-accent-top p-6 bg-white border border-slate-300 rounded-xl shadow-xs h-full flex flex-col justify-start">
             <div class="h-12 w-12 rounded bg-slate-50 border border-slate-200 flex items-center justify-center text-[#F5A623] mb-4">
                 <x-icon name="key" class="w-6 h-6" />
             </div>
@@ -360,7 +360,7 @@
             <p class="text-xs leading-relaxed text-slate-600">Bawa sendiri mobilnya dengan syarat mudah. Cukup verifikasi KTP &amp; SIM A secara digital tanpa prosedur rumit.</p>
         </div>
 
-        <div class="card card-accent-top p-6 bg-white border border-slate-200 shadow-sm">
+        <div class="card card-accent-top p-6 bg-white border border-slate-300 rounded-xl shadow-xs h-full flex flex-col justify-start">
             <div class="h-12 w-12 rounded bg-slate-50 border border-slate-200 flex items-center justify-center text-[#F5A623] mb-4">
                 <x-icon name="user" class="w-6 h-6" />
             </div>
@@ -368,7 +368,7 @@
             <p class="text-xs leading-relaxed text-slate-600">Tersedia opsi pengemudi ramah, berbusana rapi, bebas rokok, dan menguasai rute kota Makassar hingga pelosok Sulsel.</p>
         </div>
 
-        <div class="card card-accent-top p-6 bg-white border border-slate-200 shadow-sm">
+        <div class="card card-accent-top p-6 bg-white border border-slate-300 rounded-xl shadow-xs h-full flex flex-col justify-start">
             <div class="h-12 w-12 rounded bg-slate-50 border border-slate-200 flex items-center justify-center text-[#F5A623] mb-4">
                 <x-icon name="shield" class="w-6 h-6" />
             </div>
@@ -376,7 +376,7 @@
             <p class="text-xs leading-relaxed text-slate-600">Seluruh unit diservis berkala di bengkel resmi, ber-AC dingin, dan dicuci bersih steril sebelum diserahterimakan.</p>
         </div>
 
-        <div class="card card-accent-top p-6 bg-white border border-slate-200 shadow-sm">
+        <div class="card card-accent-top p-6 bg-white border border-slate-300 rounded-xl shadow-xs h-full flex flex-col justify-start">
             <div class="h-12 w-12 rounded bg-slate-50 border border-slate-200 flex items-center justify-center text-[#F5A623] mb-4">
                 <x-icon name="clock" class="w-6 h-6" />
             </div>
@@ -395,19 +395,19 @@
     </div>
 
     <div class="grid gap-6 md:grid-cols-3">
-        <div class="card p-6 bg-white border border-slate-200 relative shadow-sm">
+        <div class="card p-6 bg-white border border-slate-300 rounded-xl relative shadow-xs h-full flex flex-col justify-start">
             <span class="text-4xl font-black text-amber-600 font-mono block mb-2 opacity-90">01</span>
             <h3 class="font-extrabold text-base uppercase text-slate-900 mb-2">Pilih Unit &amp; Tanggal</h3>
             <p class="text-xs leading-relaxed text-slate-600">Tentukan jadwal perjalanan, lokasi pengambilan (kantor/bandara/alamat), serta kelas mobil yang sesuai kebutuhan.</p>
         </div>
 
-        <div class="card p-6 bg-white border border-slate-200 relative shadow-sm">
+        <div class="card p-6 bg-white border border-slate-300 rounded-xl relative shadow-xs h-full flex flex-col justify-start">
             <span class="text-4xl font-black text-amber-600 font-mono block mb-2 opacity-90">02</span>
             <h3 class="font-extrabold text-base uppercase text-slate-900 mb-2">Isi Data &amp; Konfirmasi</h3>
             <p class="text-xs leading-relaxed text-slate-600">Lengkapi data penyewa, pilih layanan lepas kunci atau tambah sopir, dan lakukan konfirmasi pembayaran via QRIS, Virtual Account, atau transfer bank.</p>
         </div>
 
-        <div class="card p-6 bg-white border border-slate-200 relative shadow-sm">
+        <div class="card p-6 bg-white border border-slate-300 rounded-xl relative shadow-xs h-full flex flex-col justify-start">
             <span class="text-4xl font-black text-amber-600 font-mono block mb-2 opacity-90">03</span>
             <h3 class="font-extrabold text-base uppercase text-slate-900 mb-2">Serah Terima &amp; Jalan</h3>
             <p class="text-xs leading-relaxed text-slate-600">Petugas pool kami menyerahkan kendaraan dalam kondisi prima dan bahan bakar sesuai perjanjian serah terima digital.</p>
