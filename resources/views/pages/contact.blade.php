@@ -12,9 +12,9 @@
     </p>
 </div>
 
-<div class="grid gap-6 md:grid-cols-2">
+<div class="grid gap-6 md:grid-cols-2 items-stretch">
     {{-- Profil Kantor & Jam Operasional --}}
-    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-200 text-xs shadow-sm flex flex-col justify-between">
+    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-300 rounded-xl text-xs shadow-xs h-full flex flex-col justify-between" style="height: 100%;">
         <div>
             <div class="flex items-center gap-3 mb-5">
                 <div class="h-10 w-10 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700">
@@ -73,7 +73,7 @@
     </div>
 
     {{-- Kontak WhatsApp Admin --}}
-    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-300 rounded-xl shadow-xs h-full flex flex-col justify-between" style="height: 100%;">
         <div>
             <div class="flex items-center gap-3 mb-5">
                 <div class="h-10 w-10 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">

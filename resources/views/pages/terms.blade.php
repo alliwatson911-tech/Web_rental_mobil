@@ -12,9 +12,9 @@
     </p>
 </div>
 
-<div class="grid gap-6 md:grid-cols-2">
+<div class="grid gap-6 md:grid-cols-2 items-stretch">
     {{-- Persyaratan Penyewa --}}
-    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-200 shadow-sm">
+    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-300 rounded-xl shadow-xs h-full flex flex-col justify-start" style="height: 100%;">
         <div class="flex items-center gap-3 mb-4">
             <div class="h-12 w-12 rounded bg-slate-50 border border-slate-200 flex items-center justify-center text-[#F5A623]">
                 <x-icon name="user" class="w-6 h-6" />
@@ -38,7 +38,7 @@
     </div>
 
     {{-- Deposit Jaminan --}}
-    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-200 shadow-sm">
+    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-300 rounded-xl shadow-xs h-full flex flex-col justify-start" style="height: 100%;">
         <div class="flex items-center gap-3 mb-4">
             <div class="h-12 w-12 rounded bg-slate-50 border border-slate-200 flex items-center justify-center text-[#F5A623]">
                 <x-icon name="shield" class="w-6 h-6" />
@@ -56,7 +56,7 @@
     </div>
 
     {{-- Batas Kilometer --}}
-    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-200 shadow-sm">
+    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-300 rounded-xl shadow-xs h-full flex flex-col justify-start" style="height: 100%;">
         <div class="flex items-center gap-3 mb-4">
             <div class="h-12 w-12 rounded bg-slate-50 border border-slate-200 flex items-center justify-center text-[#F5A623]">
                 <x-icon name="car" class="w-6 h-6" />
@@ -74,7 +74,7 @@
     </div>
 
     {{-- Keterlambatan --}}
-    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-200 shadow-sm">
+    <div class="card card-accent-top p-6 md:p-8 bg-white border border-slate-300 rounded-xl shadow-xs h-full flex flex-col justify-start" style="height: 100%;">
         <div class="flex items-center gap-3 mb-4">
             <div class="h-12 w-12 rounded bg-slate-50 border border-slate-200 flex items-center justify-center text-[#F5A623]">
                 <x-icon name="clock" class="w-6 h-6" />

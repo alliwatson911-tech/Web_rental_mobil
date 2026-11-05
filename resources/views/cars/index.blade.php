@@ -65,7 +65,7 @@
     </div>
 @endif
 
-<div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+<div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
     @forelse ($cars as $car)
         @include('partials.car-card', ['car' => $car, 'filters' => $filters, 'days' => $days])
     @empty
