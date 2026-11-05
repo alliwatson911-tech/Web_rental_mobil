@@ -6,7 +6,8 @@
         const iconOpen = document.getElementById('icon-menu-open');
         const iconClose = document.getElementById('icon-menu-close');
 
-        if (!toggleBtn || !drawer) return;
+        if (!toggleBtn || !drawer || toggleBtn.dataset.menuInitialized === 'true') return;
+        toggleBtn.dataset.menuInitialized = 'true';
 
         function openMenu() {
             drawer.classList.remove('hidden');
@@ -25,6 +26,7 @@
         }
 
         toggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             e.stopPropagation();
             const isOpen = !drawer.classList.contains('hidden');
             if (isOpen) {
