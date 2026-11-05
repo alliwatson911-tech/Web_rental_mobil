@@ -110,8 +110,8 @@
 
         {{-- Bottom Copyright --}}
         <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#64748b]">
-            <p class="m-0">
-                &copy; {{ date('Y') }} <strong>Padaidi Rent Car</strong>. Hak Cipta Dilindungi Undang-Undang.
+            <p class="m-0 text-center md:text-left">
+                &copy; {{ date('Y') }} <strong>Padaidi Rent Car</strong>. Hak Cipta Dilindungi Undang-Undang. Developed by <a href="https://www.linyjayainformatika.co.id/" target="_blank" rel="noopener noreferrer" class="font-bold text-[#94a3b8] hover:text-[#F5A623] transition-colors underline decoration-[#334155] hover:decoration-[#F5A623]">Liny Jaya Informatika</a>.
             </p>
             <div class="flex items-center gap-5">
                 <a href="{{ route('terms') }}" class="hover:text-[#94a3b8] transition">Kebijakan Privasi</a>
