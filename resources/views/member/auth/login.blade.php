@@ -10,9 +10,12 @@
             <a href="{{ route('home') }}" class="inline-block mb-3" title="Padaidi Rent Car">
                 <img src="{{ asset('images/brand/padaidi-logo.png') }}" alt="Padaidi Rent Car" class="h-14 w-auto mx-auto object-contain">
             </a>
-            <h1 class="text-2xl font-black text-slate-900 tracking-wide uppercase">Masuk Member</h1>
-            <p class="mt-1 text-sm text-slate-500">Akses riwayat pesanan, tier diskon, dan promo sewa mobil.</p>
+            <h1 class="text-2xl font-black text-slate-900 tracking-wide uppercase">Masuk Akun</h1>
+            <p class="mt-1 text-sm text-slate-500">Akses riwayat pesanan, tier diskon, dan panel operasional.</p>
         </div>
+
+        {{-- Widget Pilih Akun Demo untuk Uji Coba Testing --}}
+        @include('partials.demo-accounts-picker', ['theme' => 'light', 'type' => 'all'])
 
         <form method="POST" action="{{ route('login.submit') }}" class="mt-6 space-y-4">
             @csrf

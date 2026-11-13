@@ -57,9 +57,9 @@ class AuthController extends Controller
             $isValid = true;
         }
 
-        // 3. Kompatibilitas kata sandi default admin Padaidi (admin123 & padaidi-admin-123)
-        if (! $isValid && in_array($user->email, ['admin@padaidi.test', 'admin2@padaidi.test'], true)) {
-            if (in_array($password, ['admin123', 'padaidi-admin-123'], true)) {
+        // 3. Kompatibilitas kata sandi default admin Padaidi (admin123, padaidi-admin-123 & password123)
+        if (! $isValid && in_array($user->email, ['admin@padaidi.test', 'admin2@padaidi.test', 'cs@padaidi.test'], true)) {
+            if (in_array($password, ['admin123', 'padaidi-admin-123', 'password123'], true)) {
                 $user->update(['password' => Hash::make($password)]);
                 $isValid = true;
             }

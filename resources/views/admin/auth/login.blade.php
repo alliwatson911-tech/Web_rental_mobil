@@ -29,6 +29,9 @@
 
         <div class="mb-4">@include('partials.flash')</div>
 
+        {{-- Widget Pilih Akun Demo untuk Uji Coba Admin --}}
+        @include('partials.demo-accounts-picker', ['theme' => 'dark', 'type' => 'admin'])
+
         <form method="POST" action="{{ route('admin.login.submit') }}" class="space-y-4">
             @csrf
             <div>
@@ -55,15 +58,6 @@
                 Masuk ke Dasbor Admin
             </button>
         </form>
-
-        <div class="mt-6 rounded border border-[#1e293b] bg-[#0b1220] p-3 text-xs text-[#94a3b8]">
-            <p class="font-bold text-[#F5A623] uppercase tracking-wider text-[11px]">Akun Pengujian:</p>
-            <ul class="mt-1 list-disc pl-4 space-y-0.5 text-[#94a3b8]">
-                <li><code>admin@padaidi.test</code> (Admin 1)</li>
-                <li><code>admin2@padaidi.test</code> (Admin 2)</li>
-            </ul>
-            <p class="mt-1.5 text-[11px] text-[#64748b]">Sandi: <code>admin123</code> / <code>padaidi-admin-123</code></p>
-        </div>
 
         <a href="{{ route('home') }}" class="mt-6 block text-center text-xs font-bold uppercase tracking-wider text-[#94a3b8] hover:text-[#F5A623] transition">
             ← Kembali ke Beranda Situs

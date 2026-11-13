@@ -42,6 +42,18 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // Akun staf CS & Reservasi
+        User::updateOrCreate(
+            ['email' => 'cs@padaidi.test'],
+            [
+                'name' => 'Petugas CS & Reservasi',
+                'phone' => '6281144556677',
+                'role' => User::ROLE_ADMIN,
+                'password' => 'password123',
+                'email_verified_at' => now(),
+            ]
+        );
+
         $categories = collect([
             ['City Car', 'Mobil kecil irit untuk dalam kota.'],
             ['MPV', 'Mobil keluarga 7 penumpang.'],

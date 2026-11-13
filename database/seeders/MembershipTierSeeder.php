@@ -49,16 +49,16 @@ class MembershipTierSeeder extends Seeder
             );
         }
 
-        // Akun member contoh untuk pengetesan
+        // Akun member reguler contoh untuk pengetesan
         $regulerTier = MembershipTier::where('slug', MembershipTier::TIER_REGULER)->first();
 
         $member = User::updateOrCreate(
             ['email' => 'member@padaidi.test'],
             [
-                'name' => 'Budi Santoso (Member Contoh)',
+                'name' => 'Budi Santoso (Member Reguler)',
                 'phone' => '081234567890',
                 'role' => User::ROLE_CUSTOMER,
-                'password' => Hash::make('padaidi-member-123'),
+                'password' => Hash::make('password123'),
                 'email_verified_at' => now(),
             ]
         );
@@ -68,6 +68,28 @@ class MembershipTierSeeder extends Seeder
             'membership_tier_id' => $regulerTier?->id,
             'phone_verified_at' => now(),
             'kyc_status' => MemberProfile::KYC_UNVERIFIED,
+            'is_active' => true,
+        ]);
+
+        // Akun member prioritas (Gold Tier) contoh
+        $goldTier = MembershipTier::where('slug', MembershipTier::TIER_GOLD)->first();
+
+        $goldMember = User::updateOrCreate(
+            ['email' => 'gold@padaidi.test'],
+            [
+                'name' => 'H. Syamsuddin (Member Prioritas)',
+                'phone' => '081199887766',
+                'role' => User::ROLE_CUSTOMER,
+                'password' => Hash::make('password123'),
+                'email_verified_at' => now(),
+            ]
+        );
+
+        $goldProfile = $goldMember->ensureMemberProfile();
+        $goldProfile->update([
+            'membership_tier_id' => $goldTier?->id,
+            'phone_verified_at' => now(),
+            'kyc_status' => MemberProfile::KYC_VERIFIED,
             'is_active' => true,
         ]);
     }

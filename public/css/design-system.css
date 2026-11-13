@@ -203,7 +203,8 @@ body.theme-padaidi {
    ========================================================================== */
 .section-kicker {
     display: inline-block;
-    color: #b45309 !important; /* Rich amber-gold (WCAG AA 4.8:1 on white canvas) */
+    color: #b45309 !important;
+    /* Rich amber-gold (WCAG AA 4.8:1 on white canvas) */
     font-size: var(--font-size-kicker);
     font-weight: 800;
     letter-spacing: 2px;
@@ -928,24 +929,28 @@ section.hero-section {
     background-color: #111827 !important;
     border-radius: 50% !important;
     border: 36px solid #1e293b !important;
-    z-index: -1 !important; /* Strictly behind all section text and cards */
+    z-index: -1 !important;
+    /* Strictly behind all section text and cards */
     pointer-events: none !important;
 }
 
 /* --- 3. DESKTOP NAVIGATION MENU SPACING & LINKS (Desktop >= 768px only) --- */
 @media (min-width: 768px) {
+
     nav[aria-label="Menu Utama"],
     .site-nav-menu {
         display: flex !important;
         align-items: center !important;
-        gap: 1.75rem !important; /* 28px separation */
+        gap: 1.75rem !important;
+        /* 28px separation */
     }
 
-    nav[aria-label="Menu Utama"] > a,
+    nav[aria-label="Menu Utama"]>a,
     .site-nav-link {
         display: inline-flex !important;
         align-items: center !important;
-        padding: 0.375rem 0.625rem !important; /* 6px 10px */
+        padding: 0.375rem 0.625rem !important;
+        /* 6px 10px */
         white-space: nowrap !important;
         font-size: 0.75rem !important;
         font-weight: 700 !important;
@@ -966,74 +971,227 @@ header a[aria-label*="Padaidi"] span {
 }
 
 /* --- 4. Z-INDEX HIERARCHY SPECIFICATION --- */
-.z-0 { z-index: 0 !important; }
-.z-10 { z-index: 10 !important; }
-.z-20 { z-index: 20 !important; }
-.z-30 { z-index: 30 !important; }
-.z-40 { z-index: 40 !important; }
-.z-50 { z-index: 50 !important; }
-.z-sticky { z-index: 1000 !important; }
-.z-modal { z-index: 2000 !important; }
-.z-toast { z-index: 2500 !important; }
-.z-skip { z-index: 3000 !important; }
+.z-0 {
+    z-index: 0 !important;
+}
+
+.z-10 {
+    z-index: 10 !important;
+}
+
+.z-20 {
+    z-index: 20 !important;
+}
+
+.z-30 {
+    z-index: 30 !important;
+}
+
+.z-40 {
+    z-index: 40 !important;
+}
+
+.z-50 {
+    z-index: 50 !important;
+}
+
+.z-sticky {
+    z-index: 1000 !important;
+}
+
+.z-modal {
+    z-index: 2000 !important;
+}
+
+.z-toast {
+    z-index: 2500 !important;
+}
+
+.z-skip {
+    z-index: 3000 !important;
+}
 
 /* Sticky cards on car detail and booking checkout */
-.top-0 { top: 0 !important; }
-.top-16 { top: 4rem !important; }
-.top-20 { top: 5rem !important; }
-.top-24 { top: 6rem !important; }
+.top-0 {
+    top: 0 !important;
+}
+
+.top-16 {
+    top: 4rem !important;
+}
+
+.top-20 {
+    top: 5rem !important;
+}
+
+.top-24 {
+    top: 6rem !important;
+}
+
 .sticky.top-24,
 div.sticky.top-24 {
     position: sticky !important;
     top: 6rem !important;
-    z-index: 20 !important; /* Below 1000 header, above standard background */
+    z-index: 20 !important;
+    /* Below 1000 header, above standard background */
 }
 
 /* --- 5. FLEX & GRID UTILITIES FALLBACK --- */
-.gap-1 { gap: 0.25rem !important; }
-.gap-1\.5 { gap: 0.375rem !important; }
-.gap-2 { gap: 0.5rem !important; }
-.gap-2\.5 { gap: 0.625rem !important; }
-.gap-3 { gap: 0.75rem !important; }
-.gap-3\.5 { gap: 0.875rem !important; }
-.gap-4 { gap: 1rem !important; }
-.gap-5 { gap: 1.25rem !important; }
-.gap-6 { gap: 1.5rem !important; }
-.gap-7 { gap: 1.75rem !important; }
-.gap-8 { gap: 2rem !important; }
-.gap-10 { gap: 2.5rem !important; }
-.gap-12 { gap: 3rem !important; }
+.gap-1 {
+    gap: 0.25rem !important;
+}
+
+.gap-1\.5 {
+    gap: 0.375rem !important;
+}
+
+.gap-2 {
+    gap: 0.5rem !important;
+}
+
+.gap-2\.5 {
+    gap: 0.625rem !important;
+}
+
+.gap-3 {
+    gap: 0.75rem !important;
+}
+
+.gap-3\.5 {
+    gap: 0.875rem !important;
+}
+
+.gap-4 {
+    gap: 1rem !important;
+}
+
+.gap-5 {
+    gap: 1.25rem !important;
+}
+
+.gap-6 {
+    gap: 1.5rem !important;
+}
+
+.gap-7 {
+    gap: 1.75rem !important;
+}
+
+.gap-8 {
+    gap: 2rem !important;
+}
+
+.gap-10 {
+    gap: 2.5rem !important;
+}
+
+.gap-12 {
+    gap: 3rem !important;
+}
 
 /* Responsive Grid columns fallback */
 @media (min-width: 768px) {
-    .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-    .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
-    .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
-    .md\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
-    .md\:grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
-    .md\:grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)) !important; }
-    .md\:col-span-1 { grid-column: span 1 / span 1 !important; }
-    .md\:col-span-2 { grid-column: span 2 / span 2 !important; }
-    .md\:col-span-3 { grid-column: span 3 / span 3 !important; }
-    .md\:col-span-4 { grid-column: span 4 / span 4 !important; }
-    .md\:col-span-5 { grid-column: span 5 / span 5 !important; }
-    .md\:col-span-6 { grid-column: span 6 / span 6 !important; }
-    .md\:col-span-7 { grid-column: span 7 / span 7 !important; }
-    .md\:col-span-8 { grid-column: span 8 / span 8 !important; }
-    .md\:col-span-9 { grid-column: span 9 / span 9 !important; }
-    .md\:col-span-12 { grid-column: span 12 / span 12 !important; }
+    .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .md\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .md\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+
+    .md\:grid-cols-5 {
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    }
+
+    .md\:grid-cols-6 {
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    }
+
+    .md\:grid-cols-12 {
+        grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+    }
+
+    .md\:col-span-1 {
+        grid-column: span 1 / span 1 !important;
+    }
+
+    .md\:col-span-2 {
+        grid-column: span 2 / span 2 !important;
+    }
+
+    .md\:col-span-3 {
+        grid-column: span 3 / span 3 !important;
+    }
+
+    .md\:col-span-4 {
+        grid-column: span 4 / span 4 !important;
+    }
+
+    .md\:col-span-5 {
+        grid-column: span 5 / span 5 !important;
+    }
+
+    .md\:col-span-6 {
+        grid-column: span 6 / span 6 !important;
+    }
+
+    .md\:col-span-7 {
+        grid-column: span 7 / span 7 !important;
+    }
+
+    .md\:col-span-8 {
+        grid-column: span 8 / span 8 !important;
+    }
+
+    .md\:col-span-9 {
+        grid-column: span 9 / span 9 !important;
+    }
+
+    .md\:col-span-12 {
+        grid-column: span 12 / span 12 !important;
+    }
 }
 
 @media (min-width: 1024px) {
-    .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-    .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
-    .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
-    .lg\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
-    .lg\:grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
-    .lg\:col-span-1 { grid-column: span 1 / span 1 !important; }
-    .lg\:col-span-2 { grid-column: span 2 / span 2 !important; }
-    .lg\:col-span-3 { grid-column: span 3 / span 3 !important; }
-    .lg\:col-span-4 { grid-column: span 4 / span 4 !important; }
+    .lg\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .lg\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .lg\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+
+    .lg\:grid-cols-5 {
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    }
+
+    .lg\:grid-cols-6 {
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    }
+
+    .lg\:col-span-1 {
+        grid-column: span 1 / span 1 !important;
+    }
+
+    .lg\:col-span-2 {
+        grid-column: span 2 / span 2 !important;
+    }
+
+    .lg\:col-span-3 {
+        grid-column: span 3 / span 3 !important;
+    }
+
+    .lg\:col-span-4 {
+        grid-column: span 4 / span 4 !important;
+    }
 }
 
 
@@ -1121,7 +1279,8 @@ textarea:focus {
 }
 
 .price-row-price {
-    color: #b45309 !important; /* Rich amber-gold (WCAG AA 4.8:1 on white) */
+    color: #b45309 !important;
+    /* Rich amber-gold (WCAG AA 4.8:1 on white) */
     font-weight: 800 !important;
 }
 
@@ -1162,6 +1321,7 @@ footer[role="contentinfo"] {
 .destination-card {
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
+
 .destination-card:hover {
     transform: translateY(-3px);
     border-color: #F5A623 !important;
@@ -1213,10 +1373,12 @@ details.faq-item {
     background-color: #ffffff;
     transition: all 0.2s ease;
 }
+
 details.faq-item[open] {
     border-color: #F5A623;
     box-shadow: 0 4px 14px rgba(245, 166, 35, 0.10);
 }
+
 details.faq-item summary {
     cursor: pointer;
     list-style: none;
@@ -1229,16 +1391,20 @@ details.faq-item summary {
     color: #0f172a;
     user-select: none;
 }
+
 details.faq-item summary::-webkit-details-marker {
     display: none;
 }
+
 details.faq-item summary .faq-chevron {
     transition: transform 0.2s ease;
     color: #F5A623;
 }
+
 details.faq-item[open] summary .faq-chevron {
     transform: rotate(180deg);
 }
+
 details.faq-item .faq-body {
     padding: 0 1.25rem 1.25rem 1.25rem;
     color: #475569;
@@ -1269,6 +1435,7 @@ details.faq-item .faq-body {
     letter-spacing: 0.025em;
     transition: all 0.2s ease-in-out;
 }
+
 .floating-whatsapp-pill:hover {
     transform: translateY(-2px);
     background-color: #111827;
@@ -1276,6 +1443,7 @@ details.faq-item .faq-body {
     color: #F5A623;
     box-shadow: 0 14px 28px rgba(245, 166, 35, 0.25);
 }
+
 .live-pulse-dot {
     position: relative;
     display: inline-flex;
@@ -1284,6 +1452,7 @@ details.faq-item .faq-body {
     border-radius: 9999px;
     background-color: #10b981;
 }
+
 .live-pulse-dot::after {
     content: '';
     position: absolute;
@@ -1295,8 +1464,11 @@ details.faq-item .faq-body {
     background-color: #10b981;
     animation: live-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
+
 @keyframes live-ping {
-    75%, 100% {
+
+    75%,
+    100% {
         transform: scale(2.2);
         opacity: 0;
     }
@@ -1307,6 +1479,7 @@ details.faq-item .faq-body {
    Additive rules strictly protecting desktop contracts (>= 768px untouched)
    ========================================================================== */
 @media (max-width: 767px) {
+
     /* 1. Ensure root viewport has pure visible overflow for 100% reliable position: sticky */
     html {
         overflow-x: visible !important;
@@ -1384,8 +1557,10 @@ details.faq-item .faq-body {
     input[type="date"],
     select,
     textarea {
-        font-size: 16px !important; /* Prevents iOS Safari auto-zoom */
-        min-height: 44px !important; /* 44px touch ergonomics */
+        font-size: 16px !important;
+        /* Prevents iOS Safari auto-zoom */
+        min-height: 44px !important;
+        /* 44px touch ergonomics */
         padding: 10px 12px !important;
         box-sizing: border-box !important;
     }
@@ -1425,7 +1600,8 @@ details.faq-item .faq-body {
     }
 
     .hero-section h1 {
-        font-size: 1.875rem !important; /* 30px */
+        font-size: 1.875rem !important;
+        /* 30px */
         line-height: 1.15 !important;
     }
 
@@ -1490,6 +1666,7 @@ body.theme-admin .admin-sidebar {
 }
 
 @media (max-width: 767px) {
+
     body.theme-admin aside,
     body.theme-admin .admin-sidebar {
         position: -webkit-sticky !important;
@@ -1643,27 +1820,34 @@ body.theme-admin .btn-primary:hover {
 body.theme-admin .text-slate-900 {
     color: #0f172a !important;
 }
+
 body.theme-admin .text-slate-800 {
     color: #1e293b !important;
 }
+
 body.theme-admin .text-slate-700 {
     color: #334155 !important;
 }
+
 body.theme-admin .text-slate-600 {
     color: #475569 !important;
 }
+
 body.theme-admin .text-slate-500 {
     color: #64748b !important;
 }
+
 /* WCAG AA contrast normalization: Ensure secondary text has >= 4.5:1 ratio on light background */
 body.theme-admin main .text-slate-400,
 body.theme-admin .card .text-slate-400 {
     color: #64748b !important;
 }
+
 body.theme-admin main .text-slate-300,
 body.theme-admin .card .text-slate-300 {
     color: #334155 !important;
 }
+
 body.theme-admin main .text-slate-200,
 body.theme-admin main .text-slate-100,
 body.theme-admin .card .text-slate-200,
@@ -1674,9 +1858,11 @@ body.theme-admin .card .text-slate-100 {
 body.theme-admin .border-slate-100 {
     border-color: #f1f5f9 !important;
 }
+
 body.theme-admin .border-slate-200 {
     border-color: #e2e8f0 !important;
 }
+
 body.theme-admin .border-slate-300 {
     border-color: #cbd5e1 !important;
 }
@@ -1688,6 +1874,7 @@ body.theme-admin .bg-white {
 body.theme-admin .bg-slate-50 {
     background-color: #f8fafc !important;
 }
+
 body.theme-admin .bg-slate-100 {
     background-color: #f1f5f9 !important;
 }
@@ -1782,10 +1969,11 @@ body.theme-admin table .text-white:not(.btn):not(.badge):not([class*="bg-emerald
     cursor: pointer !important;
 }
 
-body.theme-admin .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+body.theme-admin .divide-slate-100> :not([hidden])~ :not([hidden]) {
     border-color: #f1f5f9 !important;
 }
-body.theme-admin .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
+
+body.theme-admin .divide-slate-200> :not([hidden])~ :not([hidden]) {
     border-color: #e2e8f0 !important;
 }
 
@@ -1798,7 +1986,8 @@ body.theme-admin .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
     height: 100% !important;
     min-height: 100% !important;
     padding: 0 !important;
-    border: 1px solid #cbd5e1 !important; /* WCAG 2.2 AA non-text contrast > 3:1 */
+    border: 1px solid #cbd5e1 !important;
+    /* WCAG 2.2 AA non-text contrast > 3:1 */
     border-radius: 12px !important;
     background-color: #ffffff !important;
     overflow: hidden !important;
@@ -1840,7 +2029,7 @@ body.theme-admin .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
 }
 
 .car-card-media img,
-.car-card-media > div,
+.car-card-media>div,
 .car-card-media picture img {
     position: absolute !important;
     top: 0 !important;
@@ -1938,7 +2127,8 @@ body.theme-admin .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
 .car-card-footer {
     margin-top: auto !important;
     padding-top: 14px !important;
-    border-top: 1px solid #cbd5e1 !important; /* Crisp WCAG AA divider on EVERY card */
+    border-top: 1px solid #cbd5e1 !important;
+    /* Crisp WCAG AA divider on EVERY card */
     box-sizing: border-box !important;
 }
 
