@@ -10,6 +10,12 @@ class Location extends Model
 {
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        static::saved(fn () => \Illuminate\Support\Facades\Cache::forget('master_locations'));
+        static::deleted(fn () => \Illuminate\Support\Facades\Cache::forget('master_locations'));
+    }
+
     protected $fillable = ['name', 'slug', 'description', 'requires_address', 'is_active'];
 
     protected function casts(): array

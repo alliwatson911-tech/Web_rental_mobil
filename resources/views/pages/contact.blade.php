@@ -116,7 +116,10 @@
                 <div class="relative shrink-0">
                     <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 p-0.5 shadow-md flex items-center justify-center">
                         <div class="h-full w-full rounded-2xl bg-slate-900 flex items-center justify-center p-2">
-                            <img src="{{ asset('images/brand/padaidi-logo.png') }}" alt="Padaidi Rent Car" class="h-full w-full object-contain">
+                            <picture class="h-full w-full flex items-center justify-center">
+                                <source srcset="{{ asset('images/brand/padaidi-logo.webp') }}" type="image/webp">
+                                <img src="{{ asset('images/brand/padaidi-logo.png') }}" alt="Padaidi Rent Car" class="h-full w-full object-contain" loading="lazy" decoding="async">
+                            </picture>
                         </div>
                     </div>
                     <span class="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-pink-600 text-white shadow ring-2 ring-white">

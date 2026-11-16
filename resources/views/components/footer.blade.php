@@ -4,11 +4,16 @@
             {{-- Kolom 1: Profil Brand --}}
             <div>
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-3 mb-4 group shrink-0" aria-label="Padaidi Rent Car">
-                    <img src="{{ asset('images/brand/padaidi-logo.png') }}" 
-                         alt="Padaidi Rent Car Emblem" 
-                         class="h-11 w-auto object-contain shrink-0" 
-                         width="44" 
-                         height="44" />
+                    <picture class="shrink-0">
+                        <source srcset="{{ asset('images/brand/padaidi-logo.webp') }}" type="image/webp">
+                        <img src="{{ asset('images/brand/padaidi-logo.png') }}" 
+                             alt="Padaidi Rent Car Emblem" 
+                             class="h-11 w-auto object-contain shrink-0" 
+                             width="44" 
+                             height="44"
+                             loading="lazy"
+                             decoding="async" />
+                    </picture>
                     <span class="text-xl font-black tracking-wider text-[#f8fafc] uppercase whitespace-nowrap">
                         <span class="text-[#F5A623]">PADAIDI</span> RENT CAR
                     </span>

@@ -10,6 +10,19 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forget('master_categories');
+            \Illuminate\Support\Facades\Cache::forget('home_categories_count');
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forget('master_categories');
+            \Illuminate\Support\Facades\Cache::forget('home_categories_count');
+        });
+    }
+
     protected $fillable = ['name', 'slug', 'description', 'sort_order'];
 
     public function cars(): HasMany

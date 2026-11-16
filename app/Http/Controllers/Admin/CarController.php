@@ -62,6 +62,10 @@ class CarController extends Controller
 
         foreach ($car->photos()->get() as $photo) {
             Storage::disk('public')->delete($photo->path);
+            $webpPath = pathinfo($photo->path, PATHINFO_DIRNAME) . '/' . pathinfo($photo->path, PATHINFO_FILENAME) . '.webp';
+            if (Storage::disk('public')->exists($webpPath)) {
+                Storage::disk('public')->delete($webpPath);
+            }
         }
         $car->delete();
 
@@ -72,6 +76,10 @@ class CarController extends Controller
     {
         abort_unless($photo->car_id === $car->id, 404);
         Storage::disk('public')->delete($photo->path);
+        $webpPath = pathinfo($photo->path, PATHINFO_DIRNAME) . '/' . pathinfo($photo->path, PATHINFO_FILENAME) . '.webp';
+        if (Storage::disk('public')->exists($webpPath)) {
+            Storage::disk('public')->delete($webpPath);
+        }
         $wasPrimary = $photo->is_primary;
         $photo->delete();
 
@@ -97,13 +105,67 @@ class CarController extends Controller
         $order = (int) $car->photos()->max('sort_order');
 
         foreach ($request->file('photos', []) as $file) {
+            $path = $file->store('cars', 'public');
+            $this->generateWebpVersion($path);
+
             $car->photos()->create([
-                'path' => $file->store('cars', 'public'),
+                'path' => $path,
                 'is_primary' => ! $hasPrimary,
                 'sort_order' => ++$order,
             ]);
             $hasPrimary = true;
         }
+    }
+
+    protected function generateWebpVersion(string $path): void
+    {
+        $fullPath = Storage::disk('public')->path($path);
+        if (!file_exists($fullPath) || !extension_loaded('gd')) {
+            return;
+        }
+
+        $info = @getimagesize($fullPath);
+        if (!$info) return;
+
+        $width = $info[0];
+        $height = $info[1];
+        $mime = $info['mime'];
+
+        if ($mime === 'image/jpeg') {
+            $srcImg = @imagecreatefromjpeg($fullPath);
+        } elseif ($mime === 'image/png') {
+            $srcImg = @imagecreatefrompng($fullPath);
+        } else {
+            return;
+        }
+
+        if (!$srcImg) return;
+
+        $maxWidth = 720;
+        if ($width > $maxWidth) {
+            $newWidth = $maxWidth;
+            $newHeight = (int) round(($height / $width) * $newWidth);
+        } else {
+            $newWidth = $width;
+            $newHeight = $height;
+        }
+
+        $destImg = imagecreatetruecolor($newWidth, $newHeight);
+        if ($mime === 'image/png') {
+            imagealphablending($destImg, false);
+            imagesavealpha($destImg, true);
+        }
+        imagecopyresampled($destImg, $srcImg, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+        $dir = pathinfo($path, PATHINFO_DIRNAME);
+        $filename = pathinfo($path, PATHINFO_FILENAME);
+        $destRel = ($dir === '.' ? '' : $dir . '/') . $filename . '.webp';
+        $destFull = Storage::disk('public')->path($destRel);
+
+        @imagewebp($destImg, $destFull, 82);
+
+        imagedestroy($srcImg);
+        imagedestroy($destImg);
     }
 
     protected function uniqueSlug(string $text): string

@@ -10,12 +10,23 @@
         {{-- Foto Utama & Galeri --}}
         <div class="card overflow-hidden bg-white border border-slate-200 p-0 shadow-sm">
             @if ($car->photos->isNotEmpty())
-                <img id="main-car-photo" src="{{ $car->photos->first()->url() }}" alt="{{ $car->name }}" class="h-72 w-full object-cover md:h-96">
+                @php($firstPhoto = $car->photos->first())
+                <picture>
+                    @if ($firstPhoto->webpUrl())
+                        <source id="main-car-source" srcset="{{ $firstPhoto->webpUrl() }}" type="image/webp">
+                    @endif
+                    <img id="main-car-photo" src="{{ $firstPhoto->url() }}" alt="{{ $car->name }}" class="h-72 w-full object-cover md:h-96" decoding="async">
+                </picture>
                 @if ($car->photos->count() > 1)
                     <div class="grid grid-cols-4 gap-2 p-3 bg-slate-50 border-t border-slate-200">
                         @foreach ($car->photos as $photo)
-                            <button type="button" class="h-20 w-full rounded border border-slate-200 overflow-hidden cursor-pointer hover:border-[#F5A623] focus:border-[#F5A623] focus:outline-none transition-colors" onclick="document.getElementById('main-car-photo').src = '{{ $photo->url() }}'">
-                                <img src="{{ $photo->url() }}" alt="{{ $car->name }}" class="h-full w-full object-cover" loading="lazy">
+                            <button type="button" class="h-20 w-full rounded border border-slate-200 overflow-hidden cursor-pointer hover:border-[#F5A623] focus:border-[#F5A623] focus:outline-none transition-colors" onclick="document.getElementById('main-car-photo').src = '{{ $photo->url() }}'; var srcEl = document.getElementById('main-car-source'); if (srcEl) { srcEl.srcset = '{{ $photo->webpUrl() ?? $photo->url() }}'; }">
+                                <picture class="h-full w-full">
+                                    @if ($photo->webpUrl())
+                                        <source srcset="{{ $photo->webpUrl() }}" type="image/webp">
+                                    @endif
+                                    <img src="{{ $photo->url() }}" alt="{{ $car->name }}" class="h-full w-full object-cover" loading="lazy" decoding="async">
+                                </picture>
                             </button>
                         @endforeach
                     </div>

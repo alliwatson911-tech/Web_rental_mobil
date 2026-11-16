@@ -2,11 +2,15 @@
     <div class="site-container flex items-center justify-between py-3.5">
         {{-- Brand Logo & Name --}}
         <a href="{{ route('home') }}" class="flex items-center gap-3 text-decoration-none group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5A623] rounded p-1 shrink-0" aria-label="Padaidi Rent Car Beranda">
-            <img src="{{ asset('images/brand/padaidi-logo.png') }}" 
-                 alt="Padaidi Rent Car Emblem" 
-                 class="h-10 w-auto object-contain transition-transform group-hover:scale-105 shrink-0" 
-                 width="40" 
-                 height="40" />
+            <picture class="shrink-0">
+                <source srcset="{{ asset('images/brand/padaidi-logo.webp') }}" type="image/webp">
+                <img src="{{ asset('images/brand/padaidi-logo.png') }}" 
+                     alt="Padaidi Rent Car Emblem" 
+                     class="h-10 w-auto object-contain transition-transform group-hover:scale-105 shrink-0" 
+                     width="40" 
+                     height="40"
+                     decoding="async" />
+            </picture>
             <div class="leading-none whitespace-nowrap">
                 <span class="block text-base sm:text-lg font-black tracking-wider text-[#f8fafc] uppercase whitespace-nowrap">
                     <span class="text-[#F5A623]">PADAIDI</span> RENT CAR

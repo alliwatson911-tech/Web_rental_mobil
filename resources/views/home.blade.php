@@ -62,7 +62,10 @@
             {{-- Right Column: Signature Offset Frame Visual --}}
             <div class="md:col-span-5 flex justify-center items-center">
                 <div class="hero-offset-frame relative w-full max-w-[320px] sm:max-w-[340px] shadow-xl">
-                    <img src="{{ asset('images/brand/padaidi-hero.jpg') }}" alt="Armada Rental Mobil Padaidi Makassar" class="w-full h-full object-cover rounded block" width="340" height="255">
+                    <picture class="w-full h-full">
+                        <source srcset="{{ asset('images/brand/padaidi-hero.webp') }}" type="image/webp">
+                        <img src="{{ asset('images/brand/padaidi-hero.jpg') }}" alt="Armada Rental Mobil Padaidi Makassar" class="w-full h-full object-cover rounded block" width="340" height="255" fetchpriority="high">
+                    </picture>
                 </div>
             </div>
         </div>

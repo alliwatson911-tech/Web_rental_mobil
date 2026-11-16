@@ -11,6 +11,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
     {{-- Google Font: Plus Jakarta Sans --}}
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -38,7 +40,10 @@
     <aside class="admin-sidebar sticky top-0 z-50 bg-[#0b1220] border-b border-[#1e293b] text-slate-200 md:border-b-0 md:border-r md:min-h-screen md:w-64 md:shrink-0 md:h-screen md:overflow-y-auto" style="position: -webkit-sticky; position: sticky; top: 0; z-index: 1000; background-color: #0b1220; border-color: #1e293b;">
         <div class="flex items-center justify-between px-4 py-3.5 border-b border-[#1e293b] bg-[#0b1220]">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2.5 text-xs font-black tracking-wider text-white uppercase whitespace-nowrap shrink-0">
-                <img src="{{ asset('images/brand/padaidi-logo.png') }}" alt="Padaidi Emblem" class="h-8 w-auto object-contain shrink-0" width="32" height="32" />
+                <picture class="shrink-0">
+                    <source srcset="{{ asset('images/brand/padaidi-logo.webp') }}" type="image/webp">
+                    <img src="{{ asset('images/brand/padaidi-logo.png') }}" alt="Padaidi Emblem" class="h-8 w-auto object-contain shrink-0" width="32" height="32" decoding="async" />
+                </picture>
                 <span><span class="text-[#F5A623]">PADAIDI</span> ADMIN</span>
             </a>
             <button type="button" class="md:hidden text-slate-400 hover:text-white p-2 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer rounded border border-[#1e293b] bg-[#111827]" data-toggle="#admin-nav" aria-label="Menu Navigasi Admin" aria-controls="admin-nav" aria-expanded="false">

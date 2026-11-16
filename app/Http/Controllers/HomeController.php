@@ -6,6 +6,7 @@ use App\Models\Addon;
 use App\Models\Car;
 use App\Models\Category;
 use App\Models\Location;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -13,9 +14,9 @@ class HomeController extends Controller
     public function index(): View
     {
         return view('home', [
-            'locations' => Location::active()->orderBy('id')->get(),
-            'categories' => Category::orderBy('sort_order')->withCount(['cars' => fn ($q) => $q->where('status', Car::STATUS_AVAILABLE)])->get(),
-            'featuredCars' => Car::with(['category', 'primaryPhoto'])->where('status', Car::STATUS_AVAILABLE)->orderBy('daily_price')->take(6)->get(),
+            'locations' => Cache::remember('master_locations', 3600, fn () => Location::active()->orderBy('id')->get()),
+            'categories' => Cache::remember('home_categories_count', 300, fn () => Category::orderBy('sort_order')->withCount(['cars' => fn ($q) => $q->where('status', Car::STATUS_AVAILABLE)])->get()),
+            'featuredCars' => Cache::remember('home_featured_cars', 300, fn () => Car::with(['category', 'primaryPhoto'])->where('status', Car::STATUS_AVAILABLE)->orderBy('daily_price')->take(6)->get()),
         ]);
     }
 
@@ -23,7 +24,7 @@ class HomeController extends Controller
     {
         return view('pages.terms', [
             'terms' => config('padaidi.terms'),
-            'addons' => Addon::active()->orderBy('id')->get(),
+            'addons' => Cache::remember('addons_active', 3600, fn () => Addon::active()->orderBy('id')->get()),
         ]);
     }
 

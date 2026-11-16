@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Location;
 use App\Services\AvailabilityService;
 use App\Services\PricingService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class CarController extends Controller
@@ -22,26 +23,37 @@ class CarController extends Controller
     {
         $filters = $request->validated();
         $hasDates = $request->hasDates();
+        $isDefaultCatalog = !$hasDates && empty(array_filter($filters));
 
-        $query = $hasDates
-            ? $this->availability->availableCarsQuery($filters['pickup_date'], $filters['return_date'])
-            : Car::query()->where('status', '!=', Car::STATUS_INACTIVE);
+        if ($isDefaultCatalog) {
+            $cars = Cache::remember('cars_catalog_default', 300, function () {
+                return Car::query()
+                    ->where('status', '!=', Car::STATUS_INACTIVE)
+                    ->with(['category', 'primaryPhoto'])
+                    ->orderBy('daily_price')
+                    ->get();
+            });
+        } else {
+            $query = $hasDates
+                ? $this->availability->availableCarsQuery($filters['pickup_date'], $filters['return_date'])
+                : Car::query()->where('status', '!=', Car::STATUS_INACTIVE);
 
-        $cars = $query
-            ->with(['category', 'primaryPhoto'])
-            ->when($filters['category'] ?? null, fn ($q, $slug) => $q->whereHas('category', fn ($c) => $c->where('slug', $slug)))
-            ->when($filters['transmission'] ?? null, fn ($q, $t) => $q->where('transmission', $t))
-            ->when($filters['seats'] ?? null, fn ($q, $s) => $q->where('seats', '>=', (int) $s))
-            ->orderBy('daily_price')
-            ->get();
+            $cars = $query
+                ->with(['category', 'primaryPhoto'])
+                ->when($filters['category'] ?? null, fn ($q, $slug) => $q->whereHas('category', fn ($c) => $c->where('slug', $slug)))
+                ->when($filters['transmission'] ?? null, fn ($q, $t) => $q->where('transmission', $t))
+                ->when($filters['seats'] ?? null, fn ($q, $s) => $q->where('seats', '>=', (int) $s))
+                ->orderBy('daily_price')
+                ->get();
+        }
 
         return view('cars.index', [
             'cars' => $cars,
             'filters' => $filters,
             'hasDates' => $hasDates,
             'days' => $hasDates ? $this->pricing->days($filters['pickup_date'], $filters['return_date']) : null,
-            'categories' => Category::orderBy('sort_order')->get(),
-            'locations' => Location::active()->orderBy('id')->get(),
+            'categories' => Cache::remember('master_categories', 3600, fn () => Category::orderBy('sort_order')->get()),
+            'locations' => Cache::remember('master_locations', 3600, fn () => Location::active()->orderBy('id')->get()),
         ]);
     }
 
@@ -61,7 +73,7 @@ class CarController extends Controller
             'car' => $car,
             'filters' => $filters,
             'available' => $available,
-            'locations' => Location::active()->orderBy('id')->get(),
+            'locations' => Cache::remember('master_locations', 3600, fn () => Location::active()->orderBy('id')->get()),
         ]);
     }
 }

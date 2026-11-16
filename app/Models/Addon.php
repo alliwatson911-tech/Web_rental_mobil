@@ -9,6 +9,12 @@ class Addon extends Model
 {
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        static::saved(fn () => \Illuminate\Support\Facades\Cache::forget('addons_active'));
+        static::deleted(fn () => \Illuminate\Support\Facades\Cache::forget('addons_active'));
+    }
+
     public const PER_DAY = 'per_day';
 
     public const ONCE = 'once';

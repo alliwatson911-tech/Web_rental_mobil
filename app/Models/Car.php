@@ -13,6 +13,21 @@ class Car extends Model
 {
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forget('cars_catalog_default');
+            \Illuminate\Support\Facades\Cache::forget('home_featured_cars');
+            \Illuminate\Support\Facades\Cache::forget('home_categories_count');
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forget('cars_catalog_default');
+            \Illuminate\Support\Facades\Cache::forget('home_featured_cars');
+            \Illuminate\Support\Facades\Cache::forget('home_categories_count');
+        });
+    }
+
     public const STATUS_AVAILABLE = 'available';
 
     public const STATUS_MAINTENANCE = 'maintenance';

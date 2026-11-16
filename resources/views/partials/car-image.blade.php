@@ -1,11 +1,21 @@
 {{-- Foto utama mobil, atau ilustrasi elegan bila belum ada foto. Butuh relasi primaryPhoto sudah dimuat. --}}
-@php($url = $car->primaryPhoto?->url())
+@php
+    $photo = $car->primaryPhoto;
+    $url = $photo?->url();
+    $webpUrl = $photo?->webpUrl();
+@endphp
 @if ($url)
-    <img src="{{ $url }}" 
-         alt="{{ $car->name }}" 
-         class="{{ $class ?? 'w-full h-full object-cover' }}" 
-         @if(!empty($style)) style="{{ $style }}" @endif
-         loading="lazy">
+    <picture class="{{ $class ?? 'w-full h-full' }}">
+        @if ($webpUrl && $webpUrl !== $url)
+            <source srcset="{{ $webpUrl }}" type="image/webp">
+        @endif
+        <img src="{{ $url }}" 
+             alt="{{ $car->name }}" 
+             class="{{ $class ?? 'w-full h-full object-cover' }}" 
+             @if(!empty($style)) style="{{ $style }}" @endif
+             loading="lazy"
+             decoding="async">
+    </picture>
 @else
     <div class="{{ $class ?? 'w-full h-full' }} relative flex flex-col items-center justify-center bg-slate-50 border-b border-slate-200 text-slate-500 overflow-hidden group-hover:bg-slate-100 transition-colors"
          @if(!empty($style)) style="{{ $style }}" @endif>

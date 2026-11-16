@@ -24,4 +24,26 @@ class CarPhoto extends Model
     {
         return Storage::disk('public')->url($this->path);
     }
+
+    public function webpUrl(): ?string
+    {
+        if (empty($this->path)) {
+            return null;
+        }
+
+        $extension = strtolower(pathinfo($this->path, PATHINFO_EXTENSION));
+        if ($extension === 'webp') {
+            return $this->url();
+        }
+
+        $dir = pathinfo($this->path, PATHINFO_DIRNAME);
+        $filename = pathinfo($this->path, PATHINFO_FILENAME);
+        $webpPath = ($dir === '.' ? '' : $dir . '/') . $filename . '.webp';
+
+        if (Storage::disk('public')->exists($webpPath)) {
+            return Storage::disk('public')->url($webpPath);
+        }
+
+        return null;
+    }
 }
